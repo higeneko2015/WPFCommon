@@ -1,0 +1,48 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPFCommon">
+
+    <!--
+        Generic.xamlで最初にマージしていてデザイナ上の表示も問題ないが
+        実行時エラーが発生する。(TextBoxBase.xamlが見つからない)
+    -->
+    <!--
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WPFCommon;component/Themes/TextBoxBase.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    -->
+
+    <!--  テキストボックスコントロール  -->
+    <Style BasedOn="{StaticResource {x:Type local:TextBoxBase}}" TargetType="{x:Type local:TextBoxEx}">
+        <Setter Property="SelectionBrush" Value="{DynamicResource TextBoxEx.Selection.BackgroundColor}" />
+        <Setter Property="SelectionTextBrush" Value="{DynamicResource TextBoxEx.Selection.ForegroundColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource TextBoxEx.MouseOver.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.MouseOver.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.MouseOver.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="Background" Value="{DynamicResource TextBoxEx.Focused.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Focused.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Focused.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="Background" Value="{DynamicResource TextBoxEx.ReadOnly.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.ReadOnly.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.ReadOnly.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource TextBoxEx.Disabled.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Disabled.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Disabled.BorderColor}" />
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="{DynamicResource TextBoxEx.Error.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Error.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Error.BorderColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

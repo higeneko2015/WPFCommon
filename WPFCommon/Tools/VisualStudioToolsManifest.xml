@@ -1,0 +1,16 @@
+﻿<FileList>
+  <File Reference="WPFCommon.dll">
+    <ContainsControls>true</ContainsControls>
+    <ToolboxItems UIFramework="WPF" VSCategory="WPFCommonコントロール" BlendCategory="WPFCommonコントロール">
+      <Item Type="WPFCommon.ButtonEx" />
+      <Item Type="WPFCommon.LabelEx" />
+      <Item Type="WPFCommon.TextBoxEx" />
+      <Item Type="WPFCommon.DateBoxEx" />
+      <Item Type="WPFCommon.TimeBoxEx" />
+      <Item Type="WPFCommon.NumberBoxEx" />
+      <Item Type="WPFCommon.CheckBoxEx" />
+      <Item Type="WPFCommon.ComboBoxEx" />
+      <Item Type="WPFCommon.RadioButtonEx" />
+    </ToolboxItems>
+  </File>
+</FileList>

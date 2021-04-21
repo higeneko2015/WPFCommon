@@ -1,0 +1,183 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- ビルド時にnupkgを作成する設定 -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- ビルド時に、アプリケーションの動作に必要なDLLをbinフォルダにコピーする設定 -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!-- pdbファイル内のソースコードのフルパスを置換して見えなくするための設定 -->
+    <DeterministicSourceRoot>\</DeterministicSourceRoot>
+    <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\'))</RepoRoot>
+    <PathMap>$(RepoRoot)=$(DeterministicSourceRoot)</PathMap>
+
+    <!-- nupkgの情報定義 -->
+    <PackageId>WPFCommon2</PackageId>
+    <Authors>higeneko760414</Authors>
+    <Company>higeneko.ne.jp</Company>
+    <Product>WPF共通基板</Product>
+    <Description>WPFを使用したアプリケーション作成時に使用する共通基盤です。</Description>
+    <Copyright>(C) 2020 higeneko760414@gmail.com</Copyright>
+    <NeutralLanguage>ja</NeutralLanguage>
+    <Version>1.0.0.0</Version>
+    <PackageVersion>$(Version)</PackageVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/higeneko2015/WPFCommon</PackageProjectUrl>
+    <!-- この記述が無いとnupkg内に"content"フォルダと"contentFiles"フォルダが作られて両方にFontファイルがコピーされてしまう-->
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="Themes\ButtonEx.xaml" />
+    <Page Remove="Themes\CheckBoxEx.xaml" />
+    <Page Remove="Themes\ComboBoxEx.xaml" />
+    <Page Remove="Themes\CommonResource.xaml" />
+    <Page Remove="Themes\DateBoxEx.xaml" />
+    <Page Remove="Themes\Default.xaml" />
+    <Page Remove="Themes\FocusableLabel.xaml" />
+    <Page Remove="Themes\LabelEx.xaml" />
+    <Page Remove="Themes\NumberBoxEx.xaml" />
+    <Page Remove="Themes\RadioButtonEx.xaml" />
+    <Page Remove="Themes\TextBoxBase.xaml" />
+    <Page Remove="Themes\TextBoxEx.xaml" />
+    <Page Remove="Themes\TimeBoxEx.xaml" />
+    <Page Remove="Themes\TimeSelecter.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Font\rounded-l-mgenplus-1m-regular.ttf" />
+  </ItemGroup>
+
+  <!-- パッケージを利用する側のプロジェクトでビルドしたときにbinフォルダにコピーするための設定 -->
+  <ItemGroup>
+    <None Update="Themes\Generic.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Generic.xaml</LastGenOutput>
+    </None>
+    <None Pack="true" IncludeInPackage="false" Update="Tools\WPFCommon2.targets" PackagePath="build/WPFCommon2.targets" />
+    <!--
+    <None Pack="true" IncludeInPackage="false" Update="Resources\Font\**" PackagePath="binaryFiles" />
+    -->
+    <None Pack="true" IncludeInPackage="false" Update="Resources\Icon\**" PackagePath="binaryFiles" />
+    <None Pack="true" IncludeInPackage="false" Update="Resources\common.config" PackagePath="binaryFiles" />
+    <None Include="Resources\Icon\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <!-- VisualStudioのコントロールツールボックスに表示されるアイコン -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.ButtonEx.png" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.CheckBoxEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.ComboBoxEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.LabelEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.NumberBoxEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.RadioButtonEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.TextBoxEx.png" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.DateBoxEx.bmp" />
+    <EmbeddedResource Include="Resources\ToolBoxIcon\WPFCommon.TimeBoxEx.bmp" />
+  </ItemGroup>
+
+  <!-- nupkg内のToolsフォルダにコピーするために必要な記述 -->
+  <ItemGroup>
+    <None Include="Themes\ButtonEx.xaml" />
+    <None Include="Themes\CheckBoxEx.xaml" />
+    <None Include="Themes\ComboBoxEx.xaml" />
+    <None Include="Themes\CommonResource.xaml" />
+    <None Include="Themes\DateBoxEx.xaml" />
+    <None Include="Themes\Default.xaml" />
+    <None Include="Themes\FocusableLabel.xaml" />
+    <None Include="Themes\LabelEx.xaml" />
+    <None Include="Themes\NumberBoxEx.xaml" />
+    <None Include="Themes\RadioButtonEx.xaml" />
+    <None Include="Themes\TextBoxBase.xaml" />
+    <None Include="Themes\TextBoxEx.xaml" />
+    <None Include="Themes\TimeBoxEx.xaml" />
+    <None Include="Themes\TimeSelecter.xaml" />
+    <None Include="Tools\VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="26.1.0" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="NPOI" Version="2.5.3" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.1" />
+    <PackageReference Include="SharpVectors" Version="1.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Themes\Generic.xaml">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Generic.tt</DependentUpon>
+    </Page>
+  </ItemGroup>
+  
+  <UsingTask TaskName="UpdateVersion" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <CurrentVersion ParameterType="System.String" />
+      <NewVersion ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        DateTime dNow = DateTime.Now;
+        DateTime dateFrom = new DateTime(2020, 1, 1);
+        DateTime dateTo = dNow.Date;
+        double buildVer = (dateTo - dateFrom).TotalDays;
+
+        String revision = dNow.TimeOfDay.ToString("hhmmss").Remove(5);
+
+        if (String.IsNullOrEmpty(CurrentVersion) == true)
+        {
+            CurrentVersion = "1.0.0.0";
+        }
+        String[] arr = "$(FileVersion)".Split('.');
+        arr[2] = buildVer.ToString();
+        arr[3] = revision;
+
+        NewVersion = String.Join(".", arr);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- ビルド前イベントでバージョン情報をUPDATEする -->
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <UpdateVersion CurrentVersion="$(FileVersion)">
+      <Output PropertyName="Version" TaskParameter="NewVersion" />
+      <Output PropertyName="PackageVersion" TaskParameter="NewVersion" />
+      <Output PropertyName="FileVersion" TaskParameter="NewVersion" />
+      <Output PropertyName="AssemblyVersion" TaskParameter="NewVersion" />
+    </UpdateVersion>
+  </Target>
+
+  <Target Name="CopyNuPkgFile" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <NewNugetFile Include="$(OutputPath)\..\*.nupkg" />
+    </ItemGroup>
+    <Move SourceFiles="@(NewNugetFile)" DestinationFolder="..\..\LocalPackages" />
+  </Target>
+
+</Project>

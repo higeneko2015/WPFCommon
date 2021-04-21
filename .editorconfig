@@ -1,0 +1,7 @@
+﻿[*.{cs,vb}]
+
+# IDE0060: 未使用のパラメーターを削除します
+dotnet_diagnostic.IDE0060.severity = silent
+
+# CA1822: メンバーを static に設定します
+dotnet_diagnostic.CA1822.severity = silent

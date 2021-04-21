@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPFCommon">
+
+    <!--
+        Generic.xamlで最初にマージしていてデザイナ上の表示も問題ないが
+        実行時エラーが発生する。(TextBoxBase.xamlが見つからない)
+    -->
+    <!--
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WPFCommon;component/Themes/TextBoxBase.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    -->
+
+    <!--  数値用テキストボックスコントロール  -->
+    <Style BasedOn="{StaticResource {x:Type local:TextBoxBase}}" TargetType="{x:Type local:NumberBoxEx}">
+        <Setter Property="SelectionBrush" Value="{DynamicResource NumberBoxEx.Selection.BackgroundColor}" />
+        <Setter Property="SelectionTextBrush" Value="{DynamicResource NumberBoxEx.Selection.ForegroundColor}" />
+        <Setter Property="HorizontalContentAlignment" Value="Right" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NumberBoxEx.MouseOver.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource NumberBoxEx.MouseOver.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource NumberBoxEx.MouseOver.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NumberBoxEx.Focused.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource NumberBoxEx.Focused.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource NumberBoxEx.Focused.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NumberBoxEx.ReadOnly.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource NumberBoxEx.ReadOnly.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource NumberBoxEx.ReadOnly.BorderColor}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource NumberBoxEx.Disabled.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource NumberBoxEx.Disabled.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource NumberBoxEx.Disabled.BorderColor}" />
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NumberBoxEx.Error.BackgroundColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource NumberBoxEx.Error.ForegroundColor}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource NumberBoxEx.Error.BorderColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

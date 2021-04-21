@@ -1,0 +1,342 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:System="clr-namespace:System;assembly=System.Runtime">
+
+    <!--  システム全体で使用するデフォルトフォント  -->
+    <FontFamily x:Key="Default.FontFamily">/Resources/Font/#Rounded-L Mgen+ 1m regular</FontFamily>
+    <!--  システム全体で使用するフォントサイズ  -->
+    <System:Double x:Key="Default.FontSize">15</System:Double>
+
+    <!--  ウィンドウ枠の色  -->
+    <SolidColorBrush x:Key="Window.BorderColor" Color="Black" />
+
+    <!--  システム全体で使用する前景色  -->
+    <SolidColorBrush x:Key="Window.Client.ForegroundColor" Color="Black" />
+    <!--  システム全体で使用する背景色  -->
+    <SolidColorBrush x:Key="Window.Client.BackgroundColor" Color="Beige" />
+
+    <!--  システム全体で使用するコントロール前景色  -->
+    <SolidColorBrush x:Key="Control.Default.ForegroundColor" Color="Black" />
+    <!--  システム全体で使用するコントロール背景色  -->
+    <SolidColorBrush x:Key="Control.Default.BackgroundColor" Color="IndianRed" />
+
+    <!--  システム全体で使用するフォーカス時前景色  -->
+    <SolidColorBrush x:Key="Control.Focused.ForegroundColor" Color="Black" />
+    <!--  システム全体で使用するフォーカス時背景色  -->
+    <SolidColorBrush x:Key="Control.Focused.BackgroundColor" Color="LightCyan" />
+
+    <!--  システム全体で使用するエラー発生時前景色  -->
+    <SolidColorBrush x:Key="Control.Error.ForegroundColor" Color="White" />
+    <!--  システム全体で使用するエラー発生時背景色  -->
+    <SolidColorBrush x:Key="Control.Error.BackgroundColor" Color="Red" />
+
+    <!--  システム全体で使用するヘッダ領域の前景色  -->
+    <SolidColorBrush x:Key="Window.Header.ForegroundColor" Color="Azure" />
+    <!--  システム全体で使用するヘッダ領域の背景色(濃い色)  -->
+    <SolidColorBrush x:Key="Window.Header.AccentColor" Color="#FFF39700" />
+    <!--  システム全体で使用するヘッダ領域の背景色(薄い色)  -->
+    <SolidColorBrush x:Key="Window.Header.BackgroundColor" Color="#FFFFBE56" />
+
+    <!--  メッセージボックスのヘッダ領域の前景色  -->
+    <SolidColorBrush x:Key="MessageBox.Header.ForegroundColor" Color="White" />
+    <!--  メッセージボックスのヘッダ領域の背景色  -->
+    <SolidColorBrush x:Key="MessageBox.Header.BackgroundColor" Color="#FF7993EA" />
+
+    <!--  TODO  -->
+    <!--#region TextBoxExの色設定-->
+    <SolidColorBrush x:Key="TextBoxEx.Selection.ForegroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="TextBoxEx.Selection.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF32E820" />
+
+    <SolidColorBrush x:Key="TextBoxEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TextBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TextBoxEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="TextBoxEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="TextBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="TextBoxEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush
+        x:Key="TextBoxEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="TextBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TextBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TextBoxEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush
+        x:Key="TextBoxEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF838383" />
+    <SolidColorBrush x:Key="TextBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush
+        x:Key="TextBoxEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF707070" />
+
+    <SolidColorBrush x:Key="TextBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="TextBoxEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="TextBoxEx.Error.BorderColor" Color="Black" />
+    <!--#endregion-->
+
+    <!--  NumberBoxExの色設定  -->
+    <SolidColorBrush x:Key="NumberBoxEx.Selection.ForegroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="NumberBoxEx.Selection.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF0078D7" />
+
+    <SolidColorBrush x:Key="NumberBoxEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="NumberBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="NumberBoxEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="NumberBoxEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="NumberBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="NumberBoxEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush
+        x:Key="NumberBoxEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="NumberBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="NumberBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="NumberBoxEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush
+        x:Key="NumberBoxEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF838383" />
+    <SolidColorBrush x:Key="NumberBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush
+        x:Key="NumberBoxEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF707070" />
+
+    <SolidColorBrush x:Key="NumberBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="NumberBoxEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="NumberBoxEx.Error.BorderColor" Color="Black" />
+
+    <!--  DateBoxExの色設定  -->
+    <SolidColorBrush x:Key="DateBoxEx.Selection.ForegroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="DateBoxEx.Selection.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF32E820" />
+
+    <SolidColorBrush x:Key="DateBoxEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="DateBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="DateBoxEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="DateBoxEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="DateBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="DateBoxEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush
+        x:Key="DateBoxEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="DateBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="DateBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="DateBoxEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush
+        x:Key="DateBoxEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF838383" />
+    <SolidColorBrush x:Key="DateBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush
+        x:Key="DateBoxEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF707070" />
+
+    <SolidColorBrush x:Key="DateBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="DateBoxEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="DateBoxEx.Error.BorderColor" Color="Black" />
+
+    <!--  TimeBoxExの色設定  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selection.ForegroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selection.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF32E820" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="TimeBoxEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush
+        x:Key="TimeBoxEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF838383" />
+    <SolidColorBrush x:Key="TimeBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF707070" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="TimeBoxEx.Error.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.BackgroundColor" Color="DarkGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.ForegroundColor" Color="Black" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.BackgroundColor" Color="DarkGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.ForegroundColor" Color="Black" />
+
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Focused.BackgroundColor" Color="DarkGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Focused.ForegroundColor" Color="Black" />
+
+    <!--  CheckBoxExの色設定  -->
+    <SolidColorBrush x:Key="CheckBoxEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="CheckBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="CheckBoxEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="CheckBoxEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="CheckBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="CheckBoxEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush x:Key="CheckBoxEx.MouseOver.BorderColor" Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="CheckBoxEx.Disabled.ForegroundColor" Color="#FF838383" />
+    <SolidColorBrush x:Key="CheckBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="CheckBoxEx.Disabled.BorderColor" Color="#FF707070" />
+
+    <SolidColorBrush x:Key="CheckBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="CheckBoxEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="CheckBoxEx.Error.BorderColor" Color="Black" />
+
+    <!--  RadioButtonExの色設定  -->
+    <SolidColorBrush x:Key="RadioButtonEx.Default.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="RadioButtonEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="RadioButtonEx.Default.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="RadioButtonEx.Focused.ForegroundColor" Color="black" />
+    <SolidColorBrush x:Key="RadioButtonEx.Focused.BackgroundColor" Color="LightCyan" />
+    <SolidColorBrush x:Key="RadioButtonEx.Focused.BorderColor" Color="black" />
+
+    <SolidColorBrush x:Key="RadioButtonEx.MouseOver.BorderColor" Color="#FF2C77FF" />
+
+    <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.ForegroundColor" Color="Black" />
+    <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.BorderColor" Color="Black" />
+
+    <SolidColorBrush x:Key="RadioButtonEx.Disabled.ForegroundColor" Color="#FF838383" />
+    <SolidColorBrush x:Key="RadioButtonEx.Disabled.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="RadioButtonEx.Disabled.BorderColor" Color="#FF707070" />
+
+    <SolidColorBrush x:Key="RadioButtonEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="RadioButtonEx.Error.BackgroundColor" Color="Red" />
+    <SolidColorBrush x:Key="RadioButtonEx.Error.BorderColor" Color="Black" />
+
+    <!--  ComboBoxExの色設定  -->
+    <SolidColorBrush x:Key="ComboBoxEx.Default.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Default.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ComboBoxEx.Focused.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Focused.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Focused.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ComboBoxEx.MouseOver.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.MouseOver.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.MouseOver.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ComboBoxEx.ReadOnly.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.ReadOnly.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.ReadOnly.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ComboBoxEx.Disabled.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Disabled.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Disabled.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ComboBoxEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Error.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ComboBoxEx.Error.BorderColor" Color="White" />
+
+    <!--  LabelExの色設定  -->
+    <SolidColorBrush x:Key="LabelEx.Default.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Default.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="LabelEx.Focused.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Focused.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Focused.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="LabelEx.MouseOver.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.MouseOver.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.MouseOver.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="LabelEx.ReadOnly.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.ReadOnly.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.ReadOnly.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="LabelEx.Disabled.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Disabled.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Disabled.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="LabelEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Error.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="LabelEx.Error.BorderColor" Color="White" />
+
+    <!--  ButtonExの色設定  -->
+    <SolidColorBrush x:Key="ButtonEx.Default.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Default.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ButtonEx.Focused.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Focused.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Focused.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ButtonEx.MouseOver.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.MouseOver.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.MouseOver.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ButtonEx.ReadOnly.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.ReadOnly.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.ReadOnly.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ButtonEx.Disabled.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Disabled.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Disabled.BorderColor" Color="White" />
+
+    <SolidColorBrush x:Key="ButtonEx.Error.ForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Error.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="ButtonEx.Error.BorderColor" Color="White" />
+</ResourceDictionary>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- ビルド後にnupkgからコピーするファイルが格納されているパスの定義-->
+  <ItemGroup>
+    <ThePackageFiles Include="$(MSBuildThisFileDirectory)/../binaryFiles/**" />
+    <ThePackageFiles Include="$(MSBuildThisFileDirectory)/../contentFiles/any/net5.0-windows7.0/**" />
+  </ItemGroup>
+
+  <!-- ビルド後にnupkgから必要なリソースファイルをbinへコピーするタスク -->
+  <Target Name="CopyThePackage" AfterTargets="AfterBuild">
+    <Copy SourceFiles="@(ThePackageFiles)" DestinationFolder="$(OutDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- ビルド前にアセンブリのバージョン番号を自動UPさせるタスク内容 -->
+  <UsingTask TaskName="UpdateVersion" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <CurrentVersion ParameterType="System.String" />
+      <NewVersion ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        DateTime dNow = DateTime.Now;
+        DateTime dateFrom = new DateTime(2020, 1, 1);
+        DateTime dateTo = dNow.Date;
+        double buildVer = (dateTo - dateFrom).TotalDays;
+
+        String revision = dNow.TimeOfDay.ToString("hhmmss").Remove(5);
+
+        if (String.IsNullOrEmpty(CurrentVersion) == true)
+        {
+            CurrentVersion = "1.0.0.0";
+        }
+        String[] arr = CurrentVersion.Split('.');
+        arr[2] = buildVer.ToString();
+        arr[3] = revision;
+
+        NewVersion = String.Join(".", arr);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!-- ビルド前にアセンブリのバージョン番号を自動UPさせるタスク -->
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <UpdateVersion CurrentVersion="$(FileVersion)">
+      <Output PropertyName="Version" TaskParameter="NewVersion" />
+    </UpdateVersion>
+  </Target>
+</Project>

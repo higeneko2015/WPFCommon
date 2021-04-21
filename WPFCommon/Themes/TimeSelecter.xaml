@@ -1,0 +1,1326 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPFCommon">
+
+    <Style TargetType="{x:Type local:TimeSelecter}">
+        <Setter Property="FontSize" Value="9" />
+        <Setter Property="BorderBrush" Value="#FF858585" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+        <Setter Property="Background" Value="{DynamicResource TimeBoxEx.Selecter.Hour.BackgroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource TimeBoxEx.Selecter.Hour.ForegroundColor}" />
+        <Setter Property="HourMouseOverBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Hour.MouseOver.BackgroundColor}" />
+        <Setter Property="HourMouseOverForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Hour.MouseOver.ForegroundColor}" />
+        <Setter Property="HourFocusedBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Hour.Focused.BackgroundColor}" />
+        <Setter Property="HourFocusedForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Hour.Focused.ForegroundColor}" />
+        <Setter Property="MinutesMouseOverBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Minutes.MouseOver.BackgroundColor}" />
+        <Setter Property="MinutesMouseOverForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Minutes.MouseOver.ForegroundColor}" />
+        <Setter Property="MinutesFocusedBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Minutes.Focused.BackgroundColor}" />
+        <Setter Property="MinutesFocusedForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Minutes.Focused.ForegroundColor}" />
+        <Setter Property="SecondsMouseOverBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Seconds.MouseOver.BackgroundColor}" />
+        <Setter Property="SecondsMouseOverForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Seconds.MouseOver.ForegroundColor}" />
+        <Setter Property="SecondsFocusedBackgroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Seconds.Focused.BackgroundColor}" />
+        <Setter Property="SecondsFocusedForegroundColor" Value="{DynamicResource TimeBoxEx.Selecter.Seconds.Focused.ForegroundColor}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TimeSelecter}">
+                    <Border
+                        Padding="1"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <local:LabelEx
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,2"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#FFE8E8E8"
+                                BorderBrush="#FFE8E8E8"
+                                Content="時" />
+                            <local:LabelEx
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="0,0,0,2"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#FFE8E8E8"
+                                BorderBrush="#FFE8E8E8"
+                                Content="分" />
+                            <local:LabelEx
+                                Grid.Row="0"
+                                Grid.Column="4"
+                                Margin="0,0,0,2"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="#FFE8E8E8"
+                                BorderBrush="#FFE8E8E8"
+                                Content="秒" />
+                            <Grid
+                                x:Name="HourGrid"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Width="72"
+                                Height="108"
+                                Background="{TemplateBinding Background}"
+                                FocusManager.IsFocusScope="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Content="0"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Content="1"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Content="2"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Content="3"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Content="4"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Content="5"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Content="6"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="3"
+                                    Content="7"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Content="8"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Content="9"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Content="10"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="3"
+                                    Content="11"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Content="12"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Content="13"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Content="14"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="3"
+                                    Content="15"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Content="16"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Content="17"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="2"
+                                    Content="18"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="3"
+                                    Content="19"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    Content="20"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Content="21"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="2"
+                                    Content="22"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="3"
+                                    Content="23"
+                                    FocusedBackgroundColor="{TemplateBinding HourFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding HourFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
+                            </Grid>
+
+                            <Grid
+                                x:Name="MinutesGrid"
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Width="180"
+                                Height="108"
+                                Background="{TemplateBinding Background}"
+                                FocusManager.IsFocusScope="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Content="0"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Content="1"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Content="2"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Content="3"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="4"
+                                    Content="4"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="5"
+                                    Content="5"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="6"
+                                    Content="6"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="7"
+                                    Content="7"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="8"
+                                    Content="8"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="9"
+                                    Content="9"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Content="10"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Content="11"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Content="12"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="3"
+                                    Content="13"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="4"
+                                    Content="14"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="5"
+                                    Content="15"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="6"
+                                    Content="16"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="7"
+                                    Content="17"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="8"
+                                    Content="18"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="9"
+                                    Content="19"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Content="20"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Content="21"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Content="22"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="3"
+                                    Content="23"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="4"
+                                    Content="24"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="5"
+                                    Content="25"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="6"
+                                    Content="26"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="7"
+                                    Content="27"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="8"
+                                    Content="28"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="9"
+                                    Content="29"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Content="30"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Content="31"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Content="32"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="3"
+                                    Content="33"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="4"
+                                    Content="34"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="5"
+                                    Content="35"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="6"
+                                    Content="36"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="7"
+                                    Content="37"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="8"
+                                    Content="38"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="9"
+                                    Content="39"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Content="40"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Content="41"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="2"
+                                    Content="42"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="3"
+                                    Content="43"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="4"
+                                    Content="44"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="5"
+                                    Content="45"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="6"
+                                    Content="46"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="7"
+                                    Content="47"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="8"
+                                    Content="48"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="9"
+                                    Content="49"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    Content="50"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Content="51"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="2"
+                                    Content="52"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="3"
+                                    Content="53"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="4"
+                                    Content="54"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="5"
+                                    Content="55"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="6"
+                                    Content="56"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="7"
+                                    Content="57"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="8"
+                                    Content="58"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="9"
+                                    Content="59"
+                                    FocusedBackgroundColor="{TemplateBinding MinutesFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding MinutesFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
+                            </Grid>
+
+                            <Grid
+                                x:Name="SecondsGrid"
+                                Grid.Row="1"
+                                Grid.Column="4"
+                                Width="180"
+                                Height="108"
+                                Background="{TemplateBinding Background}"
+                                FocusManager.IsFocusScope="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Content="0"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Content="1"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Content="2"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Content="3"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="4"
+                                    Content="4"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="5"
+                                    Content="5"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="6"
+                                    Content="6"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="7"
+                                    Content="7"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="8"
+                                    Content="8"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="0"
+                                    Grid.Column="9"
+                                    Content="9"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Content="10"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Content="11"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Content="12"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="3"
+                                    Content="13"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="4"
+                                    Content="14"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="5"
+                                    Content="15"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="6"
+                                    Content="16"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="7"
+                                    Content="17"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="8"
+                                    Content="18"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="1"
+                                    Grid.Column="9"
+                                    Content="19"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Content="20"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Content="21"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Content="22"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="3"
+                                    Content="23"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="4"
+                                    Content="24"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="5"
+                                    Content="25"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="6"
+                                    Content="26"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="7"
+                                    Content="27"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="8"
+                                    Content="28"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="2"
+                                    Grid.Column="9"
+                                    Content="29"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Content="30"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Content="31"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Content="32"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="3"
+                                    Content="33"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="4"
+                                    Content="34"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="5"
+                                    Content="35"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="6"
+                                    Content="36"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="7"
+                                    Content="37"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="8"
+                                    Content="38"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="3"
+                                    Grid.Column="9"
+                                    Content="39"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Content="40"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Content="41"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="2"
+                                    Content="42"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="3"
+                                    Content="43"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="4"
+                                    Content="44"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="5"
+                                    Content="45"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="6"
+                                    Content="46"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="7"
+                                    Content="47"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="8"
+                                    Content="48"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="4"
+                                    Grid.Column="9"
+                                    Content="49"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    Content="50"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Content="51"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="2"
+                                    Content="52"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="3"
+                                    Content="53"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="4"
+                                    Content="54"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="5"
+                                    Content="55"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="6"
+                                    Content="56"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="7"
+                                    Content="57"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="8"
+                                    Content="58"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                                <local:FocusableLabel
+                                    Grid.Row="5"
+                                    Grid.Column="9"
+                                    Content="59"
+                                    FocusedBackgroundColor="{TemplateBinding SecondsFocusedBackgroundColor}"
+                                    FocusedForegroundColor="{TemplateBinding SecondsFocusedForegroundColor}"
+                                    MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
+                                    MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

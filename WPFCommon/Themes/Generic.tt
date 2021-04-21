@@ -1,0 +1,72 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ Assembly name="System.Core" #>
+<#@ Assembly name="System.Xml" #>
+<#@ Assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".xaml" #>
+
+<#
+    IDictionary<string, XNamespace> GetNamespaces(XDocument doc)
+    {
+        return doc.Root.Attributes()
+                    .Where(a => a.IsNamespaceDeclaration)
+                    .GroupBy(a => a.Name.Namespace == XNamespace.None ? string.Empty : a.Name.LocalName, a=>XNamespace.Get(a.Value))
+                    .ToDictionary(g => g.Key, g => g.First());
+    }
+
+    XDocument GetFlattenResourceDocument(string path)
+    {
+        var xFilePath = this.Host.ResolvePath(path);
+        var doc = XDocument.Load(xFilePath);
+
+        var defaultNs = doc.Root.GetDefaultNamespace();
+
+        var mergedDictElement = doc.Root.Elements(defaultNs + "ResourceDictionary.MergedDictionaries").SingleOrDefault();
+        if (mergedDictElement == null)
+            return doc;
+
+        var rootNamespaces = GetNamespaces(doc);
+
+        var mergedResourceDictionaries = mergedDictElement.Elements(defaultNs + "ResourceDictionary");
+        var addAfterElement = mergedDictElement as XNode;
+
+        foreach(var resourceDict in mergedResourceDictionaries)
+        {
+            var sourcePath = resourceDict.Attribute("Source").Value;
+            var flattenDoc = GetFlattenResourceDocument(sourcePath);
+
+            var flatNamespaces = GetNamespaces(flattenDoc);
+
+            foreach(var key in flatNamespaces.Keys)
+            {
+                if(!rootNamespaces.ContainsKey(key))
+                {
+                    var curNamespace = flatNamespaces[key];
+                    doc.Root.Add(new XAttribute(XNamespace.Xmlns + key, curNamespace.ToString()));
+                    rootNamespaces.Add(key, curNamespace);
+                }
+            }
+
+            var startComment = new XComment($"Merged from file {sourcePath}");
+            var endComment = new XComment($"");
+
+            var list = new List<XNode>();
+            list.Add(startComment);
+            list.AddRange(flattenDoc.Root.Elements());
+            list.Add(endComment);
+            addAfterElement.AddAfterSelf(list);
+
+            addAfterElement = endComment;
+
+        }
+
+        mergedDictElement.Remove();
+
+        return doc;
+    }
+#>
+<#= GetFlattenResourceDocument("Default.xaml").ToString() #>

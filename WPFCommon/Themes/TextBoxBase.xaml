@@ -1,0 +1,66 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPFCommon">
+
+    <Style TargetType="{x:Type local:TextBoxBase}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="Padding" Value="2,0,2,0" />
+        <Setter Property="Background" Value="{DynamicResource TextBoxEx.Default.BackgroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Default.ForegroundColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Default.BorderColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsReadOnlyCaretVisible" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TextBoxBase}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                x:Name="WaterMark"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Padding="4,0,4,0"
+                                VerticalAlignment="Center"
+                                Focusable="False"
+                                Foreground="#FF898989"
+                                Opacity="0"
+                                Text="{TemplateBinding WaterMarkString}" />
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,2,0,2"
+                                VerticalContentAlignment="Center"
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="WaterMark" Property="Opacity" Value="100" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

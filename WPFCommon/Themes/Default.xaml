@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="CommonResource.xaml" />
+        <ResourceDictionary Source="ButtonEx.xaml" />
+        <ResourceDictionary Source="LabelEx.xaml" />
+        <ResourceDictionary Source="FocusableLabel.xaml" />
+        <ResourceDictionary Source="TextBoxBase.xaml" />
+        <ResourceDictionary Source="TextBoxEx.xaml" />
+        <ResourceDictionary Source="DateBoxEx.xaml" />
+        <ResourceDictionary Source="TimeBoxEx.xaml" />
+        <ResourceDictionary Source="NumberBoxEx.xaml" />
+        <ResourceDictionary Source="CheckBoxEx.xaml" />
+        <ResourceDictionary Source="ComboBoxEx.xaml" />
+        <ResourceDictionary Source="RadioButtonEx.xaml" />
+        <ResourceDictionary Source="TimeSelecter.xaml" />
+        <ResourceDictionary Source="BasePanel2.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
