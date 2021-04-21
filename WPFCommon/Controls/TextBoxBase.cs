@@ -209,9 +209,9 @@ namespace WPFCommon
             // クリップボードからテキストを取得
             var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
 
-            // TODO NumberBoxExの場合は桁区切りカンマを除去したい。
-            // TODO DateBoxExの場合は区切りの/を除去したい。
-            // TODO TimeBoxExの場合は区切りの:を除去したい。
+            // TODO NumberBoxExの場合は桁区切りカンマを除去したい
+            // TODO DateBoxExの場合は区切りの/を除去したい
+            // TODO TimeBoxExの場合は区切りの:を除去したい
             text = text.Replace(",", "");
 
             // 貼り付け可能な内容かをチェック
