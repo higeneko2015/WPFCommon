@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -33,6 +35,11 @@ namespace WPFCommon
         /// 表示用の書式文字列
         /// </summary>
         protected string Format = string.Empty;
+
+        /// <summary>
+        /// 貼付時にクリップボードから取得した文字列から強制的に除去する文字の一覧
+        /// </summary>
+        protected string[] RemovePastingCharacters = null;
 
         /// <summary>
         /// 入力値の変更有無を判定するために使用する入力前値
@@ -70,7 +77,8 @@ namespace WPFCommon
             this.InputBindings.Add(new KeyBinding(ApplicationCommands.NotACommand, Key.Space, ModifierKeys.None));
             this.InputBindings.Add(new KeyBinding(ApplicationCommands.NotACommand, Key.Space, ModifierKeys.Shift));
 
-            this.Unloaded += this.TextBoxBase_Unloaded;
+            // アプリケーション終了時にこのイベントは起きない
+            //this.Unloaded += this.TextBoxBase_Unloaded;
 
             // Validationエラーが発生したときにWPFフレームワークから呼び出されるハンドラを登録
             Validation.AddErrorHandler(this, TextBoxBase_ValidationError);
@@ -105,10 +113,7 @@ namespace WPFCommon
             // 派生先クラス側のイベントを処理してから最後に全選択させる
             base.OnGotKeyboardFocus(e);
 
-            if (this.GotKeybordFocusInvokeHandler.IsEmpty() == false)
-            {
-                this.Dispatcher.InvokeAsync(this.GotKeybordFocusInvokeHandler, DispatcherPriority.ApplicationIdle);
-            }
+            this.SelectAllText();
         }
 
         /// <summary>
@@ -150,14 +155,16 @@ namespace WPFCommon
             this.CheckedFlg = true;
 
             // Validationを実施
-            var expression = BindingOperations.GetBindingExpression(this, TextProperty);
+            //var expression = BindingOperations.GetBindingExpression(this, TextProperty);
 
-            // TemplateBindingを使用している時は子コントロールのBindingはnullになる。
-            // そのため親TemplateのBinding情報から取得する。
-            if (expression.IsEmpty() && this.TemplatedParent.IsEmpty() == false)
-            {
-                expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
-            }
+            //// TemplateBindingを使用している時は子コントロールのBindingはnullになる。
+            //// そのため親TemplateのBinding情報から取得する。
+            //if (expression.IsEmpty() && this.TemplatedParent.IsEmpty() == false)
+            //{
+            //    expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
+            //}
+            var expression = GetBindingExpression(this, TextProperty);
+
             expression?.UpdateSource();
             if (expression?.ValidationErrors?.Count > 0)
             {
@@ -192,6 +199,29 @@ namespace WPFCommon
             base.OnPreviewTextInput(e);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private BindingExpression GetBindingExpression(Control target, DependencyProperty dp)
+        {
+            var expression = BindingOperations.GetBindingExpression(target, dp);
+
+            // TemplateBindingを使用している時は子コントロールのBindingはnullになる。
+            // そのため親TemplateのBinding情報から取得する。
+            if (expression.IsEmpty() && target.TemplatedParent.IsEmpty() == false)
+            {
+                expression = BindingOperations.GetBindingExpression(target.TemplatedParent, dp);
+            }
+            return expression;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private void SelectAllText()
+        {
+            if (this.GotKeybordFocusInvokeHandler.IsEmpty() == false)
+            {
+                this.Dispatcher.InvokeAsync(this.GotKeybordFocusInvokeHandler, DispatcherPriority.ApplicationIdle);
+            }
+        }
+
         /// <summary>
         /// クリップボードからの貼付時に実行されるイベントハンドラ
         /// </summary>
@@ -207,23 +237,60 @@ namespace WPFCommon
             }
 
             // クリップボードからテキストを取得
-            var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
+            var inputText = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
 
-            // TODO NumberBoxExの場合は桁区切りカンマを除去したい
-            // TODO DateBoxExの場合は区切りの/を除去したい
-            // TODO TimeBoxExの場合は区切りの:を除去したい.
-            text = text.Replace(",", "");
+            // 特定の文字を除去(NumberBoxEx時のカンマ)
+            if (this.RemovePastingCharacters.IsEmpty() == false)
+            {
+                foreach (var item in this.RemovePastingCharacters)
+                {
+                    inputText = inputText.Replace(item, string.Empty);
+                }
+            }
 
             // 貼り付け可能な内容かをチェック
-            var ret = this.CheckInputCharacterHandler(this, text);
-            if (ret == false)
+            var charEnum = StringInfo.GetTextElementEnumerator(inputText);
+            while (true)
             {
-                e.Handled = true;
+                // 次の1文字を取得する
+                if (charEnum.MoveNext() == false)
+                {
+                    break; // 取得する文字がない
+                }
+
+                // 1文字ずつ処理する
+                var ret = this.CheckInputCharacterHandler(this, (string)charEnum.Current);
+                if (ret == false)
+                {
+                    e.Handled = true;
+                    e.CancelCommand();
+                    return;
+                }
             }
+
+            //var ret = this.CheckInputCharacterHandler(this, text);
+            //if (ret == false)
+            //{
+            //    e.Handled = true;
+            //}
+            e.Handled = true;
             e.CancelCommand();
 
+            // テキストが選択されている場合はその部分を置換、そうで無ければカーソルのある位置に挿入
             var target = sender as TextBox;
-            target.Text = text;
+            var generateText = target.Text;
+
+            if (target.SelectedText.Length > 0)
+            {
+                generateText = generateText.Remove(target.SelectionStart, target.SelectionLength);
+            }
+
+            // 入力キーからENTERとTABを除去する
+            var newInputText = inputText.Replace("\r", "");
+            newInputText = newInputText.Replace("\t", "");
+            generateText = generateText.Insert(target.CaretIndex, newInputText);
+
+            target.Text = generateText;
             target.Select(target.Text.Length, 0);
         }
 
@@ -235,10 +302,7 @@ namespace WPFCommon
         private void TextBoxBase_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             // マウスクリックでフォーカスを取得したときにテキストを全選択する。
-            if (this.GotKeybordFocusInvokeHandler.IsEmpty() != false)
-            {
-                this.Dispatcher.InvokeAsync(this.GotKeybordFocusInvokeHandler, DispatcherPriority.ApplicationIdle);
-            }
+            this.SelectAllText();
 
             this.ReleaseMouseCapture();
             this.CaptureMouse();
@@ -250,11 +314,11 @@ namespace WPFCommon
         /// </summary>
         /// <param name="sender">呼び出し元オブジェクト</param>
         /// <param name="e">イベント引数</param>
-        private void TextBoxBase_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.Unloaded -= this.TextBoxBase_Unloaded;
-            DataObject.RemovePastingHandler(this, this.TextBoxBase_PastingHandler);
-        }
+        //private void TextBoxBase_Unloaded(object sender, RoutedEventArgs e)
+        //{
+        //    this.Unloaded -= this.TextBoxBase_Unloaded;
+        //    DataObject.RemovePastingHandler(this, this.TextBoxBase_PastingHandler);
+        //}
 
         /// <summary>
         /// Validationのエラー状態に変更が発生したときに実行されるハンドラ
@@ -264,11 +328,12 @@ namespace WPFCommon
         private void TextBoxBase_ValidationError(object sender, ValidationErrorEventArgs e)
         {
             // Textプロパティに対するエラーが無くなっている場合は処理継続
-            var expression = this.GetBindingExpression(TextProperty);
-            if (expression.IsEmpty())
-            {
-                expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
-            }
+            var expression = GetBindingExpression(this, TextProperty);
+            //var expression = this.GetBindingExpression(TextProperty);
+            //if (expression.IsEmpty())
+            //{
+            //    expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
+            //}
             if (expression.ValidationErrors.IsEmpty() || expression.ValidationErrors?.Count == 0)
             {
                 // 入力値にエラーが無い状態なので処理を継続させる。

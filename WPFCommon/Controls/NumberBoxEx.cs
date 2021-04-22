@@ -28,7 +28,10 @@ namespace WPFCommon
             // IMEを無効にする
             InputMethod.SetIsInputMethodEnabled(this, false);
 
-            this.CheckInputCharacterHandler += CheckInputText;
+            // 貼付時にカンマを除去してから入力可否を判定するための設定
+            this.RemovePastingCharacters = new string[] { ",", "\r", "\t" };
+
+            this.CheckInputCharacterHandler += this.CheckInputText;
             this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
             this.Unloaded += this.NumberBoxEx_Unloaded;
         }
@@ -119,7 +122,7 @@ namespace WPFCommon
         /// <param name="sender">呼び出し元オブジェクト</param>
         /// <param name="inputText">入力文字</param>
         /// <returns>入力可能(True)、入力不可(False)</returns>
-        private static bool CheckInputText(object sender, string inputText)
+        private bool CheckInputText(object sender, string inputText)
         {
             var target = sender as NumberBoxEx;
 
