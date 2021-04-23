@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Controls;
+using static WPFCommon.ShowMessageService;
 
 namespace WPFCommon
 {
@@ -33,7 +35,7 @@ namespace WPFCommon
 
                 case 2:
                     // システム年月の入力日だと判断する
-                    if (Date.TryParse($"{year}/{month}/{val}", out _) == false)
+                    if (Date.TryParse($"{year.ToString()}/{month.ToString()}/{val}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -44,7 +46,7 @@ namespace WPFCommon
                     month = int.Parse(val.Substring(0, 2));
                     day = int.Parse(val.Substring(2, 2));
 
-                    if (Date.TryParse($"{year}/{month}/{day}", out _) == false)
+                    if (Date.TryParse($"{year.ToString()}/{month.ToString()}/{day.ToString()}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -56,7 +58,7 @@ namespace WPFCommon
                     month = int.Parse(val.Substring(4, 2));
                     day = int.Parse(val.Substring(6, 2));
 
-                    if (Date.TryParse($"{year}/{month}/{day}", out _) == false)
+                    if (Date.TryParse($"{year.ToString()}/{month.ToString()}/{day.ToString()}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -72,7 +74,15 @@ namespace WPFCommon
                 var msg = svr.Get("00011", cultureInfo.Name);
 
                 var msgsvr = ApplicationEx.GetService<IShowMessageService>();
-                msgsvr.Show("00011", cultureInfo.Name);
+
+                if (Enum.TryParse(msg.MessageType, out MessageType msgType) == true)
+                {
+                    msgsvr.DirectShow(msg.MessageString, msgType);
+                }
+                else
+                {
+                    msgsvr.DirectShow(msg.MessageString, MessageType.Information);
+                }
 
                 return new ValidationResult(false, msg.MessageString);
             }

@@ -34,7 +34,7 @@ namespace WPFCommon
 
             if (target.GetType() == typeof(string))
             {
-                if ((target as string) == string.Empty)
+                if ((target as string).Length == 0)
                 {
                     return true;
                 }

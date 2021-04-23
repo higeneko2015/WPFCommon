@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Controls;
+using static WPFCommon.ShowMessageService;
 
 namespace WPFCommon
 {
@@ -25,7 +27,15 @@ namespace WPFCommon
                 var msg = svr.Get("00010", cultureInfo.Name, "", int.MinValue.ToString(), int.MaxValue.ToString());
 
                 var msgsvr = ApplicationEx.GetService<IShowMessageService>();
-                msgsvr.Show("00010", cultureInfo.Name, "", int.MinValue.ToString(), int.MaxValue.ToString());
+
+                if (Enum.TryParse(msg.MessageType, out MessageType msgType) == true)
+                {
+                    msgsvr.DirectShow(msg.MessageString, msgType);
+                }
+                else
+                {
+                    msgsvr.DirectShow(msg.MessageString, MessageType.Information);
+                }
 
                 return new ValidationResult(false, msg.MessageString);
             }

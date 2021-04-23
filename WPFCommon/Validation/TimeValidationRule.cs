@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Controls;
+using static WPFCommon.ShowMessageService;
 
 namespace WPFCommon
 {
@@ -29,7 +31,7 @@ namespace WPFCommon
 
                 case 2:
                     // システム時刻の時だと判断する
-                    if (Time.TryParse($"{val}:{minute}:{second}", out _) == false)
+                    if (Time.TryParse($"{val.ToString()}:{minute.ToString()}:{second.ToString()}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -40,7 +42,7 @@ namespace WPFCommon
                     hour = int.Parse(val.Substring(0, 2));
                     minute = int.Parse(val.Substring(2, 2));
 
-                    if (Time.TryParse($"{hour}:{minute}:{second}", out _) == false)
+                    if (Time.TryParse($"{hour.ToString()}:{minute.ToString()}:{second.ToString()}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -52,7 +54,7 @@ namespace WPFCommon
                     minute = int.Parse(val.Substring(2, 2));
                     second = int.Parse(val.Substring(4, 2));
 
-                    if (Time.TryParse($"{hour}:{minute}:{second}", out _) == false)
+                    if (Time.TryParse($"{hour.ToString()}:{minute.ToString()}:{second.ToString()}", out _) == false)
                     {
                         hasError = true;
                     }
@@ -68,7 +70,15 @@ namespace WPFCommon
                 var msg = svr.Get("00012", cultureInfo.Name);
 
                 var msgsvr = ApplicationEx.GetService<IShowMessageService>();
-                msgsvr.Show("00012", cultureInfo.Name);
+                if (Enum.TryParse(msg.MessageType, out MessageType msgType) == true)
+                {
+                    msgsvr.DirectShow(msg.MessageString, msgType);
+                }
+                else
+                {
+                    msgsvr.DirectShow(msg.MessageString, MessageType.Information);
+                }
+                //msgsvr.Show("00012", cultureInfo.Name);
 
                 return new ValidationResult(false, msg.MessageString);
             }

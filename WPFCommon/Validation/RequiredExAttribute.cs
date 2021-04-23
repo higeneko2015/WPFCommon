@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using static WPFCommon.ShowMessageService;
 
 namespace WPFCommon
 {
@@ -23,7 +24,15 @@ namespace WPFCommon
                 this.ErrorMessage = msg.MessageString;
 
                 var msgsvr = ApplicationEx.GetService<IShowMessageService>();
-                msgsvr.Show("00008", CultureInfo.CurrentCulture.Name, this._AddMessage);
+                if (Enum.TryParse(msg.MessageType, out MessageType msgType) == true)
+                {
+                    msgsvr.DirectShow(msg.MessageString, msgType);
+                }
+                else
+                {
+                    msgsvr.DirectShow(msg.MessageString, MessageType.Information);
+                }
+                //msgsvr.Show("00008", CultureInfo.CurrentCulture.Name, this._AddMessage);
 
                 return false;
             }

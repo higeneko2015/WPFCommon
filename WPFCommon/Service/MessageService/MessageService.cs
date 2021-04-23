@@ -8,7 +8,7 @@ namespace WPFCommon
     /// </summary>
     public class MessageService : IMessageService
     {
-        private static readonly SQLStrings _SQLString = new SQLStrings();
+        private static readonly SQLStrings _SQLString = new();
 
         private readonly IDatabaseService _Conn = null;
 
