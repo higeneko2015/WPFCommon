@@ -567,6 +567,11 @@ namespace WPFCommon
             if (expression.ValidationErrors.IsEmpty() || expression.ValidationErrors?.Count == 0)
             {
                 e.Handled = true;
+                // ここでも更新しておかないと99→.→99と入力したときにチェックされなくなる
+                if (this._CheckedFlg)
+                {
+                    this._OldText = this.Text;
+                }
                 return;
             }
 

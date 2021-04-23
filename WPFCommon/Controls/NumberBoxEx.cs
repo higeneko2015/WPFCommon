@@ -29,11 +29,11 @@ namespace WPFCommon
             InputMethod.SetIsInputMethodEnabled(this, false);
 
             // 貼付時にカンマを除去してから入力可否を判定するための設定
-            this.RemovePastingCharacters = new string[] { ",", "\r", "\t" };
+            this.RemovePastingCharacters = new string[] { ",", "\r" };
 
             this.CheckInputCharacterHandler += this.CheckInputText;
             this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
-            this.Unloaded += this.NumberBoxEx_Unloaded;
+            //this.Unloaded += this.NumberBoxEx_Unloaded;
         }
 
         public override void OnApplyTemplate()
@@ -251,11 +251,11 @@ namespace WPFCommon
         /// </summary>
         /// <param name="sender">呼び出し元オブジェクト</param>
         /// <param name="e">イベント引数</param>
-        private void NumberBoxEx_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.CheckInputCharacterHandler -= CheckInputText;
-            this.GotKeybordFocusInvokeHandler -= this.GotKeyboardFocusInvoke;
-            this.Unloaded -= this.NumberBoxEx_Unloaded;
-        }
+        //private void NumberBoxEx_Unloaded(object sender, RoutedEventArgs e)
+        //{
+        //    this.CheckInputCharacterHandler -= CheckInputText;
+        //    this.GotKeybordFocusInvokeHandler -= this.GotKeyboardFocusInvoke;
+        //    this.Unloaded -= this.NumberBoxEx_Unloaded;
+        //}
     }
 }

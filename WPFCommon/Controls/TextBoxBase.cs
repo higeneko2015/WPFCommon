@@ -81,7 +81,7 @@ namespace WPFCommon
             //this.Unloaded += this.TextBoxBase_Unloaded;
 
             // Validationエラーが発生したときにWPFフレームワークから呼び出されるハンドラを登録
-            Validation.AddErrorHandler(this, TextBoxBase_ValidationError);
+            Validation.AddErrorHandler(this, this.TextBoxBase_ValidationError);
 
             // 貼り付けコマンド用のハンドラを登録
             DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
@@ -154,17 +154,9 @@ namespace WPFCommon
 
             this.CheckedFlg = true;
 
-            // Validationを実施
-            //var expression = BindingOperations.GetBindingExpression(this, TextProperty);
-
-            //// TemplateBindingを使用している時は子コントロールのBindingはnullになる。
-            //// そのため親TemplateのBinding情報から取得する。
-            //if (expression.IsEmpty() && this.TemplatedParent.IsEmpty() == false)
-            //{
-            //    expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
-            //}
             var expression = GetBindingExpression(this, TextProperty);
 
+            // Validationを実施
             expression?.UpdateSource();
             if (expression?.ValidationErrors?.Count > 0)
             {
@@ -194,6 +186,7 @@ namespace WPFCommon
             if (ret == false)
             {
                 e.Handled = true;
+                return;
             }
 
             base.OnPreviewTextInput(e);
@@ -242,7 +235,7 @@ namespace WPFCommon
             // 特定の文字を除去(NumberBoxEx時のカンマ)
             if (this.RemovePastingCharacters.IsEmpty() == false)
             {
-                foreach (var item in this.RemovePastingCharacters)
+                foreach (var item in this.RemovePastingCharacters.AsSpan())
                 {
                     inputText = inputText.Replace(item, string.Empty);
                 }
@@ -268,11 +261,6 @@ namespace WPFCommon
                 }
             }
 
-            //var ret = this.CheckInputCharacterHandler(this, text);
-            //if (ret == false)
-            //{
-            //    e.Handled = true;
-            //}
             e.Handled = true;
             e.CancelCommand();
 
@@ -285,10 +273,7 @@ namespace WPFCommon
                 generateText = generateText.Remove(target.SelectionStart, target.SelectionLength);
             }
 
-            // 入力キーからENTERとTABを除去する
-            var newInputText = inputText.Replace("\r", "");
-            newInputText = newInputText.Replace("\t", "");
-            generateText = generateText.Insert(target.CaretIndex, newInputText);
+            generateText = generateText.Insert(target.CaretIndex, inputText);
 
             target.Text = generateText;
             target.Select(target.Text.Length, 0);
@@ -329,15 +314,15 @@ namespace WPFCommon
         {
             // Textプロパティに対するエラーが無くなっている場合は処理継続
             var expression = GetBindingExpression(this, TextProperty);
-            //var expression = this.GetBindingExpression(TextProperty);
-            //if (expression.IsEmpty())
-            //{
-            //    expression = BindingOperations.GetBindingExpression(this.TemplatedParent, TextProperty);
-            //}
+
             if (expression.ValidationErrors.IsEmpty() || expression.ValidationErrors?.Count == 0)
             {
                 // 入力値にエラーが無い状態なので処理を継続させる。
                 e.Handled = true;
+                if (this.CheckedFlg)
+                {
+                    this.BeforeText = this.Text;
+                }
                 return;
             }
 
