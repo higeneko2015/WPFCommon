@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +24,12 @@ namespace WPFCommon
         /// OnPreviewTextInputイベント時に実行される。
         /// </summary>
         public CheckInputTextDelegate CheckInputCharacterHandler = null;
+
+        /// <summary>
+        /// 貼り付けされた文字の有効性をチェックするデリゲート変数
+        /// TextBoxBase_PastingHandlerで実行される。
+        /// </summary>
+        public CheckInputTextDelegate CheckPasteCharacterHandler = null;
 
         /// <summary>
         /// キーボードフォーカス取得時の最後に実行するアクション定義
@@ -230,29 +235,21 @@ namespace WPFCommon
             }
 
             // クリップボードからテキストを取得
-            var inputText = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
+            var pasteText = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
 
             // 特定の文字を除去(NumberBoxEx時のカンマ)
             if (this.RemovePastingCharacters.IsEmpty() == false)
             {
                 foreach (var item in this.RemovePastingCharacters.AsSpan())
                 {
-                    inputText = inputText.Replace(item, string.Empty);
+                    pasteText = pasteText.Replace(item, string.Empty);
                 }
             }
 
             // 貼り付け可能な内容かをチェック
-            var charEnum = StringInfo.GetTextElementEnumerator(inputText);
-            while (true)
+            if (this.CheckPasteCharacterHandler.IsEmpty() == false)
             {
-                // 次の1文字を取得する
-                if (charEnum.MoveNext() == false)
-                {
-                    break; // 取得する文字がない
-                }
-
-                // 1文字ずつ処理する
-                var ret = this.CheckInputCharacterHandler(this, (string)charEnum.Current);
+                var ret = this.CheckPasteCharacterHandler(this, pasteText);
                 if (ret == false)
                 {
                     e.Handled = true;
@@ -270,10 +267,12 @@ namespace WPFCommon
 
             if (target.SelectedText.Length > 0)
             {
+                // 選択済みのテキストがある場合はそれを除去する
                 generateText = generateText.Remove(target.SelectionStart, target.SelectionLength);
             }
 
-            generateText = generateText.Insert(target.CaretIndex, inputText);
+            // カーソル位置にテキストを挿入する
+            generateText = generateText.Insert(target.CaretIndex, pasteText);
 
             target.Text = generateText;
             target.Select(target.Text.Length, 0);

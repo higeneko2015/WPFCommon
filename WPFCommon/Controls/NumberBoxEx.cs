@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -32,14 +33,13 @@ namespace WPFCommon
             this.RemovePastingCharacters = new string[] { ",", "\r" };
 
             this.CheckInputCharacterHandler += this.CheckInputText;
+            this.CheckPasteCharacterHandler += this.CheckPasteText;
             this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
             //this.Unloaded += this.NumberBoxEx_Unloaded;
         }
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             if (DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
@@ -114,6 +114,8 @@ namespace WPFCommon
             newBinding.ConverterParameter = this.Format;
             newBinding.StringFormat = this.Format;
             BindingOperations.SetBinding(this, TextProperty, newBinding);
+
+            base.OnApplyTemplate();
         }
 
         /// <summary>
@@ -182,12 +184,108 @@ namespace WPFCommon
 
             // 小数以下の値が入力されている場合は、フォーマットで指定された小数点以下桁数を
             // 超えていないかチェックする
-            if (generateText.IndexOf(".") > 0)
+            if (generateText.AsSpan().IndexOf(".") > 0)
             {
                 // 入力値から小数点以下の文字数を取得
-                var x = generateText[generateText.IndexOf(".")..].Length;
+                var x = generateText[generateText.AsSpan().IndexOf(".")..].Length;
                 // StringFormatから小数点以下の文字数を取得
-                var y = target.Format[target.Format.IndexOf(".")..].Length;
+                var y = target.Format[target.Format.AsSpan().IndexOf(".")..].Length;
+
+                if (x > y)
+                {
+                    return false;
+                }
+            }
+
+            // 数字に変換できなかった場合はエラーとする。
+            var expression = target.GetBindingExpression(TextProperty);
+            var z = target.DataContext?.GetType().GetProperty(expression.ParentBinding?.Path.Path);
+            var ret = false;
+            switch (z.PropertyType)
+            {
+                case Type intType when intType == typeof(int):
+                    ret = int.TryParse(generateText, out _);
+                    break;
+
+                case Type intType when intType == typeof(decimal):
+                    ret = decimal.TryParse(generateText, out _);
+                    break;
+            }
+
+            if (ret == false)
+            {
+                return false;
+            }
+
+            // 正の小数の入力チェックを行う
+            if (generateText.Length >= 2)
+            {
+                if (generateText.Substring(0, 1) == "0" && generateText.Substring(1, 1) != ".")
+                {
+                    return false;
+                }
+            }
+
+            // 負の小数の入力チェックを行う
+            if (generateText.Length >= 3)
+            {
+                if (generateText.Substring(0, 1) == "-" && generateText.Substring(1, 1) == "0" && generateText.Substring(2, 1) != ".")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool CheckPasteText(object sender, string pasteText)
+        {
+            var target = sender as NumberBoxEx;
+
+            var generateText = target.Text;
+
+            // すでに入力済みの文字列と今回押下されたキー文字を合成して
+            // チェック対象の文字列を生成する。
+            if (target.SelectedText.Length > 0)
+            {
+                generateText = generateText.Remove(target.SelectionStart, target.SelectionLength);
+            }
+
+            // 入力済みの文字と貼り付けしようとしている文字を合成する
+            generateText = generateText.Insert(target.CaretIndex, pasteText);
+
+            // 数字と小数点、マイナス記号以外が入力されていたらNG
+            if (Regex.IsMatch(generateText, @"^[0123456789.-]+$") == false)
+            {
+                return false;
+            }
+
+            // ２文字目以降にマイナス記号が見つかった場合はエラー
+            if (generateText.AsSpan().IndexOf("-") > 0)
+            {
+                return false;
+            }
+
+            // 未入力はＯＫとする
+            if (generateText.IsEmpty())
+            {
+                return true;
+            }
+
+            // 表示書式に小数点が含まれていない場合は小数点の入力は不可
+            if (target.Format.Contains(".") == false && pasteText.Contains("."))
+            {
+                return false;
+            }
+
+            // 小数以下の値が入力されている場合は、フォーマットで指定された小数点以下桁数を
+            // 超えていないかチェックする
+            if (generateText.AsSpan().IndexOf(".") > 0)
+            {
+                // 入力値から小数点以下の文字数を取得
+                var x = generateText.AsSpan()[generateText.AsSpan().IndexOf(".")..].Length;
+                // StringFormatから小数点以下の文字数を取得
+                var y = target.Format.AsSpan()[target.Format.AsSpan().IndexOf(".")..].Length;
 
                 if (x > y)
                 {

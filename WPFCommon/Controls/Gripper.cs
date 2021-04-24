@@ -26,7 +26,7 @@ namespace WPFCommon
             _resizeGrip.SetValue(HeightProperty, 18d);
             _resizeGrip.DragDelta += OnGripDelta;
             _resizeGrip.Template = controlTemplate ?? MakeDefaultGripTemplate();
-            _resizeGrip.MouseEnter += this._resizeGrip_MouseEnter;
+            //_resizeGrip.MouseEnter += this._resizeGrip_MouseEnter;
             _visualChildren = new VisualCollection(this)
             {
                 _resizeGrip
@@ -53,10 +53,10 @@ namespace WPFCommon
             return _visualChildren[index];
         }
 
-        private void _resizeGrip_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var x = 0;
-        }
+        //private void _resizeGrip_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    var x = 0;
+        //}
 
         private ControlTemplate MakeDefaultGripTemplate()
         {
