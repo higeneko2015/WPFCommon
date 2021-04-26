@@ -5,7 +5,8 @@
     xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:WPFCommon"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <!--  Merged from file CommonResource.xaml  -->
     <FontFamily x:Key="Default.FontFamily">/Resources/Font/#Rounded-L Mgen+ 1m regular</FontFamily>
     <System:Double x:Key="Default.FontSize">15</System:Double>
@@ -394,8 +395,8 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Default.ForegroundColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Default.BorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <!--<Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />-->
         <Setter Property="IsReadOnlyCaretVisible" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
@@ -406,8 +407,7 @@
                         x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />

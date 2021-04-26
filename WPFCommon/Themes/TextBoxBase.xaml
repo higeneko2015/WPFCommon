@@ -12,8 +12,8 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Default.ForegroundColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Default.BorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <!--<Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />-->
         <Setter Property="IsReadOnlyCaretVisible" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
@@ -24,8 +24,7 @@
                         x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -40,7 +39,7 @@
                                 Padding="4,0,4,0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                Foreground="#FF898989"
+                                Foreground="{DynamicResource TextBoxEx.WaterMark.ForegroundColor}"
                                 Opacity="0"
                                 Text="{TemplateBinding WaterMarkString}" />
                             <ScrollViewer
