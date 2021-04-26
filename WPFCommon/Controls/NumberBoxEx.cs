@@ -220,7 +220,7 @@ namespace WPFCommon
             // 正の小数の入力チェックを行う
             if (generateText.Length >= 2)
             {
-                if (generateText.Substring(0, 1) == "0" && generateText.Substring(1, 1) != ".")
+                if (generateText.AsSpan(0, 1) == "0" && generateText.AsSpan(1, 1) != ".")
                 {
                     return false;
                 }
@@ -229,7 +229,7 @@ namespace WPFCommon
             // 負の小数の入力チェックを行う
             if (generateText.Length >= 3)
             {
-                if (generateText.Substring(0, 1) == "-" && generateText.Substring(1, 1) == "0" && generateText.Substring(2, 1) != ".")
+                if (generateText.AsSpan(0, 1) == "-" && generateText.AsSpan(1, 1) == "0" && generateText.AsSpan(2, 1) != ".")
                 {
                     return false;
                 }
@@ -316,7 +316,7 @@ namespace WPFCommon
             // 正の小数の入力チェックを行う
             if (generateText.Length >= 2)
             {
-                if (generateText.Substring(0, 1) == "0" && generateText.Substring(1, 1) != ".")
+                if (generateText.AsSpan(0, 1) == "0" && generateText.AsSpan(1, 1) != ".")
                 {
                     return false;
                 }
@@ -325,7 +325,7 @@ namespace WPFCommon
             // 負の小数の入力チェックを行う
             if (generateText.Length >= 3)
             {
-                if (generateText.Substring(0, 1) == "-" && generateText.Substring(1, 1) == "0" && generateText.Substring(2, 1) != ".")
+                if (generateText.AsSpan(0, 1) == "-" && generateText.AsSpan(1, 1) == "0" && generateText.AsSpan(2, 1) != ".")
                 {
                     return false;
                 }

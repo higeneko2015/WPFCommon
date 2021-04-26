@@ -55,16 +55,16 @@ namespace WPFCommon
 
                 case 4:
                     // システム年の入力月日だと判断する
-                    month = int.Parse(target.Substring(0, 2));
-                    day = int.Parse(target.Substring(2, 2));
+                    month = int.Parse(target.AsSpan(0, 2));
+                    day = int.Parse(target.AsSpan(2, 2));
 
                     return new Date(year, month, day);
 
                 case 8:
                     // yyyyMMddの入力だと判断する
-                    year = int.Parse(target.Substring(0, 4));
-                    month = int.Parse(target.Substring(4, 2));
-                    day = int.Parse(target.Substring(6, 2));
+                    year = int.Parse(target.AsSpan(0, 4));
+                    month = int.Parse(target.AsSpan(4, 2));
+                    day = int.Parse(target.AsSpan(6, 2));
 
                     return new Date(year, month, day);
             }

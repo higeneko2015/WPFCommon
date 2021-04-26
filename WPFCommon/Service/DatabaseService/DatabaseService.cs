@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
@@ -11,7 +10,7 @@ namespace WPFCommon
     /// <summary>
     /// データベース操作サービスクラス
     /// </summary>
-    public class DatabaseService : IDatabaseService, IDisposable
+    public sealed class DatabaseService : IDatabaseService, IDisposable
     {
         private readonly Task _ConnectionTask = null;
 
@@ -114,13 +113,13 @@ namespace WPFCommon
             this._ConnectionTask.Wait();
 
             var retValue = this._conn.Query<T>(sql.ToString(), param);
-            if (retValue.IsEmpty() == false)
+            if (retValue.IsEmpty())
             {
-                return retValue.ToList();
+                return new List<T>();
             }
             else
             {
-                return new List<T>();
+                return retValue.AsList();
             }
         }
 
@@ -130,13 +129,13 @@ namespace WPFCommon
             this._ConnectionTask.Wait();
 
             var retValue = this._conn.Query(sql.ToString(), param);
-            if (retValue.IsEmpty() == false)
+            if (retValue.IsEmpty())
             {
-                return retValue.ToList();
+                return new List<dynamic>();
             }
             else
             {
-                return new List<dynamic>();
+                return retValue.AsList();
             }
         }
 

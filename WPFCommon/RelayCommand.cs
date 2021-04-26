@@ -123,7 +123,7 @@ namespace WPFCommon
                 // 呼び出し元がWPFCommonのMainPanelの場合は上位Windowのクラス名をセットする。
                 // 名前空間付きで取得されるのでクラス名部分だけを取り出す。
                 //var windowName = (execute.Target as BasePanel)?.OwnerWindow?.ToString();
-                //this._calledClassName = Path.GetExtension(windowName).Substring(1);
+                //this._calledClassName = Path.GetExtension(windowName).AsSpan(1);
             }
             else
             {

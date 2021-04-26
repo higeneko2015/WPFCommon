@@ -55,16 +55,16 @@ namespace WPFCommon
 
                 case 4:
                     // システム年の入力年月だと判断する
-                    hour = int.Parse(target.Substring(0, 2));
-                    minute = int.Parse(target.Substring(2, 2));
+                    hour = int.Parse(target.AsSpan(0, 2));
+                    minute = int.Parse(target.AsSpan(2, 2));
 
                     return new Time(hour, minute, 0);
 
                 case 6:
                     // yyyyMMddの入力だと判断する
-                    hour = int.Parse(target.Substring(0, 2));
-                    minute = int.Parse(target.Substring(2, 2));
-                    second = int.Parse(target.Substring(4, 2));
+                    hour = int.Parse(target.AsSpan(0, 2));
+                    minute = int.Parse(target.AsSpan(2, 2));
+                    second = int.Parse(target.AsSpan(4, 2));
 
                     return new Time(hour, minute, second);
             }

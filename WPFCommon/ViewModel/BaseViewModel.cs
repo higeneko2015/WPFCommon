@@ -49,12 +49,12 @@ namespace WPFCommon
 
         public void AddError(string propertyName, string error)
         {
-            if (!this._Errors.ContainsKey(propertyName))
+            if (this._Errors.ContainsKey(propertyName) == false)
             {
                 this._Errors[propertyName] = new List<string>();
             }
 
-            if (!this._Errors[propertyName].Contains(error))
+            if (this._Errors[propertyName].Contains(error) == false)
             {
                 this._Errors[propertyName].Add(error);
                 this.OnErrorsChanged(propertyName);
@@ -156,7 +156,7 @@ namespace WPFCommon
             var validationErrors = new List<ValidationResult>();
 
             // Validationを実行(各プロパティに定義されているValidationAttributeで指定されたチェックロジックが実行される)
-            if (!Validator.TryValidateProperty(value, context, validationErrors))
+            if (Validator.TryValidateProperty(value, context, validationErrors) == false)
             {
                 // エラーがあった場合
                 var errors = validationErrors.Select(error => error.ErrorMessage);

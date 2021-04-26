@@ -43,8 +43,8 @@ namespace WPFCommon
 
                 case 4:
                     // システム年の入力年月だと判断する
-                    month = int.Parse(val.Substring(0, 2));
-                    day = int.Parse(val.Substring(2, 2));
+                    month = int.Parse(val.AsSpan(0, 2));
+                    day = int.Parse(val.AsSpan(2, 2));
 
                     if (Date.TryParse($"{year.ToString()}/{month.ToString()}/{day.ToString()}", out _) == false)
                     {
@@ -54,9 +54,9 @@ namespace WPFCommon
 
                 case 8:
                     // yyyyMMddの入力だと判断する
-                    year = int.Parse(val.Substring(0, 4));
-                    month = int.Parse(val.Substring(4, 2));
-                    day = int.Parse(val.Substring(6, 2));
+                    year = int.Parse(val.AsSpan(0, 4));
+                    month = int.Parse(val.AsSpan(4, 2));
+                    day = int.Parse(val.AsSpan(6, 2));
 
                     if (Date.TryParse($"{year.ToString()}/{month.ToString()}/{day.ToString()}", out _) == false)
                     {

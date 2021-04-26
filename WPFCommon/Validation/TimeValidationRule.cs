@@ -39,8 +39,8 @@ namespace WPFCommon
 
                 case 4:
                     // システム時刻の入力時分だと判断する
-                    hour = int.Parse(val.Substring(0, 2));
-                    minute = int.Parse(val.Substring(2, 2));
+                    hour = int.Parse(val.AsSpan(0, 2));
+                    minute = int.Parse(val.AsSpan(2, 2));
 
                     if (Time.TryParse($"{hour.ToString()}:{minute.ToString()}:{second.ToString()}", out _) == false)
                     {
@@ -50,9 +50,9 @@ namespace WPFCommon
 
                 case 6:
                     // HHmmssの入力だと判断する
-                    hour = int.Parse(val.Substring(0, 2));
-                    minute = int.Parse(val.Substring(2, 2));
-                    second = int.Parse(val.Substring(4, 2));
+                    hour = int.Parse(val.AsSpan(0, 2));
+                    minute = int.Parse(val.AsSpan(2, 2));
+                    second = int.Parse(val.AsSpan(4, 2));
 
                     if (Time.TryParse($"{hour.ToString()}:{minute.ToString()}:{second.ToString()}", out _) == false)
                     {

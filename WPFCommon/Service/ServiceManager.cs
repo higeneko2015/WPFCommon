@@ -6,14 +6,14 @@ namespace WPFCommon
 {
     public class ServiceManager
     {
-        private IServiceProvider Service { get; set; }
-
-        private ServiceCollection ServiceList { get; }
-
         public ServiceManager()
         {
             this.ServiceList = new ServiceCollection();
         }
+
+        private IServiceProvider Service { get; set; }
+
+        private ServiceCollection ServiceList { get; }
 
         public void AddSingleton<T1, T2>()
         {
@@ -40,6 +40,11 @@ namespace WPFCommon
             this.Service = this.ServiceList.BuildServiceProvider();
         }
 
+        public IServiceProvider GetProvider()
+        {
+            return this.Service;
+        }
+
         public T GetService<T>()
         {
             return this.Service.GetRequiredService<T>();
@@ -49,11 +54,6 @@ namespace WPFCommon
         {
             var descriptor = new ServiceDescriptor(typeof(T1), typeof(T2), type);
             this.ServiceList.Replace(descriptor);
-        }
-
-        public IServiceProvider GetProvider()
-        {
-            return Service;
         }
     }
 }
