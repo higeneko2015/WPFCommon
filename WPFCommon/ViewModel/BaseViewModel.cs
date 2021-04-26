@@ -15,10 +15,16 @@ namespace WPFCommon
     {
         private readonly Dictionary<string, List<string>> _Errors = new();
 
+        private readonly IServiceProvider _Service = null;
+
+        private readonly ValidationContext _ValidationContext = null;
+
         public BaseViewModel(IConfigService config, IShowMessageService message)
         {
             this.Config = config;
             this.MessageBox = message;
+            this._Service = ApplicationEx.Service.GetProvider();
+            this._ValidationContext = new ValidationContext(this, this._Service, null);
         }
 
         /// <summary>
@@ -151,12 +157,14 @@ namespace WPFCommon
             this.RemoveError(propName);
 
             // Validator内で各種サービスを使用するためにプロバイダーを取得
-            var service = ApplicationEx.Service.GetProvider();
-            var context = new ValidationContext(this, service, null) { MemberName = propName };
+            // 動作速度を優先させるためにインスタンスメンバに変更
+            //var service = ApplicationEx.Service.GetProvider();
+            //var context = new ValidationContext(this, service, null) { MemberName = propName };
+            this._ValidationContext.MemberName = propName;
             var validationErrors = new List<ValidationResult>();
 
             // Validationを実行(各プロパティに定義されているValidationAttributeで指定されたチェックロジックが実行される)
-            if (Validator.TryValidateProperty(value, context, validationErrors) == false)
+            if (Validator.TryValidateProperty(value, this._ValidationContext, validationErrors) == false)
             {
                 // エラーがあった場合
                 var errors = validationErrors.Select(error => error.ErrorMessage);
@@ -178,6 +186,7 @@ namespace WPFCommon
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void OnErrorsChanged(string propertyName)
         {
             this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));

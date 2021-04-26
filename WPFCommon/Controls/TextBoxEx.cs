@@ -12,21 +12,21 @@ namespace WPFCommon
         /// 入力可能文字種を管理する依存プロパティ
         /// </summary>
         public static readonly DependencyProperty InputableCharacterProperty =
-            DependencyProperty.Register(nameof(InputableCharacter), typeof(string), typeof(TextBoxEx));
+            DependencyProperty.Register(nameof(InputableCharacter), typeof(string), typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
 
         /// <summary>
         /// 入力不可能文字種を管理する依存プロパティ
         /// </summary>
         public static readonly DependencyProperty UnInputableCharacterProperty =
-            DependencyProperty.Register(nameof(UnInputableCharacter), typeof(string), typeof(TextBoxEx));
+            DependencyProperty.Register(nameof(UnInputableCharacter), typeof(string), typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
 
         /// <summary>
         /// クラスへの初回アクセス時に１度だけ実行される静的コンストラクタ
         /// </summary>
         static TextBoxEx()
         {
-            InputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
-            UnInputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
+            //InputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
+            //UnInputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(typeof(TextBoxEx)));
         }
 
@@ -35,7 +35,7 @@ namespace WPFCommon
         /// </summary>
         public TextBoxEx()
         {
-            this.CheckInputCharacterHandler += CheckInputText;
+            this.CheckInputCharacterHandler += this.CheckInputText;
             this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
             this.Unloaded += this.TextBoxEx_Unloaded;
         }
@@ -69,7 +69,7 @@ namespace WPFCommon
         /// 有効な入力値の場合：true
         /// 無効な入力値の場合：false
         /// </returns>
-        private static bool CheckInputText(object sender, string inputText)
+        private bool CheckInputText(object sender, string inputText)
         {
             var target = sender as TextBoxEx;
 
@@ -106,7 +106,7 @@ namespace WPFCommon
         /// <param name="e">イベント引数</param>
         private void TextBoxEx_Unloaded(object sender, RoutedEventArgs e)
         {
-            this.CheckInputCharacterHandler -= CheckInputText;
+            this.CheckInputCharacterHandler -= this.CheckInputText;
             this.GotKeybordFocusInvokeHandler -= this.GotKeyboardFocusInvoke;
             this.Unloaded -= this.TextBoxEx_Unloaded;
         }
