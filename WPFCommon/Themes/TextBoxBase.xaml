@@ -12,8 +12,6 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Default.ForegroundColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Default.BorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <!--<Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />-->
         <Setter Property="IsReadOnlyCaretVisible" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />

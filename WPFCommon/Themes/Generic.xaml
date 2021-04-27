@@ -5,8 +5,7 @@
     xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:WPFCommon"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
     <!--  Merged from file CommonResource.xaml  -->
     <FontFamily x:Key="Default.FontFamily">/Resources/Font/#Rounded-L Mgen+ 1m regular</FontFamily>
     <System:Double x:Key="Default.FontSize">15</System:Double>
@@ -20,10 +19,23 @@
     <SolidColorBrush x:Key="Control.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="Control.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="Window.Header.ForegroundColor" Color="Azure" />
-    <SolidColorBrush x:Key="Window.Header.AccentColor" Color="#FFF39700" />
-    <SolidColorBrush x:Key="Window.Header.BackgroundColor" Color="#FFFFBE56" />
+    <SolidColorBrush
+        x:Key="Window.Header.AccentColor"
+        PresentationOptions:Freeze="true"
+        Color="#FFF39700" />
+    <SolidColorBrush
+        x:Key="Window.Header.BackgroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FFFFBE56" />
     <SolidColorBrush x:Key="MessageBox.Header.ForegroundColor" Color="White" />
-    <SolidColorBrush x:Key="MessageBox.Header.BackgroundColor" Color="#FF7993EA" />
+    <SolidColorBrush
+        x:Key="MessageBox.Header.BackgroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF7993EA" />
+    <SolidColorBrush
+        x:Key="TextBoxEx.WaterMark.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF898989" />
     <SolidColorBrush x:Key="TextBoxEx.Selection.ForegroundColor" Color="White" />
     <SolidColorBrush
         x:Key="TextBoxEx.Selection.BackgroundColor"
@@ -168,13 +180,22 @@
     <SolidColorBrush x:Key="CheckBoxEx.Focused.ForegroundColor" Color="black" />
     <SolidColorBrush x:Key="CheckBoxEx.Focused.BackgroundColor" Color="LightCyan" />
     <SolidColorBrush x:Key="CheckBoxEx.Focused.BorderColor" Color="black" />
-    <SolidColorBrush x:Key="CheckBoxEx.MouseOver.BorderColor" Color="#FF2C77FF" />
+    <SolidColorBrush
+        x:Key="CheckBoxEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF2C77FF" />
     <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="CheckBoxEx.ReadOnly.BorderColor" Color="Black" />
-    <SolidColorBrush x:Key="CheckBoxEx.Disabled.ForegroundColor" Color="#FF838383" />
+    <SolidColorBrush
+        x:Key="CheckBoxEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF838383" />
     <SolidColorBrush x:Key="CheckBoxEx.Disabled.BackgroundColor" Color="LightGray" />
-    <SolidColorBrush x:Key="CheckBoxEx.Disabled.BorderColor" Color="#FF707070" />
+    <SolidColorBrush
+        x:Key="CheckBoxEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF707070" />
     <SolidColorBrush x:Key="CheckBoxEx.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="CheckBoxEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="CheckBoxEx.Error.BorderColor" Color="Black" />
@@ -184,13 +205,22 @@
     <SolidColorBrush x:Key="RadioButtonEx.Focused.ForegroundColor" Color="black" />
     <SolidColorBrush x:Key="RadioButtonEx.Focused.BackgroundColor" Color="LightCyan" />
     <SolidColorBrush x:Key="RadioButtonEx.Focused.BorderColor" Color="black" />
-    <SolidColorBrush x:Key="RadioButtonEx.MouseOver.BorderColor" Color="#FF2C77FF" />
+    <SolidColorBrush
+        x:Key="RadioButtonEx.MouseOver.BorderColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF2C77FF" />
     <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="RadioButtonEx.ReadOnly.BorderColor" Color="Black" />
-    <SolidColorBrush x:Key="RadioButtonEx.Disabled.ForegroundColor" Color="#FF838383" />
+    <SolidColorBrush
+        x:Key="RadioButtonEx.Disabled.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF838383" />
     <SolidColorBrush x:Key="RadioButtonEx.Disabled.BackgroundColor" Color="LightGray" />
-    <SolidColorBrush x:Key="RadioButtonEx.Disabled.BorderColor" Color="#FF707070" />
+    <SolidColorBrush
+        x:Key="RadioButtonEx.Disabled.BorderColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF707070" />
     <SolidColorBrush x:Key="RadioButtonEx.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="RadioButtonEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="RadioButtonEx.Error.BorderColor" Color="Black" />
@@ -278,16 +308,14 @@
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="true">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter
                             x:Name="contentPresenter"
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
-                            RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefaulted" Value="true">
@@ -395,8 +423,6 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBoxEx.Default.ForegroundColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxEx.Default.BorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <!--<Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />-->
         <Setter Property="IsReadOnlyCaretVisible" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
@@ -422,7 +448,7 @@
                                 Padding="4,0,4,0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                Foreground="#FF898989"
+                                Foreground="{DynamicResource TextBoxEx.WaterMark.ForegroundColor}"
                                 Opacity="0"
                                 Text="{TemplateBinding WaterMarkString}" />
                             <ScrollViewer
@@ -490,8 +516,6 @@
         <Setter Property="SelectionTextBrush" Value="{DynamicResource DateBoxEx.Selection.ForegroundColor}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -500,8 +524,7 @@
                         x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -637,8 +660,6 @@
         <Setter Property="SelectionTextBrush" Value="{DynamicResource TimeBoxEx.Selection.ForegroundColor}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -647,8 +668,7 @@
                         x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="True">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -861,10 +881,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CheckBoxEx}">
-                    <Grid
-                        x:Name="templateRoot"
-                        Background="Transparent"
-                        SnapsToDevicePixels="True">
+                    <Grid x:Name="templateRoot" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -902,8 +919,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
-                            RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            RecognizesAccessKey="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--  フォーカス取得時に背景色を変更  -->
@@ -1009,16 +1025,14 @@
                         x:Name="templateRoot"
                         Background="{StaticResource ComboBox.Static.Background}"
                         BorderBrush="{StaticResource ComboBox.Static.Border}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="true">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <Border
                             x:Name="splitBorder"
                             Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
                             Margin="0"
                             HorizontalAlignment="Right"
                             BorderBrush="Transparent"
-                            BorderThickness="1"
-                            SnapsToDevicePixels="true">
+                            BorderThickness="1">
                             <Path
                                 x:Name="arrow"
                                 Margin="0"
@@ -1127,8 +1141,7 @@
                     <Grid
                         x:Name="templateRoot"
                         Height="{TemplateBinding Height}"
-                        MinHeight="{TemplateBinding MinHeight}"
-                        SnapsToDevicePixels="true">
+                        MinHeight="{TemplateBinding MinHeight}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
@@ -1199,10 +1212,7 @@
                                                 Height="{Binding ActualHeight, ElementName=dropDownBorder}"
                                                 Fill="{Binding Background, ElementName=dropDownBorder}" />
                                         </Canvas>
-                                        <ItemsPresenter
-                                            x:Name="ItemsPresenter"
-                                            KeyboardNavigation.DirectionalNavigation="Contained"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
                                     </Grid>
                                 </ScrollViewer>
                             </Border>
@@ -1230,8 +1240,7 @@
                             ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                            IsHitTestVisible="false"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            IsHitTestVisible="false" />
                     </Grid>
                     <!--<ControlTemplate.Triggers>
                     -->
@@ -1287,10 +1296,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:RadioButtonEx}">
-                    <Grid
-                        x:Name="templateRoot"
-                        Background="Transparent"
-                        SnapsToDevicePixels="True">
+                    <Grid x:Name="templateRoot" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -1320,8 +1326,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Focusable="False"
-                            RecognizesAccessKey="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            RecognizesAccessKey="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasContent" Value="true">
