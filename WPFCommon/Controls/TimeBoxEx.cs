@@ -34,14 +34,14 @@ namespace WPFCommon
         public static readonly DependencyProperty WaterMarkStringProperty =
             DependencyProperty.Register(nameof(WaterMarkString), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        private bool _CheckedFlg = false;
-        private string _OldText = string.Empty;
         private ToggleButton _PartsButton = null;
         private Button _PartsCancelButton = null;
         private Button _PartsOkButton = null;
         private Popup _PartsPopup = null;
         private TimeSelecter _PartsSelecter = null;
         private TextBox _PartsTextBox = null;
+        private string BeforeText = string.Empty;
+        private bool CheckedFlg = false;
 
         static TimeBoxEx()
         {
@@ -271,7 +271,7 @@ namespace WPFCommon
                 return;
             }
 
-            this._CheckedFlg = false;
+            this.CheckedFlg = false;
 
             // 画面を閉じるボタンを押下した場合は入力値のチェックしない
             // TODO Button03という名称は変更した方がよい
@@ -283,7 +283,7 @@ namespace WPFCommon
             }
 
             // 入力値に変更が内場合は処理しない
-            if (this.Text == this._OldText)
+            if (this.Text == this.BeforeText)
             {
                 return;
             }
@@ -294,7 +294,7 @@ namespace WPFCommon
                 return;
             }
 
-            this._CheckedFlg = true;
+            this.CheckedFlg = true;
 
             // Validationを実施
             var expression = BindingOperations.GetBindingExpression(this, TextProperty);
@@ -454,9 +454,9 @@ namespace WPFCommon
                 // GoFocusでOldTextへコピーするとCoverterによる書式編集前の値がコピーされてしまい、
                 // 6と入力して6.00に編集されるパターンで
                 // 値が異なっていると判断されてしまうのでここでコピーする。
-                if (this._CheckedFlg)
+                if (this.CheckedFlg)
                 {
-                    this._OldText = this.Text;
+                    this.BeforeText = this.Text;
                 }
             });
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace WPFCommon
@@ -61,25 +59,30 @@ namespace WPFCommon
             // バックグラウンドスレッドで発生した未処理例外
             TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
 
-            // 設定ファイルから言語を読み取って設定する
-            var config = GetService<IConfigService>();
-            var culture = new CultureInfo(config.SystemLanguage, false);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+            // 並列実行することで0.16秒→0.08秒へ高速化(デバッグモード時の計測)
+            Parallel.Invoke(
+                () => this.SetCulture(),
+                () => this.SetTooltipTime()
+            );
+            //// 設定ファイルから言語を読み取って設定する
+            //var config = GetService<IConfigService>();
+            //var culture = new CultureInfo(config.SystemLanguage, false);
+            //Thread.CurrentThread.CurrentCulture = culture;
+            //Thread.CurrentThread.CurrentUICulture = culture;
 
-            // ツールチップの表示時間を無限(約24日)にする
-            ToolTipService.ShowDurationProperty.OverrideMetadata(
-                typeof(DependencyObject),
-                new FrameworkPropertyMetadata(int.MaxValue));
+            //// ツールチップの表示時間を無限(約24日)にする
+            //ToolTipService.ShowDurationProperty.OverrideMetadata(
+            //    typeof(DependencyObject),
+            //    new FrameworkPropertyMetadata(int.MaxValue));
 
-            // 実行時に外部のフォントが読み込まれないので強制的にロードする
-            var location = Assembly.GetExecutingAssembly().Location;
-            var path = Path.GetDirectoryName(location);
+            //// 実行時に外部のフォントが読み込まれないので強制的にロードする
+            //var location = Assembly.GetExecutingAssembly().Location;
+            //var path = Path.GetDirectoryName(location);
 
-            var fontPath = Path.Combine(path, @"Resources\Font\");
-            var fontFile = $"{fontPath}#{config.DefaultFont}";
+            //var fontPath = Path.Combine(path, @"Resources\Font\");
+            //var fontFile = $"{fontPath}#{config.DefaultFont}";
 
-            Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
+            //Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
 
             // 派生先クラスのStartupイベントハンドラを実行
             base.OnStartup(e);
@@ -121,6 +124,38 @@ namespace WPFCommon
             sb.AppendFormat("StackTrace={0}\n", ex.StackTrace);
 
             return (ex.Message, sb.ToString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private void SetCulture()
+        {
+            var config = GetService<IConfigService>();
+            var culture = new CultureInfo(config.SystemLanguage, false);
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+        }
+
+        // General.xamlにまとまったことでこの設定が不要になった？
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        //private void SetDefaultFont()
+        //{
+        //    //var config = GetService<IConfigService>();
+        //    //// 実行時に外部のフォントが読み込まれないので強制的にロードする
+        //    //var location = Assembly.GetExecutingAssembly().Location;
+        //    //var path = Path.GetDirectoryName(location);
+
+        //    //var fontPath = Path.Combine(path, @"Resources\Font\");
+        //    //var fontFile = $"{fontPath}#{config.DefaultFont}";
+        //    //Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
+        //}
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private void SetTooltipTime()
+        {
+            // ツールチップの表示時間を無限(約24日)にする
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+                typeof(DependencyObject),
+                new FrameworkPropertyMetadata(int.MaxValue));
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)

@@ -12,7 +12,7 @@ namespace WPFCommon
     public class ButtonEx : Button
     {
         // ボタン押下処理実行中判定用フラグ(true:実行中, false:実行中でない)
-        private bool isProcessing = false;
+        private bool IsProcessing = false;
 
         /// <summary>
         /// 静的コンストラクタ
@@ -29,18 +29,18 @@ namespace WPFCommon
         /// </summary>
         protected override void OnClick()
         {
-            if (this.isProcessing)
+            if (this.IsProcessing)
             {
                 return;
             }
 
-            this.isProcessing = true;
+            this.IsProcessing = true;
 
             // ボタン押下処理が終了(Idleになった)したときにフラグを戻す
             this.Dispatcher.BeginInvoke(
                 new Action(() =>
                 {
-                    this.isProcessing = false;
+                    this.IsProcessing = false;
                 }), DispatcherPriority.ApplicationIdle);
 
             base.OnClick();

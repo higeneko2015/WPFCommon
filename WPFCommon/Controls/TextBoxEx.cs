@@ -12,13 +12,13 @@ namespace WPFCommon
         /// 入力可能文字種を管理する依存プロパティ
         /// </summary>
         public static readonly DependencyProperty InputableCharacterProperty =
-            DependencyProperty.Register(nameof(InputableCharacter), typeof(string), typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(InputableCharacter), typeof(string), typeof(TextBoxEx), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// 入力不可能文字種を管理する依存プロパティ
         /// </summary>
         public static readonly DependencyProperty UnInputableCharacterProperty =
-            DependencyProperty.Register(nameof(UnInputableCharacter), typeof(string), typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(UnInputableCharacter), typeof(string), typeof(TextBoxEx), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// クラスへの初回アクセス時に１度だけ実行される静的コンストラクタ
