@@ -312,7 +312,7 @@ namespace WPFCommon
         private void TextBoxBase_ValidationError(object sender, ValidationErrorEventArgs e)
         {
             // Textプロパティに対するエラーが無くなっている場合は処理継続
-            var expression = GetBindingExpression(this, TextProperty);
+            var expression = this.GetBindingExpression(this, TextProperty);
 
             if (expression.ValidationErrors.IsEmpty() || expression.ValidationErrors?.Count == 0)
             {

@@ -25,8 +25,6 @@ namespace WPFCommon
         /// </summary>
         static TextBoxEx()
         {
-            //InputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
-            //UnInputableCharacterProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(string.Empty));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBoxEx), new FrameworkPropertyMetadata(typeof(TextBoxEx)));
         }
 

@@ -64,25 +64,6 @@ namespace WPFCommon
                 () => this.SetCulture(),
                 () => this.SetTooltipTime()
             );
-            //// 設定ファイルから言語を読み取って設定する
-            //var config = GetService<IConfigService>();
-            //var culture = new CultureInfo(config.SystemLanguage, false);
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
-
-            //// ツールチップの表示時間を無限(約24日)にする
-            //ToolTipService.ShowDurationProperty.OverrideMetadata(
-            //    typeof(DependencyObject),
-            //    new FrameworkPropertyMetadata(int.MaxValue));
-
-            //// 実行時に外部のフォントが読み込まれないので強制的にロードする
-            //var location = Assembly.GetExecutingAssembly().Location;
-            //var path = Path.GetDirectoryName(location);
-
-            //var fontPath = Path.Combine(path, @"Resources\Font\");
-            //var fontFile = $"{fontPath}#{config.DefaultFont}";
-
-            //Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
 
             // 派生先クラスのStartupイベントハンドラを実行
             base.OnStartup(e);

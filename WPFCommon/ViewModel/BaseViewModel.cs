@@ -13,18 +13,20 @@ namespace WPFCommon
     /// </summary>
     public class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, List<string>> _Errors = new();
+        private readonly Dictionary<string, List<string>> Errors = new();
 
-        private readonly IServiceProvider _Service = null;
+        private readonly IServiceProvider Service = null;
 
-        private readonly ValidationContext _ValidationContext = null;
+        private readonly ValidationContext ValidationContext = null;
+
+        private readonly List<ValidationResult> ValidationResultList = new();
 
         public BaseViewModel(IConfigService config, IShowMessageService message)
         {
             this.Config = config;
             this.MessageBox = message;
-            this._Service = ApplicationEx.Service.GetProvider();
-            this._ValidationContext = new ValidationContext(this, this._Service, null);
+            this.Service = ApplicationEx.Service.GetProvider();
+            this.ValidationContext = new ValidationContext(this, this.Service, null);
         }
 
         /// <summary>
@@ -48,21 +50,21 @@ namespace WPFCommon
         // INotifyDataErrorInfoの実装
         public bool HasErrors
         {
-            get { return _Errors.Values.Any(x => x != null); }
+            get { return this.Errors.Values.Any(x => x != null); }
         }
 
         public IShowMessageService MessageBox { get; }
 
         public void AddError(string propertyName, string error)
         {
-            if (this._Errors.ContainsKey(propertyName) == false)
+            if (this.Errors.ContainsKey(propertyName) == false)
             {
-                this._Errors[propertyName] = new List<string>();
+                this.Errors[propertyName] = new List<string>();
             }
 
-            if (this._Errors[propertyName].Contains(error) == false)
+            if (this.Errors[propertyName].Contains(error) == false)
             {
-                this._Errors[propertyName].Add(error);
+                this.Errors[propertyName].Add(error);
                 this.OnErrorsChanged(propertyName);
             }
         }
@@ -74,20 +76,20 @@ namespace WPFCommon
             {
                 return null;
             }
-            if (this._Errors.ContainsKey(propertyName) == false)
+            if (this.Errors.ContainsKey(propertyName) == false)
             {
                 return null;
             }
-            return this._Errors[propertyName];
+            return this.Errors[propertyName];
         }
 
         public bool HasError(string propertyName)
         {
-            if (this._Errors.IsEmpty() || this._Errors.Count == 0)
+            if (this.Errors.IsEmpty() || this.Errors.Count == 0)
             {
                 return false;
             }
-            if (this._Errors[propertyName]?.Count > 0)
+            if (this.Errors[propertyName]?.Count > 0)
             {
                 return true;
             }
@@ -110,9 +112,9 @@ namespace WPFCommon
 
         public void RemoveError(string propertyName)
         {
-            if (this._Errors.ContainsKey(propertyName))
+            if (this.Errors.ContainsKey(propertyName))
             {
-                this._Errors.Remove(propertyName);
+                this.Errors.Remove(propertyName);
             }
 
             this.OnErrorsChanged(propertyName);
@@ -120,16 +122,16 @@ namespace WPFCommon
 
         public void RemoveError(string propertyName, string error)
         {
-            if (this._Errors.ContainsKey(propertyName))
+            if (this.Errors.ContainsKey(propertyName))
             {
-                var errors = this._Errors[propertyName];
+                var errors = this.Errors[propertyName];
                 if (errors.Contains(error))
                 {
                     errors.Remove(error);
                 }
                 if (errors.Count == 0)
                 {
-                    this._Errors.Remove(propertyName);
+                    this.Errors.Remove(propertyName);
                 }
             }
 
@@ -160,14 +162,17 @@ namespace WPFCommon
             // 動作速度を優先させるためにインスタンスメンバに変更
             //var service = ApplicationEx.Service.GetProvider();
             //var context = new ValidationContext(this, service, null) { MemberName = propName };
-            this._ValidationContext.MemberName = propName;
-            var validationErrors = new List<ValidationResult>();
+            this.ValidationContext.MemberName = propName;
+
+            // 毎回インスタンスを生成するのでは無く最初に作成したものをクリアして使い回す
+            this.ValidationResultList.Clear();
+            //var validationErrors = ValidationResultList;
 
             // Validationを実行(各プロパティに定義されているValidationAttributeで指定されたチェックロジックが実行される)
-            if (Validator.TryValidateProperty(value, this._ValidationContext, validationErrors) == false)
+            if (Validator.TryValidateProperty(value, this.ValidationContext, this.ValidationResultList) == false)
             {
                 // エラーがあった場合
-                var errors = validationErrors.Select(error => error.ErrorMessage);
+                var errors = this.ValidationResultList.Select(error => error.ErrorMessage);
                 foreach (var error in errors)
                 {
                     this.AddError(propName, error);

@@ -38,7 +38,7 @@
                                 Padding="4,0,4,0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                Foreground="#FF898989"
+                                Foreground="{DynamicResource DateBoxEx.WaterMark.ForegroundColor}"
                                 Opacity="0"
                                 Text="{TemplateBinding WaterMarkString}" />
                             <!--  Backgroundを透明に設定しておかないとWaterMarkが見えなくなる  -->

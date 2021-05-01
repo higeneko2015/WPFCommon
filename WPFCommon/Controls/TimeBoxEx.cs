@@ -19,7 +19,7 @@ namespace WPFCommon
             DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty SelectionBrushProperty =
-                    DependencyProperty.Register(nameof(SelectionBrush), typeof(Brush), typeof(TimeBoxEx));
+            DependencyProperty.Register(nameof(SelectionBrush), typeof(Brush), typeof(TimeBoxEx));
 
         public static readonly DependencyProperty SelectionTextBrushProperty =
             DependencyProperty.Register(nameof(SelectionTextBrush), typeof(Brush), typeof(TimeBoxEx));
@@ -190,8 +190,6 @@ namespace WPFCommon
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             if (DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
@@ -248,13 +246,14 @@ namespace WPFCommon
             newBinding.StringFormat = displayFormat;
             BindingOperations.ClearBinding(this, TextProperty);
             BindingOperations.SetBinding(this, TextProperty, newBinding);
+
+            base.OnApplyTemplate();
         }
 
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
-            this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke);
-
             base.OnGotKeyboardFocus(e);
+            this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke);
         }
 
         protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)

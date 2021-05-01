@@ -137,6 +137,11 @@
     <SolidColorBrush x:Key="NumberBoxEx.Error.BorderColor" Color="Black" />
 
     <!--  DateBoxExの色設定  -->
+    <SolidColorBrush
+        x:Key="DateBoxEx.WaterMark.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF898989" />
+
     <SolidColorBrush x:Key="DateBoxEx.Selection.ForegroundColor" Color="White" />
     <SolidColorBrush
         x:Key="DateBoxEx.Selection.BackgroundColor"
@@ -175,6 +180,11 @@
     <SolidColorBrush x:Key="DateBoxEx.Error.BorderColor" Color="Black" />
 
     <!--  TimeBoxExの色設定  -->
+    <SolidColorBrush
+        x:Key="TimeBoxEx.WaterMark.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF898989" />
+
     <SolidColorBrush x:Key="TimeBoxEx.Selection.ForegroundColor" Color="White" />
     <SolidColorBrush
         x:Key="TimeBoxEx.Selection.BackgroundColor"
