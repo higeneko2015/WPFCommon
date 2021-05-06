@@ -222,21 +222,38 @@
     <SolidColorBrush x:Key="TimeBoxEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="TimeBoxEx.Error.BorderColor" Color="Black" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF858585" />
+
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
+
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
+
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
+
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.ForegroundColor" Color="Black" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor" Color="White" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.ForegroundColor" Color="Black" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor" Color="White" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.ForegroundColor" Color="Black" />

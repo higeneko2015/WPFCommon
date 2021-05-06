@@ -96,6 +96,10 @@
     <SolidColorBrush x:Key="NumberBoxEx.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="NumberBoxEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="NumberBoxEx.Error.BorderColor" Color="Black" />
+    <SolidColorBrush
+        x:Key="DateBoxEx.WaterMark.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF898989" />
     <SolidColorBrush x:Key="DateBoxEx.Selection.ForegroundColor" Color="White" />
     <SolidColorBrush
         x:Key="DateBoxEx.Selection.BackgroundColor"
@@ -126,6 +130,10 @@
     <SolidColorBrush x:Key="DateBoxEx.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="DateBoxEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="DateBoxEx.Error.BorderColor" Color="Black" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.WaterMark.ForegroundColor"
+        PresentationOptions:Freeze="true"
+        Color="#FF898989" />
     <SolidColorBrush x:Key="TimeBoxEx.Selection.ForegroundColor" Color="White" />
     <SolidColorBrush
         x:Key="TimeBoxEx.Selection.BackgroundColor"
@@ -156,19 +164,32 @@
     <SolidColorBrush x:Key="TimeBoxEx.Error.ForegroundColor" Color="White" />
     <SolidColorBrush x:Key="TimeBoxEx.Error.BackgroundColor" Color="Red" />
     <SolidColorBrush x:Key="TimeBoxEx.Error.BorderColor" Color="Black" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor" Color="White" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.BorderColor"
+        PresentationOptions:Freeze="True"
+        Color="#FF858585" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
+    <SolidColorBrush
+        x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor"
+        PresentationOptions:Freeze="True"
+        Color="#FFE8E8E8" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.ForegroundColor" Color="Black" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor" Color="White" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.ForegroundColor" Color="Black" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor" Color="White" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.ForegroundColor" Color="Black" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.ForegroundColor" Color="Black" />
@@ -540,7 +561,7 @@
                                 Padding="4,0,4,0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                Foreground="#FF898989"
+                                Foreground="{DynamicResource DateBoxEx.WaterMark.ForegroundColor}"
                                 Opacity="0"
                                 Text="{TemplateBinding WaterMarkString}" />
                             <!--  Backgroundを透明に設定しておかないとWaterMarkが見えなくなる  -->
@@ -684,7 +705,7 @@
                                 Padding="4,0,4,0"
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                Foreground="#FF898989"
+                                Foreground="{DynamicResource TimeBoxEx.WaterMark.ForegroundColor}"
                                 Opacity="0"
                                 Text="{TemplateBinding WaterMarkString}" />
                             <!--  Backgroundを透明に設定しておかないとWaterMarkが見えなくなる  -->
@@ -729,6 +750,7 @@
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
+                            <!--  TODO:ドラッグ＆ドロップによるサイズ変更の実装  -->
                             <Popup
                                 x:Name="PART_Popup1"
                                 AllowsTransparency="True"
@@ -1374,7 +1396,7 @@
     <!--  Merged from file TimeSelecter.xaml  -->
     <Style TargetType="{x:Type local:TimeSelecter}">
         <Setter Property="FontSize" Value="9" />
-        <Setter Property="BorderBrush" Value="#FF858585" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TimeBoxEx.Selecter.BorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
@@ -1418,8 +1440,8 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Background="#FFE8E8E8"
-                                BorderBrush="#FFE8E8E8"
+                                Background="{DynamicResource TimeBoxEx.Selecter.Hour.BackgroundColor}"
+                                BorderBrush="{DynamicResource TimeBoxEx.Selecter.Hour.BackgroundColor}"
                                 Content="時" />
                             <local:LabelEx
                                 Grid.Row="0"
@@ -1428,8 +1450,8 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Background="#FFE8E8E8"
-                                BorderBrush="#FFE8E8E8"
+                                Background="{DynamicResource TimeBoxEx.Selecter.Minutes.BackgroundColor}"
+                                BorderBrush="{DynamicResource TimeBoxEx.Selecter.Minutes.BackgroundColor}"
                                 Content="分" />
                             <local:LabelEx
                                 Grid.Row="0"
@@ -1438,8 +1460,8 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Background="#FFE8E8E8"
-                                BorderBrush="#FFE8E8E8"
+                                Background="{DynamicResource TimeBoxEx.Selecter.Seconds.BackgroundColor}"
+                                BorderBrush="{DynamicResource TimeBoxEx.Selecter.Seconds.BackgroundColor}"
                                 Content="秒" />
                             <Grid
                                 x:Name="HourGrid"
@@ -1464,6 +1486,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <local:FocusableLabel
+                                    x:Name="h00"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Content="0"
@@ -1472,6 +1495,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h01"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Content="1"
@@ -1480,6 +1504,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h02"
                                     Grid.Row="0"
                                     Grid.Column="2"
                                     Content="2"
@@ -1488,6 +1513,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h03"
                                     Grid.Row="0"
                                     Grid.Column="3"
                                     Content="3"
@@ -1496,6 +1522,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h04"
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Content="4"
@@ -1504,6 +1531,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h05"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Content="5"
@@ -1512,6 +1540,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h06"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     Content="6"
@@ -1520,6 +1549,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h07"
                                     Grid.Row="1"
                                     Grid.Column="3"
                                     Content="7"
@@ -1528,6 +1558,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h08"
                                     Grid.Row="2"
                                     Grid.Column="0"
                                     Content="8"
@@ -1536,6 +1567,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h09"
                                     Grid.Row="2"
                                     Grid.Column="1"
                                     Content="9"
@@ -1544,6 +1576,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h10"
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     Content="10"
@@ -1552,6 +1585,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h11"
                                     Grid.Row="2"
                                     Grid.Column="3"
                                     Content="11"
@@ -1560,6 +1594,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h12"
                                     Grid.Row="3"
                                     Grid.Column="0"
                                     Content="12"
@@ -1568,6 +1603,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h13"
                                     Grid.Row="3"
                                     Grid.Column="1"
                                     Content="13"
@@ -1576,6 +1612,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h14"
                                     Grid.Row="3"
                                     Grid.Column="2"
                                     Content="14"
@@ -1584,6 +1621,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h15"
                                     Grid.Row="3"
                                     Grid.Column="3"
                                     Content="15"
@@ -1592,6 +1630,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h16"
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Content="16"
@@ -1600,6 +1639,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h17"
                                     Grid.Row="4"
                                     Grid.Column="1"
                                     Content="17"
@@ -1608,6 +1648,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h18"
                                     Grid.Row="4"
                                     Grid.Column="2"
                                     Content="18"
@@ -1616,6 +1657,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h19"
                                     Grid.Row="4"
                                     Grid.Column="3"
                                     Content="19"
@@ -1624,6 +1666,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h20"
                                     Grid.Row="5"
                                     Grid.Column="0"
                                     Content="20"
@@ -1632,6 +1675,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h21"
                                     Grid.Row="5"
                                     Grid.Column="1"
                                     Content="21"
@@ -1640,6 +1684,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h22"
                                     Grid.Row="5"
                                     Grid.Column="2"
                                     Content="22"
@@ -1648,6 +1693,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding HourMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding HourMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="h23"
                                     Grid.Row="5"
                                     Grid.Column="3"
                                     Content="23"
@@ -1685,6 +1731,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <local:FocusableLabel
+                                    x:Name="m00"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Content="0"
@@ -1693,6 +1740,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m01"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Content="1"
@@ -1701,6 +1749,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m02"
                                     Grid.Row="0"
                                     Grid.Column="2"
                                     Content="2"
@@ -1709,6 +1758,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m03"
                                     Grid.Row="0"
                                     Grid.Column="3"
                                     Content="3"
@@ -1717,6 +1767,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m04"
                                     Grid.Row="0"
                                     Grid.Column="4"
                                     Content="4"
@@ -1725,6 +1776,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m05"
                                     Grid.Row="0"
                                     Grid.Column="5"
                                     Content="5"
@@ -1733,6 +1785,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m06"
                                     Grid.Row="0"
                                     Grid.Column="6"
                                     Content="6"
@@ -1741,6 +1794,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m07"
                                     Grid.Row="0"
                                     Grid.Column="7"
                                     Content="7"
@@ -1749,6 +1803,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m08"
                                     Grid.Row="0"
                                     Grid.Column="8"
                                     Content="8"
@@ -1757,6 +1812,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m09"
                                     Grid.Row="0"
                                     Grid.Column="9"
                                     Content="9"
@@ -1765,6 +1821,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m10"
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Content="10"
@@ -1773,6 +1830,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m11"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Content="11"
@@ -1781,6 +1839,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m12"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     Content="12"
@@ -1789,6 +1848,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m13"
                                     Grid.Row="1"
                                     Grid.Column="3"
                                     Content="13"
@@ -1797,6 +1857,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m14"
                                     Grid.Row="1"
                                     Grid.Column="4"
                                     Content="14"
@@ -1805,6 +1866,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m15"
                                     Grid.Row="1"
                                     Grid.Column="5"
                                     Content="15"
@@ -1813,6 +1875,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m16"
                                     Grid.Row="1"
                                     Grid.Column="6"
                                     Content="16"
@@ -1821,6 +1884,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m17"
                                     Grid.Row="1"
                                     Grid.Column="7"
                                     Content="17"
@@ -1829,6 +1893,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m18"
                                     Grid.Row="1"
                                     Grid.Column="8"
                                     Content="18"
@@ -1837,6 +1902,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m19"
                                     Grid.Row="1"
                                     Grid.Column="9"
                                     Content="19"
@@ -1845,6 +1911,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m20"
                                     Grid.Row="2"
                                     Grid.Column="0"
                                     Content="20"
@@ -1853,6 +1920,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m21"
                                     Grid.Row="2"
                                     Grid.Column="1"
                                     Content="21"
@@ -1861,6 +1929,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m22"
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     Content="22"
@@ -1869,6 +1938,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m23"
                                     Grid.Row="2"
                                     Grid.Column="3"
                                     Content="23"
@@ -1877,6 +1947,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m24"
                                     Grid.Row="2"
                                     Grid.Column="4"
                                     Content="24"
@@ -1885,6 +1956,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m25"
                                     Grid.Row="2"
                                     Grid.Column="5"
                                     Content="25"
@@ -1893,6 +1965,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m26"
                                     Grid.Row="2"
                                     Grid.Column="6"
                                     Content="26"
@@ -1901,6 +1974,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m27"
                                     Grid.Row="2"
                                     Grid.Column="7"
                                     Content="27"
@@ -1909,6 +1983,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m28"
                                     Grid.Row="2"
                                     Grid.Column="8"
                                     Content="28"
@@ -1917,6 +1992,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m29"
                                     Grid.Row="2"
                                     Grid.Column="9"
                                     Content="29"
@@ -1925,6 +2001,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m30"
                                     Grid.Row="3"
                                     Grid.Column="0"
                                     Content="30"
@@ -1933,6 +2010,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m31"
                                     Grid.Row="3"
                                     Grid.Column="1"
                                     Content="31"
@@ -1941,6 +2019,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m32"
                                     Grid.Row="3"
                                     Grid.Column="2"
                                     Content="32"
@@ -1949,6 +2028,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m33"
                                     Grid.Row="3"
                                     Grid.Column="3"
                                     Content="33"
@@ -1957,6 +2037,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m34"
                                     Grid.Row="3"
                                     Grid.Column="4"
                                     Content="34"
@@ -1965,6 +2046,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m35"
                                     Grid.Row="3"
                                     Grid.Column="5"
                                     Content="35"
@@ -1973,6 +2055,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m36"
                                     Grid.Row="3"
                                     Grid.Column="6"
                                     Content="36"
@@ -1981,6 +2064,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m37"
                                     Grid.Row="3"
                                     Grid.Column="7"
                                     Content="37"
@@ -1989,6 +2073,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m38"
                                     Grid.Row="3"
                                     Grid.Column="8"
                                     Content="38"
@@ -1997,6 +2082,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m39"
                                     Grid.Row="3"
                                     Grid.Column="9"
                                     Content="39"
@@ -2005,6 +2091,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m40"
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Content="40"
@@ -2013,6 +2100,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m41"
                                     Grid.Row="4"
                                     Grid.Column="1"
                                     Content="41"
@@ -2021,6 +2109,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m42"
                                     Grid.Row="4"
                                     Grid.Column="2"
                                     Content="42"
@@ -2029,6 +2118,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m43"
                                     Grid.Row="4"
                                     Grid.Column="3"
                                     Content="43"
@@ -2037,6 +2127,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m44"
                                     Grid.Row="4"
                                     Grid.Column="4"
                                     Content="44"
@@ -2045,6 +2136,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m45"
                                     Grid.Row="4"
                                     Grid.Column="5"
                                     Content="45"
@@ -2053,6 +2145,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m46"
                                     Grid.Row="4"
                                     Grid.Column="6"
                                     Content="46"
@@ -2061,6 +2154,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m47"
                                     Grid.Row="4"
                                     Grid.Column="7"
                                     Content="47"
@@ -2069,6 +2163,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m48"
                                     Grid.Row="4"
                                     Grid.Column="8"
                                     Content="48"
@@ -2077,6 +2172,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m49"
                                     Grid.Row="4"
                                     Grid.Column="9"
                                     Content="49"
@@ -2085,6 +2181,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m50"
                                     Grid.Row="5"
                                     Grid.Column="0"
                                     Content="50"
@@ -2093,6 +2190,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m51"
                                     Grid.Row="5"
                                     Grid.Column="1"
                                     Content="51"
@@ -2101,6 +2199,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m52"
                                     Grid.Row="5"
                                     Grid.Column="2"
                                     Content="52"
@@ -2109,6 +2208,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m53"
                                     Grid.Row="5"
                                     Grid.Column="3"
                                     Content="53"
@@ -2117,6 +2217,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m54"
                                     Grid.Row="5"
                                     Grid.Column="4"
                                     Content="54"
@@ -2125,6 +2226,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m55"
                                     Grid.Row="5"
                                     Grid.Column="5"
                                     Content="55"
@@ -2133,6 +2235,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m56"
                                     Grid.Row="5"
                                     Grid.Column="6"
                                     Content="56"
@@ -2141,6 +2244,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m57"
                                     Grid.Row="5"
                                     Grid.Column="7"
                                     Content="57"
@@ -2149,6 +2253,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m58"
                                     Grid.Row="5"
                                     Grid.Column="8"
                                     Content="58"
@@ -2157,6 +2262,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding MinutesMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding MinutesMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="m59"
                                     Grid.Row="5"
                                     Grid.Column="9"
                                     Content="59"
@@ -2194,6 +2300,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <local:FocusableLabel
+                                    x:Name="s00"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Content="0"
@@ -2202,6 +2309,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s01"
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Content="1"
@@ -2210,6 +2318,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s02"
                                     Grid.Row="0"
                                     Grid.Column="2"
                                     Content="2"
@@ -2218,6 +2327,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s03"
                                     Grid.Row="0"
                                     Grid.Column="3"
                                     Content="3"
@@ -2226,6 +2336,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s04"
                                     Grid.Row="0"
                                     Grid.Column="4"
                                     Content="4"
@@ -2234,6 +2345,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s05"
                                     Grid.Row="0"
                                     Grid.Column="5"
                                     Content="5"
@@ -2242,6 +2354,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s06"
                                     Grid.Row="0"
                                     Grid.Column="6"
                                     Content="6"
@@ -2250,6 +2363,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s07"
                                     Grid.Row="0"
                                     Grid.Column="7"
                                     Content="7"
@@ -2258,6 +2372,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s08"
                                     Grid.Row="0"
                                     Grid.Column="8"
                                     Content="8"
@@ -2266,6 +2381,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s09"
                                     Grid.Row="0"
                                     Grid.Column="9"
                                     Content="9"
@@ -2274,6 +2390,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s10"
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Content="10"
@@ -2282,6 +2399,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s11"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Content="11"
@@ -2290,6 +2408,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s12"
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     Content="12"
@@ -2298,6 +2417,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s13"
                                     Grid.Row="1"
                                     Grid.Column="3"
                                     Content="13"
@@ -2306,6 +2426,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s14"
                                     Grid.Row="1"
                                     Grid.Column="4"
                                     Content="14"
@@ -2314,6 +2435,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s15"
                                     Grid.Row="1"
                                     Grid.Column="5"
                                     Content="15"
@@ -2322,6 +2444,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s16"
                                     Grid.Row="1"
                                     Grid.Column="6"
                                     Content="16"
@@ -2330,6 +2453,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s17"
                                     Grid.Row="1"
                                     Grid.Column="7"
                                     Content="17"
@@ -2338,6 +2462,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s18"
                                     Grid.Row="1"
                                     Grid.Column="8"
                                     Content="18"
@@ -2346,6 +2471,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s19"
                                     Grid.Row="1"
                                     Grid.Column="9"
                                     Content="19"
@@ -2354,6 +2480,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s20"
                                     Grid.Row="2"
                                     Grid.Column="0"
                                     Content="20"
@@ -2362,6 +2489,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s21"
                                     Grid.Row="2"
                                     Grid.Column="1"
                                     Content="21"
@@ -2370,6 +2498,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s22"
                                     Grid.Row="2"
                                     Grid.Column="2"
                                     Content="22"
@@ -2378,6 +2507,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s23"
                                     Grid.Row="2"
                                     Grid.Column="3"
                                     Content="23"
@@ -2386,6 +2516,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s24"
                                     Grid.Row="2"
                                     Grid.Column="4"
                                     Content="24"
@@ -2394,6 +2525,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s25"
                                     Grid.Row="2"
                                     Grid.Column="5"
                                     Content="25"
@@ -2402,6 +2534,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s26"
                                     Grid.Row="2"
                                     Grid.Column="6"
                                     Content="26"
@@ -2410,6 +2543,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s27"
                                     Grid.Row="2"
                                     Grid.Column="7"
                                     Content="27"
@@ -2418,6 +2552,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s28"
                                     Grid.Row="2"
                                     Grid.Column="8"
                                     Content="28"
@@ -2426,6 +2561,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s29"
                                     Grid.Row="2"
                                     Grid.Column="9"
                                     Content="29"
@@ -2434,6 +2570,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s30"
                                     Grid.Row="3"
                                     Grid.Column="0"
                                     Content="30"
@@ -2442,6 +2579,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s31"
                                     Grid.Row="3"
                                     Grid.Column="1"
                                     Content="31"
@@ -2450,6 +2588,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s32"
                                     Grid.Row="3"
                                     Grid.Column="2"
                                     Content="32"
@@ -2458,6 +2597,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s33"
                                     Grid.Row="3"
                                     Grid.Column="3"
                                     Content="33"
@@ -2466,6 +2606,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s34"
                                     Grid.Row="3"
                                     Grid.Column="4"
                                     Content="34"
@@ -2474,6 +2615,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s35"
                                     Grid.Row="3"
                                     Grid.Column="5"
                                     Content="35"
@@ -2482,6 +2624,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s36"
                                     Grid.Row="3"
                                     Grid.Column="6"
                                     Content="36"
@@ -2490,6 +2633,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s37"
                                     Grid.Row="3"
                                     Grid.Column="7"
                                     Content="37"
@@ -2498,6 +2642,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s38"
                                     Grid.Row="3"
                                     Grid.Column="8"
                                     Content="38"
@@ -2506,6 +2651,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s39"
                                     Grid.Row="3"
                                     Grid.Column="9"
                                     Content="39"
@@ -2514,6 +2660,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s40"
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Content="40"
@@ -2522,6 +2669,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s41"
                                     Grid.Row="4"
                                     Grid.Column="1"
                                     Content="41"
@@ -2530,6 +2678,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s42"
                                     Grid.Row="4"
                                     Grid.Column="2"
                                     Content="42"
@@ -2538,6 +2687,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s43"
                                     Grid.Row="4"
                                     Grid.Column="3"
                                     Content="43"
@@ -2546,6 +2696,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s44"
                                     Grid.Row="4"
                                     Grid.Column="4"
                                     Content="44"
@@ -2554,6 +2705,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s45"
                                     Grid.Row="4"
                                     Grid.Column="5"
                                     Content="45"
@@ -2562,6 +2714,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s46"
                                     Grid.Row="4"
                                     Grid.Column="6"
                                     Content="46"
@@ -2570,6 +2723,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s47"
                                     Grid.Row="4"
                                     Grid.Column="7"
                                     Content="47"
@@ -2578,6 +2732,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s48"
                                     Grid.Row="4"
                                     Grid.Column="8"
                                     Content="48"
@@ -2586,6 +2741,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s49"
                                     Grid.Row="4"
                                     Grid.Column="9"
                                     Content="49"
@@ -2594,6 +2750,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s50"
                                     Grid.Row="5"
                                     Grid.Column="0"
                                     Content="50"
@@ -2602,6 +2759,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s51"
                                     Grid.Row="5"
                                     Grid.Column="1"
                                     Content="51"
@@ -2610,6 +2768,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s52"
                                     Grid.Row="5"
                                     Grid.Column="2"
                                     Content="52"
@@ -2618,6 +2777,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s53"
                                     Grid.Row="5"
                                     Grid.Column="3"
                                     Content="53"
@@ -2626,6 +2786,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s54"
                                     Grid.Row="5"
                                     Grid.Column="4"
                                     Content="54"
@@ -2634,6 +2795,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s55"
                                     Grid.Row="5"
                                     Grid.Column="5"
                                     Content="55"
@@ -2642,6 +2804,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s56"
                                     Grid.Row="5"
                                     Grid.Column="6"
                                     Content="56"
@@ -2650,6 +2813,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s57"
                                     Grid.Row="5"
                                     Grid.Column="7"
                                     Content="57"
@@ -2658,6 +2822,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s58"
                                     Grid.Row="5"
                                     Grid.Column="8"
                                     Content="58"
@@ -2666,6 +2831,7 @@
                                     MouseOverBackgroundColor="{TemplateBinding SecondsMouseOverBackgroundColor}"
                                     MouseOverForegroundColor="{TemplateBinding SecondsMouseOverForegroundColor}" />
                                 <local:FocusableLabel
+                                    x:Name="s59"
                                     Grid.Row="5"
                                     Grid.Column="9"
                                     Content="59"

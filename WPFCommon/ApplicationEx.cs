@@ -16,12 +16,12 @@ namespace WPFCommon
 
         public ApplicationEx()
         {
-            // CLRのスレッドプールは、スレッドの数を無駄に増やしてしまわないよう、
-            // 新しいスレッドが必要になった場合は、500ミリ秒に1つの割合を
-            // 超えないペースでスレッドを生成する設計になっている。
-            // 500ミリ待つ仕様を回避するために同時生成スレッド数を20に設定してみる。
-            ThreadPool.GetMinThreads(out _, out var ioMin);
-            ThreadPool.SetMinThreads(20, ioMin);
+            //// CLRのスレッドプールは、スレッドの数を無駄に増やしてしまわないよう、
+            //// 新しいスレッドが必要になった場合は、500ミリ秒に1つの割合を
+            //// 超えないペースでスレッドを生成する設計になっている。
+            //// 500ミリ待つ仕様を回避するために同時生成スレッド数を20に設定してみる。
+            //ThreadPool.GetMinThreads(out _, out var ioMin);
+            //ThreadPool.SetMinThreads(20, ioMin);
 
             _Service.AddSingleton<IConfigService, ConfigService>();
             _Service.AddSingleton<IDatabaseService, DatabaseService>();

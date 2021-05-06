@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -54,7 +55,7 @@ namespace WPFCommon
             DependencyProperty.Register(nameof(SelectedSeconds), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty SelectedTimeProperty =
-            DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedTimeChanged)));
 
         static TimeSelecter()
         {
@@ -170,64 +171,11 @@ namespace WPFCommon
         {
             get { return (Time)this.GetValue(SelectedTimeProperty); }
             set { this.SetValue(SelectedTimeProperty, value); }
-
-            //get
-            //{
-            //    var hours = this.SelectedHour;
-            //    var minutes = this.SelectedMinutes;
-            //    var seconds = this.SelectedSeconds;
-            //    if (hours.HasValue && minutes.HasValue && seconds.HasValue)
-            //    {
-            //        return new Time(hours.Value, minutes.Value, seconds.Value);
-            //    }
-            //    if (hours.HasValue && minutes.HasValue)
-            //    {
-            //        return new Time(hours.Value, minutes.Value, 0);
-            //    }
-            //    if (minutes.HasValue && seconds.HasValue)
-            //    {
-            //        return new Time(0, minutes.Value, seconds.Value);
-            //    }
-            //    if (hours.HasValue && seconds.HasValue)
-            //    {
-            //        return new Time(hours.Value, 0, seconds.Value);
-            //    }
-            //    if (hours.HasValue)
-            //    {
-            //        return new Time(hours.Value, 0, 0);
-            //    }
-            //    if (minutes.HasValue)
-            //    {
-            //        return new Time(0, minutes.Value, 0);
-            //    }
-            //    if (seconds.HasValue)
-            //    {
-            //        return new Time(0, 0, seconds.Value);
-            //    }
-            //    return null;
-            //}
-            //set
-            //{
-            //    if (value.IsEmpty())
-            //    {
-            //        this.SelectedHour = null;
-            //        this.SelectedMinutes = null;
-            //        this.SelectedSeconds = null;
-            //    }
-            //    else
-            //    {
-            //        this.SelectedHour = value.Hour;
-            //        this.SelectedMinutes = value.Minute;
-            //        this.SelectedSeconds = value.Second;
-            //    }
-            //}
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            var hourGrid = GetTemplateChild("HourGrid") as Grid;
-            var hh = FocusManager.GetFocusedElement(hourGrid) as FocusableLabel;
-            if (hh.IsEmpty())
+            if (this.GetHoursFocusedElement(out var hh) == false)
             {
                 SelectedHour = null;
             }
@@ -236,9 +184,7 @@ namespace WPFCommon
                 SelectedHour = int.Parse(hh.Content.ToString());
             }
 
-            var minutesGrid = GetTemplateChild("MinutesGrid") as Grid;
-            var mm = FocusManager.GetFocusedElement(minutesGrid) as FocusableLabel;
-            if (mm.IsEmpty())
+            if (this.GetMinutesFocusedElement(out var mm) == false)
             {
                 SelectedMinutes = null;
             }
@@ -247,9 +193,7 @@ namespace WPFCommon
                 SelectedMinutes = int.Parse(mm.Content.ToString());
             }
 
-            var secondsGrid = GetTemplateChild("SecondsGrid") as Grid;
-            var ss = FocusManager.GetFocusedElement(secondsGrid) as FocusableLabel;
-            if (ss.IsEmpty())
+            if (this.GetSecondsFocusedElement(out var ss) == false)
             {
                 SelectedSeconds = null;
             }
@@ -262,11 +206,100 @@ namespace WPFCommon
             base.OnMouseLeftButtonDown(e);
         }
 
+        private static void SelectedTimeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var target = sender as TimeSelecter;
+            var value = e.NewValue as Time;
+
+            if (value.IsEmpty())
+            {
+                target.SelectedHour = null;
+                target.SelectedMinutes = null;
+                target.SelectedSeconds = null;
+
+                if (target.GetHoursFocusedElement(out var hh) == false)
+                {
+                    hh.SetValue(IsFocusedProperty, false);
+                }
+
+                if (target.GetMinutesFocusedElement(out var mm) == false)
+                {
+                    mm.SetValue(IsFocusedProperty, false);
+                }
+
+                if (target.GetSecondsFocusedElement(out var ss) == false)
+                {
+                    ss.SetValue(IsFocusedProperty, false);
+                }
+            }
+            else
+            {
+                target.SelectedHour = value.Hour;
+                target.SelectedMinutes = value.Minute;
+                target.SelectedSeconds = value.Second;
+
+                var hours = target.GetTemplateChild($"h{value.Hour.ToString()}") as FocusableLabel;
+                if (hours.IsEmpty() == false)
+                {
+                    hours.Focus();
+                }
+
+                var minutes = target.GetTemplateChild($"m{value.Minute.ToString()}") as FocusableLabel;
+                if (minutes.IsEmpty() == false)
+                {
+                    minutes.Focus();
+                }
+
+                var seconds = target.GetTemplateChild($"s{value.Second.ToString()}") as FocusableLabel;
+                if (seconds.IsEmpty() == false)
+                {
+                    seconds.Focus();
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool GetHoursFocusedElement(out FocusableLabel ret)
+        {
+            var hourGrid = this.GetTemplateChild("HourGrid") as Grid;
+            ret = FocusManager.GetFocusedElement(hourGrid) as FocusableLabel;
+            if (ret.IsEmpty())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool GetMinutesFocusedElement(out FocusableLabel ret)
+        {
+            var minutesGrid = this.GetTemplateChild("MinutesGrid") as Grid;
+            ret = FocusManager.GetFocusedElement(minutesGrid) as FocusableLabel;
+            if (ret.IsEmpty())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool GetSecondsFocusedElement(out FocusableLabel ret)
+        {
+            var secondsGrid = this.GetTemplateChild("SecondsGrid") as Grid;
+            ret = FocusManager.GetFocusedElement(secondsGrid) as FocusableLabel;
+            if (ret.IsEmpty())
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void UpdateSelectedTime()
         {
             var hours = this.SelectedHour;
             var minutes = this.SelectedMinutes;
             var seconds = this.SelectedSeconds;
+
             if (hours.HasValue && minutes.HasValue && seconds.HasValue)
             {
                 this.SelectedTime = new Time(hours.Value, minutes.Value, seconds.Value);

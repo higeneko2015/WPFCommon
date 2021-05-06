@@ -12,6 +12,16 @@
     <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\'))</RepoRoot>
     <PathMap>$(RepoRoot)=$(DeterministicSourceRoot)</PathMap>
 
+    <!-- アプリケーションのスレッド数を指定 -->
+    <ThreadPoolMinThreads>4</ThreadPoolMinThreads>
+    <ThreadPoolMaxThreads>20</ThreadPoolMaxThreads>
+
+    <!-- サーバー版のGCを使用する -->
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+
+    <!-- https://docs.microsoft.com/ja-jp/dotnet/core/deploying/ready-to-run -->
+    <PublishReadyToRun>true</PublishReadyToRun>
+    
     <!-- nupkgの情報定義 -->
     <PackageId>WPFCommon2</PackageId>
     <Authors>higeneko760414</Authors>
