@@ -427,7 +427,7 @@
                 <Setter Property="Foreground" Value="{Binding MouseOverForegroundColor, RelativeSource={RelativeSource Self}}" />
                 <Setter Property="Background" Value="{Binding MouseOverBackgroundColor, RelativeSource={RelativeSource Self}}" />
             </Trigger>
-            <Trigger Property="IsFocused" Value="True">
+            <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Foreground" Value="{Binding FocusedForegroundColor, RelativeSource={RelativeSource Self}}" />
                 <Setter Property="Background" Value="{Binding FocusedBackgroundColor, RelativeSource={RelativeSource Self}}" />
             </Trigger>
@@ -690,7 +690,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid>
+                        <Grid Focusable="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="28" />
@@ -719,6 +719,7 @@
                                 VerticalAlignment="Stretch"
                                 Background="Transparent"
                                 BorderThickness="0"
+                                Focusable="True"
                                 Foreground="{TemplateBinding Foreground}"
                                 InputMethod.IsInputMethodEnabled="False"
                                 IsEnabled="{TemplateBinding IsEnabled}"

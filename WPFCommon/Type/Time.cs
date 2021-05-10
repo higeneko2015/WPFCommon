@@ -303,71 +303,71 @@ namespace WPFCommon
 
         public Time AddHours(double value)
         {
-            var tmp = Value.AddHours(value);
+            var tmp = this.Value.AddHours(value);
             return new Time(tmp.Hour, tmp.Minute, tmp.Second, tmp.Millisecond);
         }
 
         public Time AddMinutes(int value)
         {
-            var tmp = Value.AddMinutes(value);
+            var tmp = this.Value.AddMinutes(value);
             return new Time(tmp.Hour, tmp.Minute, tmp.Second, tmp.Millisecond);
         }
 
         public Time AddSeconds(int value)
         {
-            var tmp = Value.AddSeconds(value);
+            var tmp = this.Value.AddSeconds(value);
             return new Time(tmp.Hour, tmp.Minute, tmp.Second, tmp.Millisecond);
         }
 
         public int CompareTo(object obj)
         {
             var tmp = obj as Time;
-            return Value.CompareTo(tmp?.Value);
+            return this.Value.CompareTo(tmp?.Value);
         }
 
         public int CompareTo(Time other)
         {
-            return Value.CompareTo(other.Value);
+            return this.Value.CompareTo(other.Value);
         }
 
         public bool Equals(Time other)
         {
-            return Value.Equals(other.Value);
+            return this.Value.Equals(other.Value);
         }
 
         public override bool Equals(object value)
         {
-            return Value.Equals(value);
+            return this.Value.Equals(value);
         }
 
         public override int GetHashCode()
         {
-            return Value.GetHashCode();
+            return this.Value.GetHashCode();
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(Value), Value);
+            info.AddValue(nameof(this.Value), this.Value);
         }
 
         public override string ToString()
         {
-            return Value.ToString("HHmmss");
+            return this.Value.ToString("HHmmss");
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return Value.ToString(format, formatProvider);
+            return this.Value.ToString(format, formatProvider);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            return Value.ToString(provider);
+            return this.Value.ToString(provider);
         }
 
         public string ToString(string format)
         {
-            return Value.ToString(format);
+            return this.Value.ToString(format);
         }
     }
 }

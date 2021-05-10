@@ -98,11 +98,11 @@ namespace WPFCommon
         {
             var sb = new StringBuilder();
 
-            sb.AppendFormat("Message={0}\n", ex.Message);
-            sb.AppendFormat("Source={0}\n", ex.Source);
-            sb.AppendFormat("HelpLink={0}\n", ex.HelpLink);
-            sb.AppendFormat("TargetSite={0}\n", ex.TargetSite.ToString());
-            sb.AppendFormat("StackTrace={0}\n", ex.StackTrace);
+            sb.AppendLine($"Message={ex.Message}\n");
+            sb.AppendLine($"Source={ex.Source}\n");
+            sb.AppendLine($"HelpLink={ex.HelpLink}\n");
+            sb.AppendLine($"TargetSite={ex.TargetSite.ToString()}\n");
+            sb.AppendLine($"StackTrace={ex.StackTrace}\n");
 
             return (ex.Message, sb.ToString());
         }

@@ -97,7 +97,7 @@ namespace WPFCommon
             // イベントハンドラの追加
             //this.Loaded += this.TextBoxBase_Loaded;
             this.Unloaded += this.DateBoxEx_Unloaded;
-            Validation.AddErrorHandler(this, DateBoxEx_ValidationError);
+            Validation.AddErrorHandler(this, this.DateBoxEx_ValidationError);
 
             // 貼り付けコマンドのハンドラを追加
             //DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
@@ -245,7 +245,7 @@ namespace WPFCommon
             {
                 if (this._PartsButton.IsEmpty())
                 {
-                    this._PartsButton = GetTemplateChild("PART_Button1") as ToggleButton;
+                    this._PartsButton = this.GetTemplateChild("PART_Button1") as ToggleButton;
                 }
                 return this._PartsButton;
             }
@@ -260,7 +260,7 @@ namespace WPFCommon
             {
                 if (this._PartsCalender.IsEmpty())
                 {
-                    this._PartsCalender = GetTemplateChild("PART_Calender") as Calendar;
+                    this._PartsCalender = this.GetTemplateChild("PART_Calender") as Calendar;
                 }
                 return this._PartsCalender;
             }
@@ -275,7 +275,7 @@ namespace WPFCommon
             {
                 if (this._PartsPopup.IsEmpty())
                 {
-                    this._PartsPopup = GetTemplateChild("PART_Popup1") as Popup;
+                    this._PartsPopup = this.GetTemplateChild("PART_Popup1") as Popup;
                 }
                 return this._PartsPopup;
             }
@@ -290,7 +290,7 @@ namespace WPFCommon
             {
                 if (this._PartsTextBox.IsEmpty())
                 {
-                    this._PartsTextBox = GetTemplateChild("PART_TextBox1") as TextBox;
+                    this._PartsTextBox = this.GetTemplateChild("PART_TextBox1") as TextBox;
                 }
                 return this._PartsTextBox;
             }
@@ -314,7 +314,7 @@ namespace WPFCommon
             this.PartsPopup.Closed += this.Popup_Closed;
 
             // カレンダーの日付のダブルクリックで選択・カレンダーを閉じる操作を行うためにハンドラを登録
-            var ee = new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(CalenderDayButton_MouseDoubleClick));
+            var ee = new EventSetter(MouseDoubleClickEvent, new MouseButtonEventHandler(this.CalenderDayButton_MouseDoubleClick));
             var style = this.PartsCalender.CalendarDayButtonStyle;
             if (style == null)
             {
@@ -487,13 +487,13 @@ namespace WPFCommon
             if (!this.PartsCalender.BlackoutDates.Contains(this.SelectedDate.Value))
             {
                 this.PartsPopup.IsOpen = false;
-                this.Text = this.SelectedDate?.ToString(StringFormat);
+                this.Text = this.SelectedDate?.ToString(this.StringFormat);
             }
         }
 
         private void ChangeHitTestVisible(bool value)
         {
-            var btn = GetTemplateChild("PART_Button1") as ToggleButton;
+            var btn = this.GetTemplateChild("PART_Button1") as ToggleButton;
             btn.IsHitTestVisible = value;
             // コントロール外にフォーカスがある状態から直接ボタンをクリックしたときに強制的にフォーカスを当てる
             this.Dispatcher.InvokeAsync(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
@@ -550,7 +550,7 @@ namespace WPFCommon
 
         private void DateBoxEx_Unloaded(object sender, RoutedEventArgs e)
         {
-            Validation.RemoveErrorHandler(this, DateBoxEx_ValidationError);
+            Validation.RemoveErrorHandler(this, this.DateBoxEx_ValidationError);
             this.Unloaded -= this.DateBoxEx_Unloaded;
         }
 
@@ -600,12 +600,12 @@ namespace WPFCommon
 
         private void Popup_Closed(object sender, EventArgs e)
         {
-            ChangeHitTestVisible(true);
+            this.ChangeHitTestVisible(true);
         }
 
         private void Popup_Opened(object sender, EventArgs e)
         {
-            ChangeHitTestVisible(false);
+            this.ChangeHitTestVisible(false);
         }
     }
 }

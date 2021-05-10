@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:WPFCommon"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:local="clr-namespace:WPFCommon">
     <Style TargetType="{x:Type local:TimeBoxEx}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Width" Value="100" />
@@ -23,7 +23,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid>
+                        <Grid Focusable="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="28" />
@@ -52,6 +52,7 @@
                                 VerticalAlignment="Stretch"
                                 Background="Transparent"
                                 BorderThickness="0"
+                                Focusable="True"
                                 Foreground="{TemplateBinding Foreground}"
                                 InputMethod.IsInputMethodEnabled="False"
                                 IsEnabled="{TemplateBinding IsEnabled}"

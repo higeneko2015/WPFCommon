@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace WPFCommon
@@ -57,9 +56,17 @@ namespace WPFCommon
         public static readonly DependencyProperty SelectedTimeProperty =
             DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedTimeChanged)));
 
+        private readonly TextBlockClickEventHandler handler = null;
+
         static TimeSelecter()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimeSelecter), new FrameworkPropertyMetadata(typeof(TimeSelecter)));
+        }
+
+        public TimeSelecter()
+        {
+            this.handler = this.TextBlockClickEventHandler;
+            this.AddHandler(EventHelper.TextBlockClickEvent, this.handler);
         }
 
         [Category("拡張プロパティ"), Description("時コントロールで選択中のセルの背景色を取得または設定します。")]
@@ -173,39 +180,6 @@ namespace WPFCommon
             set { this.SetValue(SelectedTimeProperty, value); }
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            if (this.GetHoursFocusedElement(out var hh) == false)
-            {
-                SelectedHour = null;
-            }
-            else
-            {
-                SelectedHour = int.Parse(hh.Content.ToString());
-            }
-
-            if (this.GetMinutesFocusedElement(out var mm) == false)
-            {
-                SelectedMinutes = null;
-            }
-            else
-            {
-                SelectedMinutes = int.Parse(mm.Content.ToString());
-            }
-
-            if (this.GetSecondsFocusedElement(out var ss) == false)
-            {
-                SelectedSeconds = null;
-            }
-            else
-            {
-                SelectedSeconds = int.Parse(ss.Content.ToString());
-            }
-
-            UpdateSelectedTime();
-            base.OnMouseLeftButtonDown(e);
-        }
-
         private static void SelectedTimeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var target = sender as TimeSelecter;
@@ -213,129 +187,81 @@ namespace WPFCommon
 
             if (value.IsEmpty())
             {
-                target.SelectedHour = null;
-                target.SelectedMinutes = null;
-                target.SelectedSeconds = null;
+                var hours = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Hours, null);
+                target.TextBlockClickEventHandler(sender, hours);
 
-                if (target.GetHoursFocusedElement(out var hh) == false)
-                {
-                    hh.SetValue(IsFocusedProperty, false);
-                }
+                var minutes = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Minutes, null);
+                target.TextBlockClickEventHandler(sender, minutes);
 
-                if (target.GetMinutesFocusedElement(out var mm) == false)
-                {
-                    mm.SetValue(IsFocusedProperty, false);
-                }
-
-                if (target.GetSecondsFocusedElement(out var ss) == false)
-                {
-                    ss.SetValue(IsFocusedProperty, false);
-                }
+                var seconds = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Seconds, null);
+                target.TextBlockClickEventHandler(sender, seconds);
             }
             else
             {
-                target.SelectedHour = value.Hour;
-                target.SelectedMinutes = value.Minute;
-                target.SelectedSeconds = value.Second;
+                var hours = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Hours, value.Hour);
+                target.TextBlockClickEventHandler(sender, hours);
 
-                var hours = target.GetTemplateChild($"h{value.Hour.ToString()}") as FocusableLabel;
-                if (hours.IsEmpty() == false)
-                {
-                    hours.Focus();
-                }
+                var minutes = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Minutes, value.Hour);
+                target.TextBlockClickEventHandler(sender, minutes);
 
-                var minutes = target.GetTemplateChild($"m{value.Minute.ToString()}") as FocusableLabel;
-                if (minutes.IsEmpty() == false)
-                {
-                    minutes.Focus();
-                }
-
-                var seconds = target.GetTemplateChild($"s{value.Second.ToString()}") as FocusableLabel;
-                if (seconds.IsEmpty() == false)
-                {
-                    seconds.Focus();
-                }
+                var seconds = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Seconds, value.Hour);
+                target.TextBlockClickEventHandler(sender, seconds);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool GetHoursFocusedElement(out FocusableLabel ret)
+        private void Selected(string groupSyntax, int? selectedNumber)
         {
-            var hourGrid = this.GetTemplateChild("HourGrid") as Grid;
-            ret = FocusManager.GetFocusedElement(hourGrid) as FocusableLabel;
-            if (ret.IsEmpty())
+            if (selectedNumber.HasValue == false)
             {
-                return false;
+                return;
             }
-            return true;
+
+            var beforeControl = this.GetTemplateChild($"{groupSyntax}{selectedNumber.Value.ToString("00")}") as FocusableLabel;
+            if (beforeControl.IsEmpty() == false)
+            {
+                beforeControl.IsSelected = true;
+            }
+        }
+
+        private void TextBlockClickEventHandler(object sender, TimeSelecterClickEventArgs e)
+        {
+            switch (e.ClickGroup)
+            {
+                case TimeSelecterClieckGroup.Hours:
+                    this.UnSelected("h", this.SelectedHour);
+                    this.SelectedHour = e.SelectedNumber;
+                    this.Selected("h", e.SelectedNumber);
+                    break;
+
+                case TimeSelecterClieckGroup.Minutes:
+                    this.UnSelected("m", this.SelectedMinutes);
+                    this.SelectedMinutes = e.SelectedNumber;
+                    this.Selected("m", e.SelectedNumber);
+                    break;
+
+                case TimeSelecterClieckGroup.Seconds:
+                    this.UnSelected("s", this.SelectedSeconds);
+                    this.SelectedSeconds = e.SelectedNumber;
+                    this.Selected("s", e.SelectedNumber);
+                    break;
+            }
+            e.Handled = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool GetMinutesFocusedElement(out FocusableLabel ret)
+        private void UnSelected(string groupSyntax, int? selectedNumber)
         {
-            var minutesGrid = this.GetTemplateChild("MinutesGrid") as Grid;
-            ret = FocusManager.GetFocusedElement(minutesGrid) as FocusableLabel;
-            if (ret.IsEmpty())
+            if (selectedNumber.HasValue == false)
             {
-                return false;
+                return;
             }
-            return true;
-        }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool GetSecondsFocusedElement(out FocusableLabel ret)
-        {
-            var secondsGrid = this.GetTemplateChild("SecondsGrid") as Grid;
-            ret = FocusManager.GetFocusedElement(secondsGrid) as FocusableLabel;
-            if (ret.IsEmpty())
+            var beforeControl = this.GetTemplateChild($"{groupSyntax}{selectedNumber.Value.ToString("00")}") as FocusableLabel;
+            if (beforeControl.IsEmpty() == false)
             {
-                return false;
+                beforeControl.IsSelected = false;
             }
-            return true;
-        }
-
-        private void UpdateSelectedTime()
-        {
-            var hours = this.SelectedHour;
-            var minutes = this.SelectedMinutes;
-            var seconds = this.SelectedSeconds;
-
-            if (hours.HasValue && minutes.HasValue && seconds.HasValue)
-            {
-                this.SelectedTime = new Time(hours.Value, minutes.Value, seconds.Value);
-                return;
-            }
-            if (hours.HasValue && minutes.HasValue)
-            {
-                this.SelectedTime = new Time(hours.Value, minutes.Value, 0);
-                return;
-            }
-            if (minutes.HasValue && seconds.HasValue)
-            {
-                this.SelectedTime = new Time(0, minutes.Value, seconds.Value);
-                return;
-            }
-            if (hours.HasValue && seconds.HasValue)
-            {
-                this.SelectedTime = new Time(hours.Value, 0, seconds.Value);
-                return;
-            }
-            if (hours.HasValue)
-            {
-                this.SelectedTime = new Time(hours.Value, 0, 0);
-                return;
-            }
-            if (minutes.HasValue)
-            {
-                this.SelectedTime = new Time(0, minutes.Value, 0);
-                return;
-            }
-            if (seconds.HasValue)
-            {
-                this.SelectedTime = new Time(0, 0, seconds.Value);
-                return;
-            }
-            this.SelectedTime = null;
         }
     }
 }

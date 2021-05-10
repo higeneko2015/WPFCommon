@@ -159,7 +159,7 @@ namespace WPFCommon
 
             this.CheckedFlg = true;
 
-            var expression = GetBindingExpression(this, TextProperty);
+            var expression = this.GetBindingExpression(this, TextProperty);
 
             // Validationを実施
             expression?.UpdateSource();

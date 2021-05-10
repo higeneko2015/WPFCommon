@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,7 +30,7 @@ namespace WPFCommon
 
         // BindsTwoWayByDefaultを指定しておかないとthis.Text = hogehoge;という操作を行ったときにBindingがクリアされてしまう。
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(TextPropertyChanged)));
 
         public static readonly DependencyProperty WaterMarkStringProperty =
             DependencyProperty.Register(nameof(WaterMarkString), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -58,7 +59,7 @@ namespace WPFCommon
             // イベントハンドラの追加
             //this.Loaded += this.TextBoxBase_Loaded;
             this.Unloaded += this.TimeBoxEx_Unloaded;
-            Validation.AddErrorHandler(this, TimeBoxEx_ValidationError);
+            Validation.AddErrorHandler(this, this.TimeBoxEx_ValidationError);
 
             // 貼り付けコマンドのハンドラを追加
             //DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
@@ -122,7 +123,7 @@ namespace WPFCommon
             {
                 if (this._PartsButton.IsEmpty())
                 {
-                    this._PartsButton = GetTemplateChild("PART_Button1") as ToggleButton;
+                    this._PartsButton = this.GetTemplateChild("PART_Button1") as ToggleButton;
                 }
                 return this._PartsButton;
             }
@@ -134,7 +135,7 @@ namespace WPFCommon
             {
                 if (this._PartsCancelButton.IsEmpty())
                 {
-                    this._PartsCancelButton = GetTemplateChild("PART_CANCEL_Button") as Button;
+                    this._PartsCancelButton = this.GetTemplateChild("PART_CANCEL_Button") as Button;
                 }
                 return this._PartsCancelButton;
             }
@@ -146,7 +147,7 @@ namespace WPFCommon
             {
                 if (this._PartsOkButton.IsEmpty())
                 {
-                    this._PartsOkButton = GetTemplateChild("PART_OK_Button") as Button;
+                    this._PartsOkButton = this.GetTemplateChild("PART_OK_Button") as Button;
                 }
                 return this._PartsOkButton;
             }
@@ -158,7 +159,7 @@ namespace WPFCommon
             {
                 if (this._PartsPopup.IsEmpty())
                 {
-                    this._PartsPopup = GetTemplateChild("PART_Popup1") as Popup;
+                    this._PartsPopup = this.GetTemplateChild("PART_Popup1") as Popup;
                 }
                 return this._PartsPopup;
             }
@@ -170,7 +171,7 @@ namespace WPFCommon
             {
                 if (this._PartsSelecter.IsEmpty())
                 {
-                    this._PartsSelecter = GetTemplateChild("PART_Selecter") as TimeSelecter;
+                    this._PartsSelecter = this.GetTemplateChild("PART_Selecter") as TimeSelecter;
                 }
                 return this._PartsSelecter;
             }
@@ -182,7 +183,7 @@ namespace WPFCommon
             {
                 if (this._PartsTextBox.IsEmpty())
                 {
-                    this._PartsTextBox = GetTemplateChild("PART_TextBox1") as TextBox;
+                    this._PartsTextBox = this.GetTemplateChild("PART_TextBox1") as TextBox;
                 }
                 return this._PartsTextBox;
             }
@@ -264,6 +265,8 @@ namespace WPFCommon
 
         protected override void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
+            Debug.WriteLine("OnPreviewLostKeyboardFocus");
+            Debug.WriteLine(e.OldFocus.ToString() + "→" + e.NewFocus.ToString());
             if (this.IsReadOnly)
             {
                 //e.Handled = true; // これがあるとフォーカスが外れなくなる
@@ -337,9 +340,24 @@ namespace WPFCommon
             }
         }
 
+        private static void TextPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var value = e.NewValue as string;
+            var target = sender as TimeBoxEx;
+
+            if (Time.TryParse(value, out var timeValue))
+            {
+                target.SelectedTime = timeValue;
+            }
+            else
+            {
+                target.SelectedTime = null;
+            }
+        }
+
         private void ChangeHitTestVisible(bool value)
         {
-            var btn = GetTemplateChild("PART_Button1") as ToggleButton;
+            var btn = this.GetTemplateChild("PART_Button1") as ToggleButton;
             btn.IsHitTestVisible = value;
             // コントロール外にフォーカスがある状態から直接ボタンをクリックしたときに強制的にフォーカスを当てる
             this.Dispatcher.InvokeAsync(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
@@ -404,17 +422,26 @@ namespace WPFCommon
             this.PartsPopup.IsOpen = false;
 
             this.SelectedTime = this.PartsSelecter.SelectedTime;
-            this.Text = this.SelectedTime?.ToString(StringFormat);
+            this.Text = this.SelectedTime?.ToString(this.StringFormat);
         }
 
         private void Popup_Closed(object sender, EventArgs e)
         {
-            ChangeHitTestVisible(true);
+            this.ChangeHitTestVisible(true);
         }
 
         private void Popup_Opened(object sender, EventArgs e)
         {
-            ChangeHitTestVisible(false);
+            if (Time.TryParseExact(this.Text, "HHmmss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var timeValue))
+            {
+                this.SelectedTime = timeValue;
+            }
+            else
+            {
+                this.SelectedTime = null;
+            }
+
+            this.ChangeHitTestVisible(false);
         }
 
         private void TimeBoxEx_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -428,7 +455,7 @@ namespace WPFCommon
 
         private void TimeBoxEx_Unloaded(object sender, RoutedEventArgs e)
         {
-            Validation.RemoveErrorHandler(this, TimeBoxEx_ValidationError);
+            Validation.RemoveErrorHandler(this, this.TimeBoxEx_ValidationError);
             this.Unloaded -= this.TimeBoxEx_Unloaded;
         }
 
