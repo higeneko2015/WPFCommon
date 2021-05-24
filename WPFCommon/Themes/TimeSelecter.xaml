@@ -37,49 +37,54 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="5" />
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="5" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
+
                             <local:LabelEx
+                                x:Name="HoursLabel"
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="0,0,0,2"
+                                Margin="2,0,2,2"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 Background="{DynamicResource TimeBoxEx.Selecter.Hour.BackgroundColor}"
                                 BorderBrush="{DynamicResource TimeBoxEx.Selecter.Hour.BackgroundColor}"
                                 Content="時" />
+
                             <local:LabelEx
+                                x:Name="MinutesLabel"
                                 Grid.Row="0"
-                                Grid.Column="2"
-                                Margin="0,0,0,2"
+                                Grid.Column="1"
+                                Margin="2,0,2,2"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 Background="{DynamicResource TimeBoxEx.Selecter.Minutes.BackgroundColor}"
                                 BorderBrush="{DynamicResource TimeBoxEx.Selecter.Minutes.BackgroundColor}"
                                 Content="分" />
+
                             <local:LabelEx
+                                x:Name="SecondsLabel"
                                 Grid.Row="0"
-                                Grid.Column="4"
-                                Margin="0,0,0,2"
+                                Grid.Column="2"
+                                Margin="2,0,2,2"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 Background="{DynamicResource TimeBoxEx.Selecter.Seconds.BackgroundColor}"
                                 BorderBrush="{DynamicResource TimeBoxEx.Selecter.Seconds.BackgroundColor}"
                                 Content="秒" />
+
                             <Grid
                                 x:Name="HourGrid"
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Width="72"
                                 Height="108"
-                                Background="{TemplateBinding Background}"
-                                FocusManager.IsFocusScope="True">
+                                Margin="2,0,2,0"
+                                Background="{TemplateBinding Background}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
@@ -315,11 +320,11 @@
                             <Grid
                                 x:Name="MinutesGrid"
                                 Grid.Row="1"
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 Width="180"
                                 Height="108"
-                                Background="{TemplateBinding Background}"
-                                FocusManager.IsFocusScope="True">
+                                Margin="2,0,2,0"
+                                Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -890,11 +895,11 @@
                             <Grid
                                 x:Name="SecondsGrid"
                                 Grid.Row="1"
-                                Grid.Column="4"
+                                Grid.Column="2"
                                 Width="180"
                                 Height="108"
-                                Background="{TemplateBinding Background}"
-                                FocusManager.IsFocusScope="True">
+                                Margin="2,0,2,0"
+                                Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -1463,6 +1468,18 @@
                             </Grid>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="DisplayMode" Value="HM">
+                            <Setter TargetName="SecondsGrid" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SecondsLabel" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="DisplayMode" Value="H">
+                            <Setter TargetName="MinutesGrid" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="MinutesLabel" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SecondsGrid" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SecondsLabel" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

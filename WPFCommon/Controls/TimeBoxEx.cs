@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,16 +7,20 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace WPFCommon
 {
     public class TimeBoxEx : ContentControl
     {
+        public static readonly DependencyProperty DisplayModeProperty =
+            DependencyProperty.Register(nameof(DisplayMode), typeof(TimeSelecterDisplayMode), typeof(TimeBoxEx), new FrameworkPropertyMetadata(TimeSelecterDisplayMode.HMS, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty IsReadOnlyProperty =
             DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(TimeBoxEx), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsReadOnlyChanged)));
 
-        public static readonly DependencyProperty SelectedTimeProperty =
-            DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IsShowSelecterButtonProperty =
+            DependencyProperty.Register(nameof(IsShowSelecterButton), typeof(bool), typeof(TimeBoxEx), new FrameworkPropertyMetadata(true));
 
         public static readonly DependencyProperty SelectionBrushProperty =
             DependencyProperty.Register(nameof(SelectionBrush), typeof(Brush), typeof(TimeBoxEx));
@@ -30,19 +33,29 @@ namespace WPFCommon
 
         // BindsTwoWayByDefaultを指定しておかないとthis.Text = hogehoge;という操作を行ったときにBindingがクリアされてしまう。
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(TextPropertyChanged)));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty WaterMarkStringProperty =
             DependencyProperty.Register(nameof(WaterMarkString), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        private readonly RoutedEventHandler ChangeTimeSelectHandler = null;
         private ToggleButton _PartsButton = null;
+
         private Button _PartsCancelButton = null;
+
         private Button _PartsOkButton = null;
+
         private Popup _PartsPopup = null;
+
         private TimeSelecter _PartsSelecter = null;
+
         private TextBox _PartsTextBox = null;
+
         private string BeforeText = string.Empty;
+
         private bool CheckedFlg = false;
+
+        private bool IsOkButtonClick = false;
 
         static TimeBoxEx()
         {
@@ -57,12 +70,20 @@ namespace WPFCommon
             }
 
             // イベントハンドラの追加
-            //this.Loaded += this.TextBoxBase_Loaded;
             this.Unloaded += this.TimeBoxEx_Unloaded;
             Validation.AddErrorHandler(this, this.TimeBoxEx_ValidationError);
 
+            this.ChangeTimeSelectHandler = this.TimeSelecterSelectChanged;
+            this.AddHandler(EventHelper.TimeSelecterChangeEvent, this.ChangeTimeSelectHandler);
+
             // 貼り付けコマンドのハンドラを追加
             //DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
+        }
+
+        public TimeSelecterDisplayMode DisplayMode
+        {
+            get { return (TimeSelecterDisplayMode)this.GetValue(DisplayModeProperty); }
+            set { this.SetValue(DisplayModeProperty, value); }
         }
 
         [Category("Text")]
@@ -72,17 +93,17 @@ namespace WPFCommon
             set { this.SetValue(IsReadOnlyProperty, value); }
         }
 
+        public bool IsShowSelecterButton
+        {
+            get { return (bool)this.GetValue(IsShowSelecterButtonProperty); }
+            set { this.SetValue(IsShowSelecterButtonProperty, value); }
+        }
+
         [Category("Text")]
         public string SelectedText
         {
             get { return this.PartsTextBox.SelectedText; }
             set { this.PartsTextBox.SelectedText = value; }
-        }
-
-        public Time SelectedTime
-        {
-            get { return (Time)this.GetValue(SelectedTimeProperty); }
-            set { this.SetValue(SelectedTimeProperty, value); }
         }
 
         public Brush SelectionBrush
@@ -234,7 +255,20 @@ namespace WPFCommon
                     displayFormat = expression.ParentBinding.StringFormat;
                     if (displayFormat.IsEmpty())
                     {
-                        displayFormat = "HH:mm:ss";
+                        switch (this.DisplayMode)
+                        {
+                            case TimeSelecterDisplayMode.HMS:
+                                displayFormat = "HH:mm:ss";
+                                break;
+
+                            case TimeSelecterDisplayMode.HM:
+                                displayFormat = "HH:mm";
+                                break;
+
+                            case TimeSelecterDisplayMode.H:
+                                displayFormat = "HH";
+                                break;
+                        }
                     }
                     newBinding.Converter = new StringToTimeConverter();
                     newBinding.ValidationRules.Add(new TimeValidationRule());
@@ -253,20 +287,21 @@ namespace WPFCommon
 
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
+            // 派生先クラスの処理を先に実行する
             base.OnGotKeyboardFocus(e);
-            this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke);
+            // 最後に全選択処理を行う
+            this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke, DispatcherPriority.ApplicationIdle);
         }
 
         protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
+            // 派生先クラスの処理を先に実行する
             base.OnLostKeyboardFocus(e);
             this.PreviewMouseUp += this.TimeBoxEx_PreviewMouseUp;
         }
 
         protected override void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
-            Debug.WriteLine("OnPreviewLostKeyboardFocus");
-            Debug.WriteLine(e.OldFocus.ToString() + "→" + e.NewFocus.ToString());
             if (this.IsReadOnly)
             {
                 //e.Handled = true; // これがあるとフォーカスが外れなくなる
@@ -340,27 +375,10 @@ namespace WPFCommon
             }
         }
 
-        private static void TextPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            var value = e.NewValue as string;
-            var target = sender as TimeBoxEx;
-
-            if (Time.TryParse(value, out var timeValue))
-            {
-                target.SelectedTime = timeValue;
-            }
-            else
-            {
-                target.SelectedTime = null;
-            }
-        }
-
         private void ChangeHitTestVisible(bool value)
         {
-            var btn = this.GetTemplateChild("PART_Button1") as ToggleButton;
-            btn.IsHitTestVisible = value;
-            // コントロール外にフォーカスがある状態から直接ボタンをクリックしたときに強制的にフォーカスを当てる
-            this.Dispatcher.InvokeAsync(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
+            //            var btn = this.GetTemplateChild("PART_Button1") as ToggleButton;
+            this.PartsButton.IsHitTestVisible = value;
         }
 
         /// <summary>
@@ -419,26 +437,76 @@ namespace WPFCommon
 
         private void PartsOkButton_Click(object sender, RoutedEventArgs e)
         {
+            this.IsOkButtonClick = true;
             this.PartsPopup.IsOpen = false;
-
-            this.SelectedTime = this.PartsSelecter.SelectedTime;
-            this.Text = this.SelectedTime?.ToString(this.StringFormat);
         }
 
         private void Popup_Closed(object sender, EventArgs e)
         {
+            // OKボタン押下でPOPUPが閉じられた場合
+            if (this.IsOkButtonClick)
+            {
+                this.IsOkButtonClick = false;
+
+                switch (this.DisplayMode)
+                {
+                    case TimeSelecterDisplayMode.HMS:
+                        this.Text = $"{this.PartsSelecter.SelectedHour.Value.ToString("00")}{this.PartsSelecter.SelectedMinutes.Value.ToString("00")}{this.PartsSelecter.SelectedSeconds.Value.ToString("00")}";
+                        break;
+
+                    case TimeSelecterDisplayMode.HM:
+                        this.Text = $"{this.PartsSelecter.SelectedHour.Value.ToString("00")}{this.PartsSelecter.SelectedMinutes.Value.ToString("00")}";
+                        break;
+
+                    case TimeSelecterDisplayMode.H:
+                        this.Text = $"{this.PartsSelecter.SelectedHour.Value.ToString("00")}";
+                        break;
+                }
+            }
+            else
+            {
+                // OKボタン以外で閉じた場合はPOPUPでの選択状態をキャンセルする
+            }
+            this.Dispatcher.InvokeAsync(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
             this.ChangeHitTestVisible(true);
         }
 
         private void Popup_Opened(object sender, EventArgs e)
         {
-            if (Time.TryParseExact(this.Text, "HHmmss", CultureInfo.CurrentCulture, DateTimeStyles.None, out var timeValue))
+            // コントロール外にフォーカスがある状態から直接ボタンをクリックしたときに強制的にフォーカスを当てる
+            // Invoke()で同期処理してからPOPUPを開く処理を行う
+            this.Dispatcher.Invoke(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
+
+            var target = this;
+
+            var binding = BindingOperations.GetBinding(this, TextProperty);
+            if (binding.IsEmpty())
             {
-                this.SelectedTime = timeValue;
+                return;
+            }
+
+            var format = binding.StringFormat.Replace(":", "");
+
+            if (Time.TryParseExact(this.Text, format, CultureInfo.CurrentCulture, DateTimeStyles.None, out var timeValue))
+            {
+                // 入力値が有効なTimeの場合は反映させる
+                this.PartsSelecter.SelectedHour = timeValue.Hour;
+
+                if (this.DisplayMode != TimeSelecterDisplayMode.H)
+                {
+                    this.PartsSelecter.SelectedMinutes = timeValue.Minute;
+                }
+
+                if (this.DisplayMode == TimeSelecterDisplayMode.HMS)
+                {
+                    this.PartsSelecter.SelectedSeconds = timeValue.Second;
+                }
             }
             else
             {
-                this.SelectedTime = null;
+                this.PartsSelecter.SelectedHour = null;
+                this.PartsSelecter.SelectedMinutes = null;
+                this.PartsSelecter.SelectedSeconds = null;
             }
 
             this.ChangeHitTestVisible(false);
@@ -486,6 +554,51 @@ namespace WPFCommon
                 }
             });
 
+            e.Handled = true;
+        }
+
+        private void TimeSelecterSelectChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.PartsSelecter.IsEmpty())
+            {
+                e.Handled = true;
+                return;
+            }
+            switch (this.DisplayMode)
+            {
+                case TimeSelecterDisplayMode.HMS:
+                    if (this.PartsSelecter.SelectedHour.HasValue && this.PartsSelecter.SelectedMinutes.HasValue && this.PartsSelecter.SelectedSeconds.HasValue)
+                    {
+                        this.PartsOkButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        this.PartsOkButton.IsEnabled = false;
+                    }
+                    break;
+
+                case TimeSelecterDisplayMode.HM:
+                    if (this.PartsSelecter.SelectedHour.HasValue && this.PartsSelecter.SelectedMinutes.HasValue)
+                    {
+                        this.PartsOkButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        this.PartsOkButton.IsEnabled = false;
+                    }
+                    break;
+
+                case TimeSelecterDisplayMode.H:
+                    if (this.PartsSelecter.SelectedHour.HasValue)
+                    {
+                        this.PartsOkButton.IsEnabled = false;
+                    }
+                    else
+                    {
+                        this.PartsOkButton.IsEnabled = true;
+                    }
+                    break;
+            }
             e.Handled = true;
         }
     }

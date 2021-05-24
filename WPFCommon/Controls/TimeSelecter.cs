@@ -6,8 +6,18 @@ using System.Windows.Media;
 
 namespace WPFCommon
 {
+    public enum TimeSelecterDisplayMode
+    {
+        HMS,
+        HM,
+        H,
+    }
+
     public class TimeSelecter : Control
     {
+        public static readonly DependencyProperty DisplayModeProperty =
+            DependencyProperty.Register(nameof(DisplayMode), typeof(TimeSelecterDisplayMode), typeof(TimeSelecter), new FrameworkPropertyMetadata(TimeSelecterDisplayMode.HMS, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty HourFocusedBackgroundColorProperty =
             DependencyProperty.Register(nameof(HourFocusedBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
@@ -45,16 +55,16 @@ namespace WPFCommon
             DependencyProperty.Register(nameof(SecondsMouseOverForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty SelectedHourProperty =
-            DependencyProperty.Register(nameof(SelectedHour), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(SelectedHour), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedHoursChanged)));
 
         public static readonly DependencyProperty SelectedMinutesProperty =
-            DependencyProperty.Register(nameof(SelectedMinutes), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(SelectedMinutes), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedMinutesChanged)));
 
         public static readonly DependencyProperty SelectedSecondsProperty =
-            DependencyProperty.Register(nameof(SelectedSeconds), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register(nameof(SelectedSeconds), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedSecondsChanged)));
 
-        public static readonly DependencyProperty SelectedTimeProperty =
-            DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedTimeChanged)));
+        //public static readonly DependencyProperty SelectedTimeProperty =
+        //    DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private readonly TextBlockClickEventHandler handler = null;
 
@@ -65,8 +75,15 @@ namespace WPFCommon
 
         public TimeSelecter()
         {
+            // 各ボタンから発火するTextBlockClickEventイベントを購読する。
             this.handler = this.TextBlockClickEventHandler;
             this.AddHandler(EventHelper.TextBlockClickEvent, this.handler);
+        }
+
+        public TimeSelecterDisplayMode DisplayMode
+        {
+            get { return (TimeSelecterDisplayMode)this.GetValue(DisplayModeProperty); }
+            set { this.SetValue(DisplayModeProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("時コントロールで選択中のセルの背景色を取得または設定します。")]
@@ -174,93 +191,92 @@ namespace WPFCommon
             set { this.SetValue(SelectedSecondsProperty, value); }
         }
 
-        public Time SelectedTime
-        {
-            get { return (Time)this.GetValue(SelectedTimeProperty); }
-            set { this.SetValue(SelectedTimeProperty, value); }
-        }
+        //public Time SelectedTime
+        //{
+        //    get { return (Time)this.GetValue(SelectedTimeProperty); }
+        //    set { this.SetValue(SelectedTimeProperty, value); }
+        //}
 
-        private static void SelectedTimeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void SelectedHoursChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var target = sender as TimeSelecter;
-            var value = e.NewValue as Time;
+            var beforeValue = e.OldValue as int?;
+            var afterValue = e.NewValue as int?;
 
-            if (value.IsEmpty())
-            {
-                var hours = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Hours, null);
-                target.TextBlockClickEventHandler(sender, hours);
+            target.UpdateSelectedStatus("h", beforeValue, afterValue);
 
-                var minutes = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Minutes, null);
-                target.TextBlockClickEventHandler(sender, minutes);
-
-                var seconds = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Seconds, null);
-                target.TextBlockClickEventHandler(sender, seconds);
-            }
-            else
-            {
-                var hours = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Hours, value.Hour);
-                target.TextBlockClickEventHandler(sender, hours);
-
-                var minutes = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Minutes, value.Hour);
-                target.TextBlockClickEventHandler(sender, minutes);
-
-                var seconds = new TimeSelecterClickEventArgs(EventHelper.TextBlockClickEvent, TimeSelecterClieckGroup.Seconds, value.Hour);
-                target.TextBlockClickEventHandler(sender, seconds);
-            }
+            var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
+            target.RaiseEvent(args);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Selected(string groupSyntax, int? selectedNumber)
+        private static void SelectedMinutesChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (selectedNumber.HasValue == false)
-            {
-                return;
-            }
+            var target = sender as TimeSelecter;
+            var beforeValue = e.OldValue as int?;
+            var afterValue = e.NewValue as int?;
 
-            var beforeControl = this.GetTemplateChild($"{groupSyntax}{selectedNumber.Value.ToString("00")}") as FocusableLabel;
-            if (beforeControl.IsEmpty() == false)
-            {
-                beforeControl.IsSelected = true;
-            }
+            target.UpdateSelectedStatus("m", beforeValue, afterValue);
+
+            var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
+            target.RaiseEvent(args);
+        }
+
+        private static void SelectedSecondsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var target = sender as TimeSelecter;
+            var beforeValue = e.OldValue as int?;
+            var afterValue = e.NewValue as int?;
+
+            target.UpdateSelectedStatus("s", beforeValue, afterValue);
+
+            var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
+            target.RaiseEvent(args);
         }
 
         private void TextBlockClickEventHandler(object sender, TimeSelecterClickEventArgs e)
         {
             switch (e.ClickGroup)
             {
-                case TimeSelecterClieckGroup.Hours:
-                    this.UnSelected("h", this.SelectedHour);
+                case TimeSelecterClickGroup.Hours:
+                    this.UpdateSelectedStatus("h", this.SelectedHour, e.SelectedNumber);
                     this.SelectedHour = e.SelectedNumber;
-                    this.Selected("h", e.SelectedNumber);
                     break;
 
-                case TimeSelecterClieckGroup.Minutes:
-                    this.UnSelected("m", this.SelectedMinutes);
+                case TimeSelecterClickGroup.Minutes:
+                    this.UpdateSelectedStatus("m", this.SelectedMinutes, e.SelectedNumber);
                     this.SelectedMinutes = e.SelectedNumber;
-                    this.Selected("m", e.SelectedNumber);
                     break;
 
-                case TimeSelecterClieckGroup.Seconds:
-                    this.UnSelected("s", this.SelectedSeconds);
+                case TimeSelecterClickGroup.Seconds:
+                    this.UpdateSelectedStatus("s", this.SelectedSeconds, e.SelectedNumber);
                     this.SelectedSeconds = e.SelectedNumber;
-                    this.Selected("s", e.SelectedNumber);
                     break;
             }
+            // これ以上イベントを伝播させないようにフラグを立てる。
             e.Handled = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void UnSelected(string groupSyntax, int? selectedNumber)
+        private void UpdateSelectedStatus(string groupSyntax, int? beforeValue, int? afterValue)
         {
-            if (selectedNumber.HasValue == false)
+            // 変更前の値が設定されている場合は未選択に戻す
+            if (beforeValue.HasValue)
             {
-                return;
+                var beforeControl = this.GetTemplateChild($"{groupSyntax}{beforeValue.Value.ToString("00")}") as FocusableLabel;
+                if (beforeControl.IsEmpty() == false)
+                {
+                    beforeControl.IsSelected = false;
+                }
             }
 
-            var beforeControl = this.GetTemplateChild($"{groupSyntax}{selectedNumber.Value.ToString("00")}") as FocusableLabel;
-            if (beforeControl.IsEmpty() == false)
+            // 変更後の値が設定されている場合は選択状態にする
+            if (afterValue.HasValue)
             {
-                beforeControl.IsSelected = false;
+                var afterControl = this.GetTemplateChild($"{groupSyntax}{afterValue.Value.ToString("00")}") as FocusableLabel;
+                if (afterControl.IsEmpty() == false)
+                {
+                    afterControl.IsSelected = true;
+                }
             }
         }
     }

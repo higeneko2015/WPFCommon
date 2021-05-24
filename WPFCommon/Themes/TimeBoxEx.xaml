@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:local="clr-namespace:WPFCommon">
     <Style TargetType="{x:Type local:TimeBoxEx}">
@@ -26,7 +25,7 @@
                         <Grid Focusable="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="28" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -67,6 +66,7 @@
                                 x:Name="PART_Button1"
                                 Grid.Row="0"
                                 Grid.Column="1"
+                                Width="28"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Focusable="False"
@@ -102,14 +102,11 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Viewbox
-                                            Grid.Row="0"
-                                            Margin="10,0,10,0"
-                                            Stretch="Uniform">
+                                        <Viewbox Grid.Row="0" Stretch="Uniform">
                                             <local:TimeSelecter
                                                 x:Name="PART_Selecter"
                                                 BorderBrush="Transparent"
-                                                SelectedTime="{TemplateBinding SelectedTime}" />
+                                                DisplayMode="{TemplateBinding DisplayMode}" />
                                         </Viewbox>
                                         <DockPanel
                                             Grid.Row="1"
@@ -136,9 +133,11 @@
                                             </StackPanel>
                                         </DockPanel>
                                     </Grid>
+                                    <!--
                                     <i:Interaction.Behaviors>
                                         <local:GripperBehavior />
                                     </i:Interaction.Behaviors>
+                                    -->
                                 </Border>
                             </Popup>
                         </Grid>
@@ -147,6 +146,50 @@
                         <Trigger Property="Text" Value="">
                             <Setter TargetName="WaterMark" Property="Opacity" Value="100" />
                         </Trigger>
+                        <Trigger Property="DisplayMode" Value="HM">
+                            <Setter TargetName="PART_TextBox1" Property="MaxLength" Value="4" />
+                        </Trigger>
+                        <Trigger Property="DisplayMode" Value="H">
+                            <Setter TargetName="PART_TextBox1" Property="MaxLength" Value="2" />
+                        </Trigger>
+                        <Trigger Property="IsShowSelecterButton" Value="False">
+                            <Setter TargetName="PART_Button1" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsShowSelecterButton" Value="True" />
+                                <Condition Property="DisplayMode" Value="HM" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Width" Value="78" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsShowSelecterButton" Value="True" />
+                                <Condition Property="DisplayMode" Value="H" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Width" Value="56" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsShowSelecterButton" Value="False" />
+                                <Condition Property="DisplayMode" Value="HMS" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Width" Value="72" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsShowSelecterButton" Value="False" />
+                                <Condition Property="DisplayMode" Value="HM" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Width" Value="50" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsShowSelecterButton" Value="False" />
+                                <Condition Property="DisplayMode" Value="H" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Width" Value="28" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

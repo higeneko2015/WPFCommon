@@ -59,20 +59,20 @@ namespace WPFCommon
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            TimeSelecterClieckGroup group = default;
+            TimeSelecterClickGroup group = default;
 
             switch (this.Name.Substring(0, 1))
             {
                 case "h":
-                    group = TimeSelecterClieckGroup.Hours;
+                    group = TimeSelecterClickGroup.Hours;
                     break;
 
                 case "m":
-                    group = TimeSelecterClieckGroup.Minutes;
+                    group = TimeSelecterClickGroup.Minutes;
                     break;
 
                 case "s":
-                    group = TimeSelecterClieckGroup.Seconds;
+                    group = TimeSelecterClickGroup.Seconds;
                     break;
             }
             var number = int.Parse(this.Name[1..]);

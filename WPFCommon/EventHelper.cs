@@ -4,7 +4,7 @@ namespace WPFCommon
 {
     public delegate void TextBlockClickEventHandler(object sender, TimeSelecterClickEventArgs e);
 
-    public enum TimeSelecterClieckGroup
+    public enum TimeSelecterClickGroup
     {
         Hours,
         Minutes,
@@ -19,17 +19,24 @@ namespace WPFCommon
             typeof(TextBlockClickEventHandler),
             typeof(EventHelper)
         );
+
+        public static readonly RoutedEvent TimeSelecterChangeEvent = EventManager.RegisterRoutedEvent(
+            nameof(TimeSelecterChangeEvent),
+            RoutingStrategy.Bubble,
+            typeof(RoutedEventHandler),
+            typeof(EventHelper)
+        );
     }
 
     public class TimeSelecterClickEventArgs : RoutedEventArgs
     {
-        public TimeSelecterClickEventArgs(RoutedEvent revent, TimeSelecterClieckGroup group, int? selectedNumber) : base(revent)
+        public TimeSelecterClickEventArgs(RoutedEvent revent, TimeSelecterClickGroup group, int? selectedNumber) : base(revent)
         {
             this.SelectedNumber = selectedNumber;
             this.ClickGroup = group;
         }
 
-        public TimeSelecterClieckGroup ClickGroup { get; set; }
+        public TimeSelecterClickGroup ClickGroup { get; set; }
 
         public int? SelectedNumber { get; set; }
     }
