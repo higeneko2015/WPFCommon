@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Windows;
 using System.Windows.Documents;
-using Microsoft.Xaml.Behaviors;
 
 namespace WPFCommon
 {

@@ -39,6 +39,7 @@ namespace WPFCommon
             DependencyProperty.Register(nameof(WaterMarkString), typeof(string), typeof(TimeBoxEx), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private readonly RoutedEventHandler ChangeTimeSelectHandler = null;
+
         private ToggleButton _PartsButton = null;
 
         private Button _PartsCancelButton = null;
@@ -69,12 +70,10 @@ namespace WPFCommon
                 return;
             }
 
-            // イベントハンドラの追加
-            this.Unloaded += this.TimeBoxEx_Unloaded;
-            Validation.AddErrorHandler(this, this.TimeBoxEx_ValidationError);
-
             this.ChangeTimeSelectHandler = this.TimeSelecterSelectChanged;
-            this.AddHandler(EventHelper.TimeSelecterChangeEvent, this.ChangeTimeSelectHandler);
+
+            // イベントハンドラの追加
+            this.Loaded += this.TimeBoxEx_Loaded;
 
             // 貼り付けコマンドのハンドラを追加
             //DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
@@ -146,6 +145,7 @@ namespace WPFCommon
                 {
                     this._PartsButton = this.GetTemplateChild("PART_Button1") as ToggleButton;
                 }
+
                 return this._PartsButton;
             }
         }
@@ -158,6 +158,7 @@ namespace WPFCommon
                 {
                     this._PartsCancelButton = this.GetTemplateChild("PART_CANCEL_Button") as Button;
                 }
+
                 return this._PartsCancelButton;
             }
         }
@@ -170,6 +171,7 @@ namespace WPFCommon
                 {
                     this._PartsOkButton = this.GetTemplateChild("PART_OK_Button") as Button;
                 }
+
                 return this._PartsOkButton;
             }
         }
@@ -182,6 +184,7 @@ namespace WPFCommon
                 {
                     this._PartsPopup = this.GetTemplateChild("PART_Popup1") as Popup;
                 }
+
                 return this._PartsPopup;
             }
         }
@@ -194,6 +197,7 @@ namespace WPFCommon
                 {
                     this._PartsSelecter = this.GetTemplateChild("PART_Selecter") as TimeSelecter;
                 }
+
                 return this._PartsSelecter;
             }
         }
@@ -206,6 +210,7 @@ namespace WPFCommon
                 {
                     this._PartsTextBox = this.GetTemplateChild("PART_TextBox1") as TextBox;
                 }
+
                 return this._PartsTextBox;
             }
         }
@@ -270,6 +275,7 @@ namespace WPFCommon
                                 break;
                         }
                     }
+
                     newBinding.Converter = new StringToTimeConverter();
                     newBinding.ValidationRules.Add(new TimeValidationRule());
                     break;
@@ -277,6 +283,7 @@ namespace WPFCommon
                 default:
                     break;
             }
+
             newBinding.ConverterParameter = displayFormat;
             newBinding.StringFormat = displayFormat;
             BindingOperations.ClearBinding(this, TextProperty);
@@ -411,10 +418,12 @@ namespace WPFCommon
                 {
                     return true;
                 }
+
                 if (sender.Text.Length == 0)
                 {
                     return true;
                 }
+
                 return false;
             }
 
@@ -427,6 +436,7 @@ namespace WPFCommon
             {
                 this.Text = this.Text?.Replace(":", string.Empty);
             }
+
             this.PartsTextBox.SelectAll();
         }
 
@@ -467,6 +477,7 @@ namespace WPFCommon
             {
                 // OKボタン以外で閉じた場合はPOPUPでの選択状態をキャンセルする
             }
+
             this.Dispatcher.InvokeAsync(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
             this.ChangeHitTestVisible(true);
         }
@@ -475,7 +486,11 @@ namespace WPFCommon
         {
             // コントロール外にフォーカスがある状態から直接ボタンをクリックしたときに強制的にフォーカスを当てる
             // Invoke()で同期処理してからPOPUPを開く処理を行う
-            this.Dispatcher.Invoke(() => { this.PartsTextBox.Focus(); this.GotKeyboardFocusInvoke(); });
+            this.Dispatcher.Invoke(() =>
+            {
+                this.PartsTextBox.Focus();
+                this.GotKeyboardFocusInvoke();
+            });
 
             var target = this;
 
@@ -512,6 +527,20 @@ namespace WPFCommon
             this.ChangeHitTestVisible(false);
         }
 
+        private void TimeBoxEx_Closed(object sender, EventArgs e)
+        {
+            this.Loaded -= this.TimeBoxEx_Loaded;
+            this.TimeBoxEx_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void TimeBoxEx_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded += this.TimeBoxEx_Unloaded;
+            this.AddHandler(EventHelper.TimeSelecterChangeEvent, this.ChangeTimeSelectHandler);
+            Window.GetWindow(this).Closed += this.TimeBoxEx_Closed;
+            Validation.AddErrorHandler(this, this.TimeBoxEx_ValidationError);
+        }
+
         private void TimeBoxEx_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke);
@@ -523,8 +552,10 @@ namespace WPFCommon
 
         private void TimeBoxEx_Unloaded(object sender, RoutedEventArgs e)
         {
-            Validation.RemoveErrorHandler(this, this.TimeBoxEx_ValidationError);
             this.Unloaded -= this.TimeBoxEx_Unloaded;
+            this.RemoveHandler(EventHelper.TimeSelecterChangeEvent, this.ChangeTimeSelectHandler);
+            Window.GetWindow(this).Closed -= this.TimeBoxEx_Closed;
+            Validation.RemoveErrorHandler(this, this.TimeBoxEx_ValidationError);
         }
 
         private void TimeBoxEx_ValidationError(object sender, ValidationErrorEventArgs e)

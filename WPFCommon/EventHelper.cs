@@ -36,8 +36,14 @@ namespace WPFCommon
             this.ClickGroup = group;
         }
 
-        public TimeSelecterClickGroup ClickGroup { get; set; }
+        public TimeSelecterClickGroup ClickGroup
+        {
+            get; set;
+        }
 
-        public int? SelectedNumber { get; set; }
+        public int? SelectedNumber
+        {
+            get; set;
+        }
     }
 }

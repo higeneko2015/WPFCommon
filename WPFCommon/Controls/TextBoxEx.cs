@@ -33,9 +33,11 @@ namespace WPFCommon
         /// </summary>
         public TextBoxEx()
         {
-            this.CheckInputCharacterHandler += this.CheckInputText;
-            this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
-            this.Unloaded += this.TextBoxEx_Unloaded;
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+            this.Loaded += this.TextBoxEx_Loaded;
         }
 
         /// <summary>
@@ -97,6 +99,21 @@ namespace WPFCommon
             this.SelectAll();
         }
 
+        private void TextBoxEx_Closed(object sender, System.EventArgs e)
+        {
+            // コンストラクタで登録したハンドラとLoadedで登録したハンドラを解放する
+            this.Loaded -= this.TextBoxEx_Loaded;
+            this.TextBoxEx_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void TextBoxEx_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.CheckInputCharacterHandler += this.CheckInputText;
+            this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
+            this.Unloaded += this.TextBoxEx_Unloaded;
+            Window.GetWindow(this).Closed += this.TextBoxEx_Closed;
+        }
+
         /// <summary>
         /// Unloadedイベント発生時に実行されるイベントハンドラ
         /// </summary>
@@ -107,6 +124,7 @@ namespace WPFCommon
             this.CheckInputCharacterHandler -= this.CheckInputText;
             this.GotKeybordFocusInvokeHandler -= this.GotKeyboardFocusInvoke;
             this.Unloaded -= this.TextBoxEx_Unloaded;
+            Window.GetWindow(this).Closed -= this.TextBoxEx_Closed;
         }
     }
 }

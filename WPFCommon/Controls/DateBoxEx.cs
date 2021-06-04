@@ -95,9 +95,9 @@ namespace WPFCommon
             }
 
             // イベントハンドラの追加
-            //this.Loaded += this.TextBoxBase_Loaded;
-            this.Unloaded += this.DateBoxEx_Unloaded;
-            Validation.AddErrorHandler(this, this.DateBoxEx_ValidationError);
+            this.Loaded += this.DateBoxEx_Loaded;
+            //this.Unloaded += this.DateBoxEx_Unloaded;
+            //Validation.AddErrorHandler(this, this.DateBoxEx_ValidationError);
 
             // 貼り付けコマンドのハンドラを追加
             //DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
@@ -539,6 +539,19 @@ namespace WPFCommon
             return true;
         }
 
+        private void DateBoxEx_Closed(object sender, EventArgs e)
+        {
+            this.Loaded -= this.DateBoxEx_Loaded;
+            this.DateBoxEx_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void DateBoxEx_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded += this.DateBoxEx_Unloaded;
+            Validation.AddErrorHandler(this, this.DateBoxEx_ValidationError);
+            Window.GetWindow(this).Closed += this.DateBoxEx_Closed;
+        }
+
         private void DateBoxEx_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             this.Dispatcher.InvokeAsync(this.GotKeyboardFocusInvoke);
@@ -550,8 +563,9 @@ namespace WPFCommon
 
         private void DateBoxEx_Unloaded(object sender, RoutedEventArgs e)
         {
-            Validation.RemoveErrorHandler(this, this.DateBoxEx_ValidationError);
             this.Unloaded -= this.DateBoxEx_Unloaded;
+            Validation.RemoveErrorHandler(this, this.DateBoxEx_ValidationError);
+            Window.GetWindow(this).Closed -= this.DateBoxEx_Closed;
         }
 
         private void DateBoxEx_ValidationError(object sender, ValidationErrorEventArgs e)

@@ -12,6 +12,8 @@
     <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\'))</RepoRoot>
     <PathMap>$(RepoRoot)=$(DeterministicSourceRoot)</PathMap>
 
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    
     <!-- アプリケーションのスレッド数を指定 -->
     <ThreadPoolMinThreads>4</ThreadPoolMinThreads>
     <ThreadPoolMaxThreads>20</ThreadPoolMaxThreads>
@@ -50,6 +52,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
+	<!--
   <ItemGroup>
     <Page Remove="Themes\ButtonEx.xaml" />
     <Page Remove="Themes\CheckBoxEx.xaml" />
@@ -66,7 +69,8 @@
     <Page Remove="Themes\TimeBoxEx.xaml" />
     <Page Remove="Themes\TimeSelecter.xaml" />
   </ItemGroup>
-
+-->
+	
   <ItemGroup>
     <Content Include="Resources\Font\rounded-l-mgenplus-1m-regular.ttf" />
   </ItemGroup>
@@ -104,6 +108,7 @@
 
   <!-- nupkg内のToolsフォルダにコピーするために必要な記述 -->
   <ItemGroup>
+	  <!--
     <None Include="Themes\ButtonEx.xaml" />
     <None Include="Themes\CheckBoxEx.xaml" />
     <None Include="Themes\ComboBoxEx.xaml" />
@@ -118,11 +123,12 @@
     <None Include="Themes\TextBoxEx.xaml" />
     <None Include="Themes\TimeBoxEx.xaml" />
     <None Include="Themes\TimeSelecter.xaml" />
+	-->
     <None Include="Tools\VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="27.0.4" />
+    <PackageReference Include="CsvHelper" Version="27.1.0" />
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
@@ -130,11 +136,11 @@
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.1" />
     <PackageReference Include="SharpVectors" Version="1.7.1" />
   </ItemGroup>
-
+<!--
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
+-->
   <ItemGroup>
     <Page Update="Themes\Generic.xaml">
       <DesignTime>True</DesignTime>

@@ -82,14 +82,7 @@ namespace WPFCommon
             this.InputBindings.Add(new KeyBinding(ApplicationCommands.NotACommand, Key.Space, ModifierKeys.None));
             this.InputBindings.Add(new KeyBinding(ApplicationCommands.NotACommand, Key.Space, ModifierKeys.Shift));
 
-            // アプリケーション終了時にこのイベントは起きない
-            //this.Unloaded += this.TextBoxBase_Unloaded;
-
-            // Validationエラーが発生したときにWPFフレームワークから呼び出されるハンドラを登録
-            Validation.AddErrorHandler(this, this.TextBoxBase_ValidationError);
-
-            // 貼り付けコマンド用のハンドラを登録
-            DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
+            this.Loaded += this.TextBoxBase_Loaded;
         }
 
         /// <summary>
@@ -220,6 +213,22 @@ namespace WPFCommon
             }
         }
 
+        private void TextBoxBase_Closed(object sender, EventArgs e)
+        {
+            this.Loaded -= this.TextBoxBase_Loaded;
+            this.TextBoxBase_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void TextBoxBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded += this.TextBoxBase_Unloaded;
+            Window.GetWindow(this).Closed += this.TextBoxBase_Closed;
+            // Validationエラーが発生したときにWPFフレームワークから呼び出されるハンドラを登録
+            Validation.AddErrorHandler(this, this.TextBoxBase_ValidationError);
+            // 貼り付けコマンド用のハンドラを登録
+            DataObject.AddPastingHandler(this, this.TextBoxBase_PastingHandler);
+        }
+
         /// <summary>
         /// クリップボードからの貼付時に実行されるイベントハンドラ
         /// </summary>
@@ -298,11 +307,15 @@ namespace WPFCommon
         /// </summary>
         /// <param name="sender">呼び出し元オブジェクト</param>
         /// <param name="e">イベント引数</param>
-        //private void TextBoxBase_Unloaded(object sender, RoutedEventArgs e)
-        //{
-        //    this.Unloaded -= this.TextBoxBase_Unloaded;
-        //    DataObject.RemovePastingHandler(this, this.TextBoxBase_PastingHandler);
-        //}
+        private void TextBoxBase_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= this.TextBoxBase_Unloaded;
+            Window.GetWindow(this).Closed -= this.TextBoxBase_Closed;
+            // Validationエラーが発生したときにWPFフレームワークから呼び出されるハンドラを登録
+            Validation.RemoveErrorHandler(this, this.TextBoxBase_ValidationError);
+            // 貼り付けコマンド用のハンドラを登録
+            DataObject.RemovePastingHandler(this, this.TextBoxBase_PastingHandler);
+        }
 
         /// <summary>
         /// Validationのエラー状態に変更が発生したときに実行されるハンドラ

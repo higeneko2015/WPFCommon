@@ -33,7 +33,7 @@ namespace WPFCommon
 
         public BasePanel()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             if (DesignerProperties.GetIsInDesignMode(this))
             {
@@ -54,8 +54,14 @@ namespace WPFCommon
         /// </summary>
         public ICommand CommandClose
         {
-            get { return (ICommand)this.GetValue(CommandCloseProperty); }
-            set { this.SetValue(CommandCloseProperty, value); }
+            get
+            {
+                return (ICommand)this.GetValue(CommandCloseProperty);
+            }
+            set
+            {
+                this.SetValue(CommandCloseProperty, value);
+            }
         }
 
         /// <summary>
@@ -63,8 +69,14 @@ namespace WPFCommon
         /// </summary>
         public ICommand CommandMaximize
         {
-            get { return (ICommand)this.GetValue(CommandMaximizeProperty); }
-            set { this.SetValue(CommandMaximizeProperty, value); }
+            get
+            {
+                return (ICommand)this.GetValue(CommandMaximizeProperty);
+            }
+            set
+            {
+                this.SetValue(CommandMaximizeProperty, value);
+            }
         }
 
         /// <summary>
@@ -72,13 +84,22 @@ namespace WPFCommon
         /// </summary>
         public ICommand CommandMinimize
         {
-            get { return (ICommand)this.GetValue(CommandMinimizeProperty); }
-            set { this.SetValue(CommandMinimizeProperty, value); }
+            get
+            {
+                return (ICommand)this.GetValue(CommandMinimizeProperty);
+            }
+            set
+            {
+                this.SetValue(CommandMinimizeProperty, value);
+            }
         }
 
         public Window OwnerWindow
         {
-            get { return _OwnerWindow; }
+            get
+            {
+                return this._OwnerWindow;
+            }
         }
 
         private void BasePanel_Loaded(object sender, RoutedEventArgs e)

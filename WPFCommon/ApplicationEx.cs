@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace WPFCommon
@@ -61,28 +64,22 @@ namespace WPFCommon
 
             // 並列実行することで0.16秒→0.08秒へ高速化(デバッグモード時の計測)
             Parallel.Invoke(
-                () => this.SetCulture(),
-                () => this.SetTooltipTime()
+                () => { SetCulture(); },
+                () => { SetTooltipTime(); },
+                () => { SetDefaultFont(); }
             );
 
             // 派生先クラスのStartupイベントハンドラを実行
             base.OnStartup(e);
         }
 
-        private void ApplicationEx_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            this.ExceptionHandling(e.Exception);
-            // 例外処理済みにする
-            e.Handled = true;
-        }
-
         /// <summary>
         /// 例外情報をログに出力しメッセージを表示します。
         /// </summary>
         /// <param name="e">例外内容</param>
-        private void ExceptionHandling(Exception e)
+        private static void ExceptionHandling(Exception e)
         {
-            var errMsg = this.GetExceptionInfoString(e);
+            var errMsg = GetExceptionInfoString(e);
             var msgBox = GetService<IShowMessageService>();
             var config = GetService<IConfigService>();
             msgBox.Show("00001", config.SystemLanguage, errMsg.Item1);
@@ -94,7 +91,7 @@ namespace WPFCommon
         /// </summary>
         /// <param name="ex">例外情報</param>
         /// <returns>例外の内容を文字列に編集した内容</returns>
-        private (string, string) GetExceptionInfoString(Exception ex)
+        private static (string, string) GetExceptionInfoString(Exception ex)
         {
             var sb = new StringBuilder();
 
@@ -108,7 +105,7 @@ namespace WPFCommon
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
-        private void SetCulture()
+        private static void SetCulture()
         {
             var config = GetService<IConfigService>();
             var culture = new CultureInfo(config.SystemLanguage, false);
@@ -116,22 +113,21 @@ namespace WPFCommon
             Thread.CurrentThread.CurrentUICulture = culture;
         }
 
-        // General.xamlにまとまったことでこの設定が不要になった？
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
-        //private void SetDefaultFont()
-        //{
-        //    //var config = GetService<IConfigService>();
-        //    //// 実行時に外部のフォントが読み込まれないので強制的にロードする
-        //    //var location = Assembly.GetExecutingAssembly().Location;
-        //    //var path = Path.GetDirectoryName(location);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private static void SetDefaultFont()
+        {
+            var config = GetService<IConfigService>();
+            // 実行時に外部のフォントが読み込まれないので強制的にロードする
+            var location = Assembly.GetExecutingAssembly().Location;
+            var path = Path.GetDirectoryName(location);
 
-        //    //var fontPath = Path.Combine(path, @"Resources\Font\");
-        //    //var fontFile = $"{fontPath}#{config.DefaultFont}";
-        //    //Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
-        //}
+            var fontPath = Path.Combine(path, @"Resources\Font\");
+            var fontFile = $"{fontPath}#{config.DefaultFont}";
+            Current.Resources["Default.FontFamily"] = new FontFamily(fontFile);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
-        private void SetTooltipTime()
+        private static void SetTooltipTime()
         {
             // ツールチップの表示時間を無限(約24日)にする
             ToolTipService.ShowDurationProperty.OverrideMetadata(
@@ -139,9 +135,16 @@ namespace WPFCommon
                 new FrameworkPropertyMetadata(int.MaxValue));
         }
 
+        private void ApplicationEx_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            ExceptionHandling(e.Exception);
+            // 例外処理済みにする
+            e.Handled = true;
+        }
+
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            this.ExceptionHandling(e.Exception);
+            ExceptionHandling(e.Exception);
             // アプリを強制終了させないための記述
             e.SetObserved();
         }

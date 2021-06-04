@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Oracle.ManagedDataAccess.Client;
 using static Dapper.SqlMapper;
 
 namespace WPFCommon

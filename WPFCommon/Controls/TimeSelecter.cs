@@ -63,9 +63,6 @@ namespace WPFCommon
         public static readonly DependencyProperty SelectedSecondsProperty =
             DependencyProperty.Register(nameof(SelectedSeconds), typeof(int?), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(SelectedSecondsChanged)));
 
-        //public static readonly DependencyProperty SelectedTimeProperty =
-        //    DependencyProperty.Register(nameof(SelectedTime), typeof(Time), typeof(TimeSelecter), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
         private readonly TextBlockClickEventHandler handler = null;
 
         static TimeSelecter()
@@ -75,9 +72,15 @@ namespace WPFCommon
 
         public TimeSelecter()
         {
-            // 各ボタンから発火するTextBlockClickEventイベントを購読する。
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             this.handler = this.TextBlockClickEventHandler;
-            this.AddHandler(EventHelper.TextBlockClickEvent, this.handler);
+
+            // コンストラクタではLoadedハンドラだけ登録する
+            this.Loaded += this.TimeSelecter_Loaded;
         }
 
         public TimeSelecterDisplayMode DisplayMode
@@ -191,43 +194,29 @@ namespace WPFCommon
             set { this.SetValue(SelectedSecondsProperty, value); }
         }
 
-        //public Time SelectedTime
-        //{
-        //    get { return (Time)this.GetValue(SelectedTimeProperty); }
-        //    set { this.SetValue(SelectedTimeProperty, value); }
-        //}
-
         private static void SelectedHoursChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = sender as TimeSelecter;
-            var beforeValue = e.OldValue as int?;
-            var afterValue = e.NewValue as int?;
-
-            target.UpdateSelectedStatus("h", beforeValue, afterValue);
-
-            var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
-            target.RaiseEvent(args);
+            SelectedTimesChanged(sender, e, "h");
         }
 
         private static void SelectedMinutesChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = sender as TimeSelecter;
-            var beforeValue = e.OldValue as int?;
-            var afterValue = e.NewValue as int?;
-
-            target.UpdateSelectedStatus("m", beforeValue, afterValue);
-
-            var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
-            target.RaiseEvent(args);
+            SelectedTimesChanged(sender, e, "m");
         }
 
         private static void SelectedSecondsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            SelectedTimesChanged(sender, e, "s");
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // 積極的にinline化されるように。
+        private static void SelectedTimesChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e, string procKbn)
         {
             var target = sender as TimeSelecter;
             var beforeValue = e.OldValue as int?;
             var afterValue = e.NewValue as int?;
 
-            target.UpdateSelectedStatus("s", beforeValue, afterValue);
+            target.UpdateSelectedStatus(procKbn, beforeValue, afterValue);
 
             var args = new RoutedEventArgs(EventHelper.TimeSelecterChangeEvent);
             target.RaiseEvent(args);
@@ -254,6 +243,32 @@ namespace WPFCommon
             }
             // これ以上イベントを伝播させないようにフラグを立てる。
             e.Handled = true;
+        }
+
+        private void TimeSelecter_Closed(object sender, System.EventArgs e)
+        {
+            // コンストラクタで登録したハンドラとLoadedで登録したハンドラを解放する
+            this.Loaded -= this.TimeSelecter_Loaded;
+            this.TimeSelecter_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void TimeSelecter_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded += this.TimeSelecter_Unloaded;
+            // コンストラクタの時点ではWindow.GetWindow(this)はnullになるので
+            // Loadedイベントで登録する。
+            // Tabの切り替えでもUnload→Loadが発生するため
+            // Loadedで登録した情報はUnLoadedイベントで解放させる
+            Window.GetWindow(this).Closed += this.TimeSelecter_Closed;
+            this.AddHandler(EventHelper.TextBlockClickEvent, this.handler);
+        }
+
+        private void TimeSelecter_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Loadedイベントで登録したハンドラはUnLoadedで解放する
+            this.Unloaded -= this.TimeSelecter_Unloaded;
+            Window.GetWindow(this).Closed -= this.TimeSelecter_Closed;
+            this.RemoveHandler(EventHelper.TextBlockClickEvent, this.handler);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

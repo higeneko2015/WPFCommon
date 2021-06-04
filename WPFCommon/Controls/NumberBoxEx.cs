@@ -26,15 +26,22 @@ namespace WPFCommon
         /// </summary>
         public NumberBoxEx()
         {
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             // IMEを無効にする
             InputMethod.SetIsInputMethodEnabled(this, false);
 
             // 貼付時にカンマを除去してから入力可否を判定するための設定
             this.RemovePastingCharacters = new string[] { ",", "\r" };
 
-            this.CheckInputCharacterHandler += this.CheckInputText;
-            this.CheckPasteCharacterHandler += this.CheckPasteText;
-            this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
+            this.Loaded += this.NumberBoxEx_Loaded;
+
+            //this.CheckInputCharacterHandler += this.CheckInputText;
+            //this.CheckPasteCharacterHandler += this.CheckPasteText;
+            //this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
             //this.Unloaded += this.NumberBoxEx_Unloaded;
         }
 
@@ -342,6 +349,30 @@ namespace WPFCommon
         {
             this.Text = this.Text.Replace(",", string.Empty);
             this.SelectAll();
+        }
+
+        private void NumberBoxEx_Closed(object sender, EventArgs e)
+        {
+            this.Loaded -= this.NumberBoxEx_Loaded;
+            this.NumberBoxEx_Unloaded(sender, new RoutedEventArgs());
+        }
+
+        private void NumberBoxEx_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded += this.NumberBoxEx_Unloaded;
+            this.CheckInputCharacterHandler += this.CheckInputText;
+            this.CheckPasteCharacterHandler += this.CheckPasteText;
+            this.GotKeybordFocusInvokeHandler += this.GotKeyboardFocusInvoke;
+            Window.GetWindow(this).Closed += this.NumberBoxEx_Closed;
+        }
+
+        private void NumberBoxEx_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= this.NumberBoxEx_Unloaded;
+            this.CheckInputCharacterHandler -= this.CheckInputText;
+            this.CheckPasteCharacterHandler -= this.CheckPasteText;
+            this.GotKeybordFocusInvokeHandler -= this.GotKeyboardFocusInvoke;
+            Window.GetWindow(this).Closed -= this.NumberBoxEx_Closed;
         }
 
         /// <summary>
