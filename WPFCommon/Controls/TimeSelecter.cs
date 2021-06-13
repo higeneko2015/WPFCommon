@@ -18,17 +18,35 @@ namespace WPFCommon
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(TimeSelecterDisplayMode), typeof(TimeSelecter), new FrameworkPropertyMetadata(TimeSelecterDisplayMode.HMS, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static readonly DependencyProperty HourFocusedBackgroundColorProperty =
-            DependencyProperty.Register(nameof(HourFocusedBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty HoursDefaultBackgroundColorProperty =
+            DependencyProperty.Register(nameof(HoursDefaultBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.White), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static readonly DependencyProperty HourFocusedForegroundColorProperty =
-            DependencyProperty.Register(nameof(HourFocusedForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty HoursDefaultForegroundColorProperty =
+            DependencyProperty.Register(nameof(HoursDefaultForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static readonly DependencyProperty HourMouseOverBackgroundColorProperty =
-            DependencyProperty.Register(nameof(HourMouseOverBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty HoursFocusedBackgroundColorProperty =
+            DependencyProperty.Register(nameof(HoursFocusedBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public static readonly DependencyProperty HourMouseOverForegroundColorProperty =
-            DependencyProperty.Register(nameof(HourMouseOverForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty HoursFocusedForegroundColorProperty =
+            DependencyProperty.Register(nameof(HoursFocusedForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty HoursMouseOverBackgroundColorProperty =
+            DependencyProperty.Register(nameof(HoursMouseOverBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty HoursMouseOverForegroundColorProperty =
+            DependencyProperty.Register(nameof(HoursMouseOverForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        //public static readonly DependencyProperty ItemBackgroundColorProperty =
+        //    DependencyProperty.Register(nameof(ItemBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.White), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        //public static readonly DependencyProperty ItemForegroundColorProperty =
+        //    DependencyProperty.Register(nameof(ItemForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty MinutesDefaultBackgroundColorProperty =
+            DependencyProperty.Register(nameof(MinutesDefaultBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.White), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty MinutesDefaultForegroundColorProperty =
+            DependencyProperty.Register(nameof(MinutesDefaultForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty MinutesFocusedBackgroundColorProperty =
             DependencyProperty.Register(nameof(MinutesFocusedBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -41,6 +59,12 @@ namespace WPFCommon
 
         public static readonly DependencyProperty MinutesMouseOverForegroundColorProperty =
             DependencyProperty.Register(nameof(MinutesMouseOverForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty SecondsDefaultBackgroundColorProperty =
+            DependencyProperty.Register(nameof(SecondsDefaultBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.White), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty SecondsDefaultForegroundColorProperty =
+            DependencyProperty.Register(nameof(SecondsDefaultForegroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty SecondsFocusedBackgroundColorProperty =
             DependencyProperty.Register(nameof(SecondsFocusedBackgroundColor), typeof(Brush), typeof(TimeSelecter), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -89,32 +113,70 @@ namespace WPFCommon
             set { this.SetValue(DisplayModeProperty, value); }
         }
 
-        [Category("拡張プロパティ"), Description("時コントロールで選択中のセルの背景色を取得または設定します。")]
-        public Brush HourFocusedBackgroundColor
+        public Brush HoursDefaultBackgroundColor
         {
-            get { return (Brush)this.GetValue(HourFocusedBackgroundColorProperty); }
-            set { this.SetValue(HourFocusedBackgroundColorProperty, value); }
+            get { return (Brush)this.GetValue(HoursDefaultBackgroundColorProperty); }
+            set { this.SetValue(HoursDefaultBackgroundColorProperty, value); }
+        }
+
+        public Brush HoursDefaultForegroundColor
+        {
+            get { return (Brush)this.GetValue(HoursDefaultForegroundColorProperty); }
+            set { this.SetValue(HoursDefaultForegroundColorProperty, value); }
+        }
+
+        [Category("拡張プロパティ"), Description("時コントロールで選択中のセルの背景色を取得または設定します。")]
+        public Brush HoursFocusedBackgroundColor
+        {
+            get { return (Brush)this.GetValue(HoursFocusedBackgroundColorProperty); }
+            set { this.SetValue(HoursFocusedBackgroundColorProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("時コントロールで選択中のセルの文字色を取得または設定します。")]
-        public Brush HourFocusedForegroundColor
+        public Brush HoursFocusedForegroundColor
         {
-            get { return (Brush)this.GetValue(HourFocusedForegroundColorProperty); }
-            set { this.SetValue(HourFocusedForegroundColorProperty, value); }
+            get { return (Brush)this.GetValue(HoursFocusedForegroundColorProperty); }
+            set { this.SetValue(HoursFocusedForegroundColorProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("時コントロール上にマウスカーソルがあるセルの背景色を取得または設定します。")]
-        public Brush HourMouseOverBackgroundColor
+        public Brush HoursMouseOverBackgroundColor
         {
-            get { return (Brush)this.GetValue(HourMouseOverBackgroundColorProperty); }
-            set { this.SetValue(HourMouseOverBackgroundColorProperty, value); }
+            get { return (Brush)this.GetValue(HoursMouseOverBackgroundColorProperty); }
+            set { this.SetValue(HoursMouseOverBackgroundColorProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("時コントロール上にマウスカーソルがあるセルの文字色を取得または設定します。")]
-        public Brush HourMouseOverForegroundColor
+        public Brush HoursMouseOverForegroundColor
         {
-            get { return (Brush)this.GetValue(HourMouseOverForegroundColorProperty); }
-            set { this.SetValue(HourMouseOverForegroundColorProperty, value); }
+            get { return (Brush)this.GetValue(HoursMouseOverForegroundColorProperty); }
+            set { this.SetValue(HoursMouseOverForegroundColorProperty, value); }
+        }
+
+        //[Category("拡張プロパティ"), Description("選択欄の背景色を取得または設定します。")]
+        //public Brush ItemBackgroundColor
+        //{
+        //    get { return (Brush)this.GetValue(ItemBackgroundColorProperty); }
+        //    set { this.SetValue(ItemBackgroundColorProperty, value); }
+        //}
+
+        //[Category("拡張プロパティ"), Description("選択欄の文字色を取得または設定します。")]
+        //public Brush ItemForegroundColor
+        //{
+        //    get { return (Brush)this.GetValue(ItemForegroundColorProperty); }
+        //    set { this.SetValue(ItemForegroundColorProperty, value); }
+        //}
+
+        public Brush MinutesDefaultBackgroundColor
+        {
+            get { return (Brush)this.GetValue(MinutesDefaultBackgroundColorProperty); }
+            set { this.SetValue(MinutesDefaultBackgroundColorProperty, value); }
+        }
+
+        public Brush MinutesDefaultForegroundColor
+        {
+            get { return (Brush)this.GetValue(MinutesDefaultForegroundColorProperty); }
+            set { this.SetValue(MinutesDefaultForegroundColorProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("分コントロールで選択中のセルの背景色を取得または設定します。")]
@@ -143,6 +205,18 @@ namespace WPFCommon
         {
             get { return (Brush)this.GetValue(MinutesMouseOverForegroundColorProperty); }
             set { this.SetValue(MinutesMouseOverForegroundColorProperty, value); }
+        }
+
+        public Brush SecondsDefaultBackgroundColor
+        {
+            get { return (Brush)this.GetValue(SecondsDefaultBackgroundColorProperty); }
+            set { this.SetValue(SecondsDefaultBackgroundColorProperty, value); }
+        }
+
+        public Brush SecondsDefaultForegroundColor
+        {
+            get { return (Brush)this.GetValue(SecondsDefaultForegroundColorProperty); }
+            set { this.SetValue(SecondsDefaultForegroundColorProperty, value); }
         }
 
         [Category("拡張プロパティ"), Description("秒コントロールで選択中のセルの背景色を取得または設定します。")]

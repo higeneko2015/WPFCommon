@@ -7,6 +7,12 @@ namespace WPFCommon
 {
     public class FocusableLabel : Label
     {
+        public static readonly DependencyProperty DefaultBackgroundColorProperty =
+            DependencyProperty.Register(nameof(DefaultBackgroundColor), typeof(Brush), typeof(FocusableLabel), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty DefaultForegroundColorProperty =
+            DependencyProperty.Register(nameof(DefaultForegroundColor), typeof(Brush), typeof(FocusableLabel), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public static readonly DependencyProperty FocusedBackgroundColorProperty =
             DependencyProperty.Register(nameof(FocusedBackgroundColor), typeof(Brush), typeof(FocusableLabel), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Transparent), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
@@ -25,6 +31,18 @@ namespace WPFCommon
         static FocusableLabel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FocusableLabel), new FrameworkPropertyMetadata(typeof(FocusableLabel)));
+        }
+
+        public Brush DefaultBackgroundColor
+        {
+            get { return (Brush)this.GetValue(DefaultBackgroundColorProperty); }
+            set { this.SetValue(DefaultBackgroundColorProperty, value); }
+        }
+
+        public Brush DefaultForegroundColor
+        {
+            get { return (Brush)this.GetValue(DefaultForegroundColorProperty); }
+            set { this.SetValue(DefaultForegroundColorProperty, value); }
         }
 
         public Brush FocusedBackgroundColor

@@ -6,6 +6,7 @@
 
     <!--  システム全体で使用するデフォルトフォント  -->
     <FontFamily x:Key="Default.FontFamily">/Resources/Font/#Rounded-L Mgen+ 1m regular</FontFamily>
+
     <!--  システム全体で使用するフォントサイズ  -->
     <System:Double x:Key="Default.FontSize">15</System:Double>
 
@@ -180,83 +181,138 @@
     <SolidColorBrush x:Key="DateBoxEx.Error.BorderColor" Color="Black" />
 
     <!--  TimeBoxExの色設定  -->
+    <!--  ウォーターマーク欄の文字色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.WaterMark.ForegroundColor"
         PresentationOptions:Freeze="true"
         Color="#FF898989" />
 
+    <!--  選択テキストの文字色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Selection.ForegroundColor" Color="White" />
+
+    <!--  選択テキストの背景色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.Selection.BackgroundColor"
         PresentationOptions:Freeze="True"
         Color="#FF32E820" />
 
+    <!--  テキストボックス欄の標準時の文字色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Default.ForegroundColor" Color="Black" />
+
+    <!--  テキストボックス欄の標準時の背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Default.BackgroundColor" Color="White" />
+
+    <!--  テキストボックス欄の標準時の枠の色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Default.BorderColor" Color="Black" />
 
+    <!--  テキストボックス欄のフォーカス時の文字色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Focused.ForegroundColor" Color="black" />
+
+    <!--  テキストボックス欄のフォーカス時の背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Focused.BackgroundColor" Color="LightCyan" />
+
+    <!--  テキストボックス欄のフォーカス時の枠の色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Focused.BorderColor" Color="black" />
 
+    <!--  テキストボックス欄のマウスオーバー時の枠の色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.MouseOver.BorderColor"
         PresentationOptions:Freeze="True"
         Color="#FF2C77FF" />
 
+    <!--  テキストボックス欄の読取専用時の文字色  -->
     <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.ForegroundColor" Color="Black" />
+
+    <!--  テキストボックス欄の読取専用時の背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.BackgroundColor" Color="LightGray" />
+
+    <!--  テキストボックス欄の読取専用時の枠の色  -->
     <SolidColorBrush x:Key="TimeBoxEx.ReadOnly.BorderColor" Color="Black" />
 
+    <!--  テキストボックス欄の使用不可時の文字色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.Disabled.ForegroundColor"
         PresentationOptions:Freeze="True"
         Color="#FF838383" />
+
+    <!--  テキストボックス欄の使用不可時の背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Disabled.BackgroundColor" Color="LightGray" />
+
+    <!--  テキストボックス欄の使用不可時の枠の色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.Disabled.BorderColor"
         PresentationOptions:Freeze="True"
         Color="#FF707070" />
 
+    <!--  テキストボックス欄の入力エラー有り時の文字色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Error.ForegroundColor" Color="White" />
+
+    <!--  テキストボックス欄の入力エラー有り時の背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Error.BackgroundColor" Color="Red" />
+
+    <!--  テキストボックス欄の入力エラー有り時の枠の色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Error.BorderColor" Color="Black" />
 
+    <!--  時刻セレクタの枠の色  -->
     <SolidColorBrush
         x:Key="TimeBoxEx.Selecter.BorderColor"
         PresentationOptions:Freeze="True"
         Color="#FF858585" />
 
+    <!--  時刻セレクタの背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.BackgroundColor" Color="White" />
+
+    <!--  時刻セレクタの「時」部分のヘッダの背景色  -->
     <SolidColorBrush
-        x:Key="TimeBoxEx.Selecter.Hour.BackgroundColor"
+        x:Key="TimeBoxEx.Selecter.Header.Hours.BackgroundColor"
         PresentationOptions:Freeze="True"
         Color="#FFE8E8E8" />
 
+    <!--  時刻セレクタの「分」部分のヘッダの背景色  -->
     <SolidColorBrush
-        x:Key="TimeBoxEx.Selecter.Minutes.BackgroundColor"
+        x:Key="TimeBoxEx.Selecter.Header.Minutes.BackgroundColor"
         PresentationOptions:Freeze="True"
         Color="#FFE8E8E8" />
 
+    <!--  時刻セレクタの「秒」部分のヘッダの背景色  -->
     <SolidColorBrush
-        x:Key="TimeBoxEx.Selecter.Seconds.BackgroundColor"
+        x:Key="TimeBoxEx.Selecter.Header.Seconds.BackgroundColor"
         PresentationOptions:Freeze="True"
         Color="#FFE8E8E8" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.ForegroundColor" Color="Black" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.BackgroundColor" Color="LightGray" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.MouseOver.ForegroundColor" Color="Black" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.BackgroundColor" Color="DarkGray" />
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hour.Focused.ForegroundColor" Color="Black" />
+    <!--  時刻セレクタの「時」のクリック欄の標準時の文字色・背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.Default.ForegroundColor" Color="Black" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.ForegroundColor" Color="Black" />
+    <!--  時刻セレクタの「時」のクリック欄のマウスオーバー時の文字色・背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.MouseOver.BackgroundColor" Color="LightGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.MouseOver.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「時」のクリック欄の選択時の文字色・背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.Focused.BackgroundColor" Color="DarkGray" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Hours.Focused.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「分」のクリック欄の標準時の文字色・背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Default.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「分」のクリック欄のマウスオーバー時の文字色・背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.MouseOver.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「分」のクリック欄の選択時の文字色・背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Minutes.Focused.ForegroundColor" Color="Black" />
 
-    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.ForegroundColor" Color="Black" />
+    <!--  時刻セレクタの「秒」のクリック欄の標準時の文字色・背景色  -->
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Default.BackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Default.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「秒」のクリック欄のマウスオーバー時の文字色・背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.BackgroundColor" Color="LightGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.MouseOver.ForegroundColor" Color="Black" />
+
+    <!--  時刻セレクタの「秒」のクリック欄の選択時の文字色・背景色  -->
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Focused.BackgroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="TimeBoxEx.Selecter.Seconds.Focused.ForegroundColor" Color="Black" />
 

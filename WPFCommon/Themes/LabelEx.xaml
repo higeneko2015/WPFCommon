@@ -37,12 +37,12 @@
                             </TextBlock.Text>
                         </TextBlock>
                     </Border>
-                    <ControlTemplate.Triggers>
+                    <!--<ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Background" Value="{DynamicResource Control.Focused.BackgroundColor}" />
                             <Setter Property="Foreground" Value="{DynamicResource Control.Focused.ForegroundColor}" />
                         </Trigger>
-                    </ControlTemplate.Triggers>
+                    </ControlTemplate.Triggers>-->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
